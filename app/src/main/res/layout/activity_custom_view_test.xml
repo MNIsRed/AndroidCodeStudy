@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/jumpToSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jump to Second"/>
+    <com.example.androidtestapplication.CustomView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CustomView"
+        android:background="?attr/customColorAttribute" />
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试通过onMeasure直接获取大小"/>
+</LinearLayout>

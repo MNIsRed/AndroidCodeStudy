@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--样式是能够应用于视图组件中的一套属性-->
+<resources>
+    <style name="CustomView">
+        <item name="text">"StyleCustomView"</item>
+    </style>
+    <style name="CustomViewElse">
+        <item name="text">"CustomViewElse"</item>
+    </style>
+</resources>
