@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.viewmodel.MainViewModel
 import com.mole.androidcodestudy.R
@@ -42,6 +43,9 @@ class MainActivity : BaseActivity() {
         findViewById<Button>(R.id.file_button).setOnClickListener {
             tryFileOutput()
         }
+        binding.goAnother.setOnClickListener {
+            CustomViewTestActivity.start(this)
+        }
     }
 
     private fun tryFileOutput(){
@@ -62,5 +66,10 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         hiltTestInterface.print()
+    }
+
+    private fun tryGC(){
+        System.gc()
+        Runtime.getRuntime().gc()
     }
 }

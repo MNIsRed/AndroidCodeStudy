@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <ImageView
+        android:id="@+id/clip_iv"
+        android:layout_width="150dp"
+        android:src="@color/teal_200"
+        android:layout_marginLeft="50dp"
+        android:layout_height="150dp" />
     <ImageView
         android:id="@+id/image"
         android:layout_width="100dp"
@@ -16,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jump to Second"/>
-    <com.example.androidtestapplication.CustomView
+    <com.mole.androidcodestudy.view.CustomView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/CustomView"

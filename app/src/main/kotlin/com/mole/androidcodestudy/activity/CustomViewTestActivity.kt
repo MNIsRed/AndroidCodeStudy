@@ -1,5 +1,7 @@
 package com.mole.androidcodestudy.activity
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapRegionDecoder
@@ -7,6 +9,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View.MeasureSpec
+import com.example.androidtestapplication.RoundBottomOutlineProvider
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.databinding.ActivityCustomViewTestBinding
 import com.mole.androidcodestudy.view.CustomView
@@ -23,6 +26,9 @@ class CustomViewTestActivity : BaseActivity(){
 
         binding.linear.addView(CustomView(this,null, R.attr.DefStyleAttr,R.style.CustomView))
         getTextViewMeasure()
+
+        binding.clipIv.outlineProvider = RoundBottomOutlineProvider(110f)
+        binding.clipIv.clipToOutline = true
     }
 
     /**
@@ -47,5 +53,13 @@ class CustomViewTestActivity : BaseActivity(){
         }
         val bitmap = mDecoder.decodeRegion(rect,options)
         binding.image.setImageBitmap(bitmap)
+    }
+
+    companion object{
+        @JvmStatic
+        fun start(context: Context) {
+            val starter = Intent(context, CustomViewTestActivity::class.java)
+            context.startActivity(starter)
+        }
     }
 }
