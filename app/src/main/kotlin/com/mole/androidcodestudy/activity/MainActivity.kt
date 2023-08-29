@@ -3,6 +3,13 @@ package com.mole.androidcodestudy.activity
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.Transition
+import android.transition.TransitionManager
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +41,7 @@ class MainActivity : BaseActivity() {
             findViewById<Button>(R.id.click_button).text = it?.data?.name?:"null"
         }
         hiltTestInterface.print()
+        autoTransitionTest()
     }
 
     private fun setClick(){
@@ -71,5 +79,22 @@ class MainActivity : BaseActivity() {
     private fun tryGC(){
         System.gc()
         Runtime.getRuntime().gc()
+    }
+
+    private fun autoTransitionTest(){
+        val autoTransition = AutoTransition()
+        autoTransition.startDelay = 500
+        autoTransition.duration = 2000
+        autoTransition.interpolator = AccelerateDecelerateInterpolator() // 插值器
+
+        binding.hideButton.setOnClickListener {
+            TransitionManager.beginDelayedTransition(binding.clRoot,autoTransition)
+            //rotation,translateX无效
+            //直接修改left，设置textSize改变大小，以及设置visibility都有效
+            //同时设置时，最后一项有动画效果
+            //binding.hideText.left += 20
+            //binding.hideText.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
+            binding.hideText.visibility = if(binding.hideText.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        }
     }
 }

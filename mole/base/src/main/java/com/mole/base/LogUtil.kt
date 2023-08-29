@@ -1,12 +1,15 @@
+/*
 package com.mole.base
 
 import com.orhanobut.logger.Logger
 
+*/
 /**
  * @Description: log封装工具类
  * @author: zhang
  * @date: 2022/9/21
- */
+ *//*
+
 class LogUtil {
     companion object {
         @JvmStatic
@@ -25,4 +28,4 @@ class LogUtil {
             }
         }
     }
-}
+}*/
