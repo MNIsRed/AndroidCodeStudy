@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +43,17 @@ class MainActivity : BaseActivity() {
         }
         hiltTestInterface.print()
         autoTransitionTest()
+
+        binding.showSoftInput.setOnClickListener {
+            softInputMethodTest()
+        }
     }
+
+    private fun softInputMethodTest(){
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+
 
     private fun setClick(){
         findViewById<Button>(R.id.click_button).setOnClickListener{
