@@ -26,6 +26,7 @@
         <activity android:name="com.mole.androidcodestudy.activity.ConfigurationChangeTestActivity" />
         <activity android:name="com.mole.androidcodestudy.activity.CustomViewTestActivity" />
         <activity android:name=".activity.RxJavaActivity" />
+        <activity android:name=".activity.PickMediaActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

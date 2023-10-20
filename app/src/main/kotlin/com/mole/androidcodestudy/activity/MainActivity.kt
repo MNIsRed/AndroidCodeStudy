@@ -47,6 +47,10 @@ class MainActivity : BaseActivity() {
         binding.showSoftInput.setOnClickListener {
             softInputMethodTest()
         }
+
+        binding.showPickMedia.setOnClickListener {
+            PickMediaActivity.start(this)
+        }
     }
 
     private fun softInputMethodTest(){
