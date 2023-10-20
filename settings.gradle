@@ -1,11 +1,16 @@
 pluginManagement {
     repositories {
+        //所有二进制插件都可通过仓库查到
         gradlePluginPortal()
         google()
         mavenCentral()
     }
 }
+//dependencyResolutionManagement 替代的是原先在allprojects里声明repositories的功能，一样是指定所有子项目都从这些远程仓库中获取依赖。
 dependencyResolutionManagement {
+    //指定所有子项目都只能使用这里的远程仓库，否则就会构建失败。
+    //举例来说，如果在子项目里添加了jcenter()作为repositories，构建就会失败
+    //报错：Build was configured to prefer settings repositories over project repositories but repository 'BintrayJCenter' was added by build file 'app/build.gradle'
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
