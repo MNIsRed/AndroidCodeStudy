@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         //所有二进制插件都可通过仓库查到
+        //并且插件的依赖也可以通过备用重定向找到，这样就不用因为插件依赖了jcenter，就再添加jcenter。
         gradlePluginPortal()
         google()
         mavenCentral()
