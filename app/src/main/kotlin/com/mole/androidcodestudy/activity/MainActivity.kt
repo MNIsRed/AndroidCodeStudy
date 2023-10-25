@@ -51,6 +51,10 @@ class MainActivity : BaseActivity() {
         binding.showPickMedia.setOnClickListener {
             PickMediaActivity.start(this)
         }
+
+        binding.showDelegateActivity.setOnClickListener {
+            KotlinDelegateActivity.start(this)
+        }
     }
 
     private fun softInputMethodTest(){

@@ -1,5 +1,6 @@
 package com.mole.androidcodestudy.extension
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue

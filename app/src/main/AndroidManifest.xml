@@ -27,6 +27,7 @@
         <activity android:name="com.mole.androidcodestudy.activity.CustomViewTestActivity" />
         <activity android:name=".activity.RxJavaActivity" />
         <activity android:name=".activity.PickMediaActivity" />
+        <activity android:name=".activity.KotlinDelegateActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

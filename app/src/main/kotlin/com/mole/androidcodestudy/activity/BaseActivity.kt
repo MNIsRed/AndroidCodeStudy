@@ -3,6 +3,8 @@ package com.mole.androidcodestudy.activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.ContentView
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -11,7 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
  * 1.打印生命周期日志
  */
 private const val TAG = "BaseActivity"
-open class BaseActivity : AppCompatActivity(){
+open class BaseActivity : AppCompatActivity{
+
+    constructor():super()
+
+    @ContentView
+    constructor(@LayoutRes contentLayoutId : Int):super(contentLayoutId)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG,"${this.javaClass.simpleName}.onCreate")
