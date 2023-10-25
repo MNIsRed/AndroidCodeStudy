@@ -3,6 +3,7 @@ package com.mole.androidcodestudy.activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.CallSuper
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ open class BaseActivity : AppCompatActivity{
     @ContentView
     constructor(@LayoutRes contentLayoutId : Int):super(contentLayoutId)
 
+    //@CallSuper，重写该方法时，必须调用super方法，否则报错。
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG,"${this.javaClass.simpleName}.onCreate")

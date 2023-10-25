@@ -19,7 +19,8 @@ import com.mole.androidcodestudy.extension.viewBindingByInflate
  * </pre>
  */
 class KotlinDelegateActivity : AppCompatActivity(){
-    private val binding : ActivityKotlinDelegateBinding by viewBindingByInflate()
+//    private val binding : ActivityKotlinDelegateBinding by viewBindingByInflate()
+    private val binding by viewBinding(ActivityKotlinDelegateBinding::inflate)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.btBack.setOnClickListener {

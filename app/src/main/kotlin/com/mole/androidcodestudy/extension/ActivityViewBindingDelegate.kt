@@ -18,7 +18,9 @@ import kotlin.reflect.KProperty
  *     desc   :
  *     ActivityViewBindingDelegate反射bind方法
  *     ActivityInflateViewBindingDelegate反射inflate方法
+ *     ActivityViewBindingDelegateNoReflect利用kotlin的函数参数类型特性，摆脱了反射。
  *     单论写法上来说，inflate明显更效率，因为不需要在Activity处先膨胀布局
+ *     无发射的方式虽然使用上多写一点点，但是感觉上是最合适的。
  *     version: 1.0
  * </pre>
  */
@@ -44,5 +46,16 @@ class ActivityInflateViewBindingDelegate<VB:ViewBinding>(clazz: Class<VB>) : Rea
     }
 }
 
+class ActivityViewBindingDelegateNoReflect<VB:ViewBinding>(private val inflateFunc:(LayoutInflater)->VB) : ReadOnlyProperty<Activity,VB>{
+
+    override fun getValue(thisRef: Activity, property: KProperty<*>): VB {
+        return inflateFunc(thisRef.layoutInflater).also {
+            thisRef.setContentView(it.root)
+        }
+    }
+}
+
+
 inline fun <reified VB:ViewBinding>AppCompatActivity.viewBinding() = ActivityViewBindingDelegate(VB::class.java)
 inline fun <reified VB:ViewBinding>AppCompatActivity.viewBindingByInflate() = ActivityInflateViewBindingDelegate(VB::class.java)
+fun <VB:ViewBinding>AppCompatActivity.viewBinding(inflateFunc:(LayoutInflater)->VB) = ActivityViewBindingDelegateNoReflect(inflateFunc)
