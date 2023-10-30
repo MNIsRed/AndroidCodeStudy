@@ -18,16 +18,16 @@ android {
 }
 
 dependencies {
-    implementation libraries
-    implementation 'androidx.core:core-ktx:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-/*
-    api 'com.orhanobut:logger:2.2.0'
-*/
-    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    api libs.bundles.net
+
+    debugImplementation libs.chuckerDebug
+    releaseImplementation libs.chuckerRelease
+    implementation libs.coreKtx
+    implementation libs.hiltAndroid
+    kapt libs.hiltCompiler
+
 }

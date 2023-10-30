@@ -7,6 +7,8 @@ pluginManagement {
         mavenCentral()
     }
 }
+//开启versionCatalogs，因为还没有正式上线，所以得打开预览
+enableFeaturePreview('VERSION_CATALOGS')
 //dependencyResolutionManagement 替代的是原先在allprojects里声明repositories的功能，一样是指定所有子项目都从这些远程仓库中获取依赖。
 dependencyResolutionManagement {
     //指定所有子项目都只能使用这里的远程仓库，否则就会构建失败。
@@ -16,6 +18,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+    }
+    //指定toml文件目录
+    versionCatalogs{
+        libs{
+            from(files("libs.versions.toml"))
+        }
     }
 }
 rootProject.name = "AndroidCodeStudy"

@@ -37,18 +37,19 @@ android {
 }
 
 dependencies {
-    implementation libraries
-    implementation 'androidx.core:core-ktx:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation project(":mole:base")
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
-    implementation "io.reactivex.rxjava3:rxjava:3.1.6"
-    implementation "androidx.activity:activity:1.7.0-beta02"
-    implementation("io.coil-kt:coil:2.4.0")
 
+    implementation(libs.rxjava)
+    implementation libs.bundles.lifecycle
+    implementation libs.coil
+    implementation libs.material
+    implementation libs.work
+    implementation libs.bundles.androidx
+    implementation libs.hiltAndroid
+    kapt libs.hiltCompiler
 }
 
 kapt { correctErrorTypes true }
