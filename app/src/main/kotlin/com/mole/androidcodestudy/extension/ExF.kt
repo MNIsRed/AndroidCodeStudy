@@ -2,9 +2,13 @@ package com.mole.androidcodestudy.extension
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
+import android.os.Bundle
 import android.util.TypedValue
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import kotlin.reflect.KClass
 
 /**
  * 扩展函数聚合类
@@ -47,3 +51,11 @@ fun Float.dp2px():Float{
 }
 
 fun Int.dp2px():Float = this.toFloat().dp2px()
+
+fun <T : AppCompatActivity> Activity.start(targetActivity : Class<T>,bundle:Bundle?=null){
+    startActivity(Intent(this,targetActivity).apply {
+        bundle?.let {
+            putExtras(it)
+        }
+    })
+}

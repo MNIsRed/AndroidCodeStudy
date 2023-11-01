@@ -13,12 +13,16 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.viewmodel.MainViewModel
 import com.mole.androidcodestudy.R
+import com.mole.androidcodestudy.adapter.PageBean
+import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.ActivityMainBinding
+import com.mole.androidcodestudy.extension.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedWriter
 import java.io.IOException
@@ -28,33 +32,27 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-    private lateinit var binding : ActivityMainBinding
+    private val binding by viewBinding(ActivityMainBinding::inflate)
+
     @Inject
     lateinit var hiltTestInterface: HiltTestInterface
     private lateinit var viewModel : MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setClick()
+
         viewModel.pet.observe(this){
-            findViewById<Button>(R.id.click_button).text = it?.data?.name?:"null"
+            binding.clickButton.text = it?.data?.name?:"null"
         }
         hiltTestInterface.print()
         autoTransitionTest()
 
-        binding.showSoftInput.setOnClickListener {
-            softInputMethodTest()
+        binding.rvPages.apply {
+            adapter = PagesAdapter(pages)
         }
 
-        binding.showPickMedia.setOnClickListener {
-            PickMediaActivity.start(this)
-        }
-
-        binding.showDelegateActivity.setOnClickListener {
-            KotlinDelegateActivity.start(this)
-        }
     }
 
     private fun softInputMethodTest(){
@@ -64,14 +62,14 @@ class MainActivity : BaseActivity() {
 
 
     private fun setClick(){
-        findViewById<Button>(R.id.click_button).setOnClickListener{
+        binding.clickButton.setOnClickListener{
             viewModel.updatePet()
         }
-        findViewById<Button>(R.id.file_button).setOnClickListener {
+        binding.fileButton.setOnClickListener {
             tryFileOutput()
         }
-        binding.goAnother.setOnClickListener {
-            CustomViewTestActivity.start(this)
+        binding.showSoftInput.setOnClickListener {
+            softInputMethodTest()
         }
     }
 
@@ -115,5 +113,14 @@ class MainActivity : BaseActivity() {
             //binding.hideText.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
             binding.hideText.visibility = if(binding.hideText.visibility == View.VISIBLE) View.GONE else View.VISIBLE
         }
+    }
+
+    companion object{
+        val pages:List<PageBean> = mapOf(
+            "自定义View" to CustomViewTestActivity::class.java,
+            "位置" to LocationActivity::class.java,
+            "pickMedia" to PickMediaActivity::class.java,
+            "委托" to KotlinDelegateActivity::class.java
+        ).toList()
     }
 }

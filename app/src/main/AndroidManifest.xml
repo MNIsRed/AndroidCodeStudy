@@ -4,6 +4,8 @@
     package="com.mole.androidcodestudy" >
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 粗略的位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
         android:name="com.mole.androidcodestudy.CustomApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,6 +30,7 @@
         <activity android:name=".activity.RxJavaActivity" />
         <activity android:name=".activity.PickMediaActivity" />
         <activity android:name=".activity.KotlinDelegateActivity" />
+        <activity android:name=".activity.LocationActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
