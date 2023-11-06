@@ -18,7 +18,10 @@ chucker_version="3.5.2"
 appcompact={module="androidx.appcompat:appcompat",version.ref="appcompat_version"}
 constraintLayout={module="androidx.constraintlayout:constraintlayout",version.ref="constraint_layout_version"}
 activity={module="androidx.activity:activity",version.ref="activity_version"}
+activityKtx = {module="androidx.activity:activity-ktx",version.ref="activity_version"}
 coreKtx = {module="androidx.core:core-ktx",version.ref="core_ktx_version"}
+
+
 #Material
 material={module="com.google.android.material:material",version.ref="material_version"}
 #Coroutines
@@ -48,6 +51,6 @@ hiltCompiler={module="com.google.dagger:hilt-compiler",version.ref="hilt_version
 chuckerDebug={module="com.github.chuckerteam.chucker:library",version.ref="chucker_version"}
 chuckerRelease={module="com.github.chuckerteam.chucker:library-no-op",version.ref="chucker_version"}
 [bundles]
-androidx=["appcompact","constraintLayout","activity","coreKtx"]
+androidx=["appcompact","constraintLayout","activity","activityKtx","coreKtx"]
 lifecycle=["lifecycleLiveData","lifecycleViewmodel","lifecycleProcess"]
 net=["retrofit","retrofitGson","gson"]

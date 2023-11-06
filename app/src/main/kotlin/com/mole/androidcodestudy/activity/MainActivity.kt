@@ -9,12 +9,12 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.ActivityMainBinding
 import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.extension.viewBinding
-import com.mole.androidcodestudy.extension.viewModelProvider
 import com.mole.androidcodestudy.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedWriter
@@ -29,7 +29,7 @@ class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var hiltTestInterface: HiltTestInterface
-    private val viewModel: MainViewModel by viewModelProvider()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

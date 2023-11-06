@@ -12,6 +12,7 @@ import kotlin.reflect.KProperty
  *     e-mail : suliliveinchina@gmail.com
  *     time   : 2023/11/02
  *     desc   : reified实现编译期获取泛型类型，完成viewModel绑定，思路参照ActivityViewBindingDelegate
+ *     实际不需要，activity-ktx提供了对应的扩展函数viewModels()
  *     version: 1.0
  * </pre>
  */
