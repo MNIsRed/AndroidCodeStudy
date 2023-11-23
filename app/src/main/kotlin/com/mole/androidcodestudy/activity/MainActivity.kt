@@ -114,7 +114,8 @@ class MainActivity : BaseActivity() {
             "自定义View" to CustomViewTestActivity::class.java,
             "位置" to LocationActivity::class.java,
             "pickMedia" to PickMediaActivity::class.java,
-            "委托" to KotlinDelegateActivity::class.java
+            "委托" to KotlinDelegateActivity::class.java,
+            "嵌套Coordinator" to NestedCoordinatorActivity::class.java
         ).toList()
     }
 }

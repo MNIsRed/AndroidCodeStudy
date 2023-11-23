@@ -15,4 +15,6 @@
         <item name="customColorAttribute">@color/white</item>
         <item name="DefStyleAttr">@style/CustomViewElse</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.ActionBar" />
 </resources>

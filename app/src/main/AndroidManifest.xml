@@ -31,6 +31,7 @@
         <activity android:name=".activity.PickMediaActivity" />
         <activity android:name=".activity.KotlinDelegateActivity" />
         <activity android:name=".activity.LocationActivity" />
+        <activity android:name=".activity.NestedCoordinatorActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
