@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 
@@ -46,10 +47,16 @@ class ParentCoordinatorLayout @JvmOverloads constructor(
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray) {
         super.onNestedPreScroll(target, dx, dy, consumed)
         consumed
+        if (consumed[1]!=0){
+            Log.d("消费了滑动距离","：${consumed[1]}")
+        }
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
         super.onNestedPreScroll(target, dx, dy, consumed, type)
         consumed
+        if (consumed[1]!=0){
+            Log.d("消费了滑动距离","：${consumed[1]}")
+        }
     }
 }

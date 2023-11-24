@@ -33,14 +33,28 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
     private lateinit var parentCoordinatorLayout : CoordinatorLayout
     init {
         isNestedScrollingEnabled = true
+    }
 
+    var parentOffset = 0
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         var viewParent = parent
         while (viewParent != null){
-            if (viewParent is CoordinatorLayout){
+            if (viewParent is ParentCoordinatorLayout){
                 parentCoordinatorLayout = viewParent
                 break
             }
             viewParent = viewParent.parent
+        }
+
+        findFirstDependency(parentCoordinatorLayout.children.toList())?.let {
+            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                    parentOffset = verticalOffset
+                }
+
+            })
         }
     }
 
@@ -101,23 +115,14 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
             super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
         //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
+        //向下滑动dy<0
         if (consumed[1] == 0 && dy<0){
-//            val offsetInWindow1 = IntArray(2)
-            val offsetInWindow2 = IntArray(2)
-//            findFirstDependency((parent as CoordinatorLayout).getDependencies(this))?.let {
-//                it.getLocationInWindow(offsetInWindow1)
-//            }
-            findFirstDependency(this.children.toList())?.let {
-                it.getLocationInWindow(offsetInWindow2)
+            if (!this::parentCoordinatorLayout.isInitialized){
+                return
             }
-            val offsetInWindow3 = IntArray(2)
-            getLocationInWindow(offsetInWindow3)
-
-            if (offsetInWindow3[1] + dy <= offsetInWindow2[1]){
-                if (this::parentCoordinatorLayout.isInitialized){
-                    parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
-                    consumed[1] = dy
-                }
+            if (parentOffset != 0 && dy > parentOffset){
+                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                consumed[1] = dy
             }
         }
     }
@@ -256,68 +261,4 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         velocityY: Float,
         consumed: Boolean
     ): Boolean = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
-
-    var lastY = 0f
-//    override fun onTouchEvent(ev: MotionEvent): Boolean {
-//
-//
-//        when(ev.action){
-//            MotionEvent.ACTION_DOWN->{
-//                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH)
-//                lastY = ev.y
-//            }
-//            MotionEvent.ACTION_MOVE->{
-//                val offsetInWindow1 = IntArray(2)
-//                if (this::parentCoordinatorLayout.isInitialized){
-//                    findFirstDependency(parentCoordinatorLayout.getDependencies(this))?.getLocationInWindow(offsetInWindow1)
-//                    if (offsetInWindow1[1] > -432) {
-//                        val dy = lastY - ev.y
-//                        startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL)
-//                        canScrollVertically(
-//                            -1
-//                        )
-//                        ViewParentCompat.onStartNestedScroll(parentCoordinatorLayout,this,this,ViewCompat.SCROLL_AXIS_VERTICAL)
-//                        dispatchNestedPreScroll(
-//                            0, dy.toInt(), null, null,
-//                            ViewCompat.TYPE_TOUCH
-//                        )
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        return super.onTouchEvent(ev)
-//    }
-
-//    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-//        val y = ev.y
-//        when(ev.actionMasked){
-//            MotionEvent.ACTION_DOWN->{
-//                parent.requestDisallowInterceptTouchEvent(true)
-//            }
-//            MotionEvent.ACTION_MOVE->{
-//                val detY = y - lastY
-//                //滑到顶了，还在往上
-//                val scrollOnTop = detY > 0 && !canScrollVertically(-1)
-//                //滑到底部，还在往下
-//                val scrollOnBottom = detY < 0 && !canScrollVertically(1)
-//                if (scrollOnTop || scrollOnBottom){
-//                    Log.d("Scroll","触发了滑动超出限度")
-//                    parent.requestDisallowInterceptTouchEvent(false)
-//                }
-//            }
-//        }
-//        lastY = y
-//        return super.dispatchTouchEvent(ev)
-//
-//    }
-//
-//    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
-//        if (ev.actionMasked == MotionEvent.ACTION_DOWN) {
-//            super.onInterceptTouchEvent(ev)
-//            return false
-//        }
-//        return true
-//    }
 }
