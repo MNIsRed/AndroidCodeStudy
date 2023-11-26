@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.mole.androidcodestudy.view.NestedAppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior=".view.NestedAppbarBehavior">
@@ -26,7 +26,7 @@
             android:layout_height="80dp"
             android:background="@color/masa_red"
             app:layout_collapseMode="pin" />
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.mole.androidcodestudy.view.NestedAppBarLayout>
 
     <com.mole.androidcodestudy.view.NoScrollViewPager
         android:id="@+id/viewPager"
@@ -36,6 +36,6 @@
 
 
 
-    </com.mole.androidcodestudy.view.NoScrollViewPager>>
+    </com.mole.androidcodestudy.view.NoScrollViewPager>
 
 </com.mole.androidcodestudy.view.NestedCoordinatorLayout>

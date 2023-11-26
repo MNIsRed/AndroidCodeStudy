@@ -12,6 +12,7 @@ import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.google.android.material.appbar.AppBarLayout
+import java.lang.Math.abs
 
 /**
  * <pre>
@@ -30,7 +31,9 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr), NestedScrollingChild3 {
 
     private var childHelper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
-    private lateinit var parentCoordinatorLayout : CoordinatorLayout
+    lateinit var parentCoordinatorLayout : CoordinatorLayout
+
+    fun parentCoordinatorInitialized():Boolean = this::parentCoordinatorLayout.isInitialized
     init {
         isNestedScrollingEnabled = true
     }
@@ -114,15 +117,18 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         if (consumed[1] == 0) {
             super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
+        if (!this::parentCoordinatorLayout.isInitialized){
+            return
+        }
         //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
         //向下滑动dy<0
-        if (consumed[1] == 0 && dy<0){
-            if (!this::parentCoordinatorLayout.isInitialized){
-                return
-            }
-            if (parentOffset != 0 && dy > parentOffset){
-                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
-                consumed[1] = dy
+        if (consumed[1] == 0){
+            //向下滑
+            if (dy<0) {
+                if (parentOffset != 0 && dy > parentOffset){
+                    parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                    consumed[1] = dy
+                }
             }
         }
     }
@@ -261,4 +267,10 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         velocityY: Float,
         consumed: Boolean
     ): Boolean = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Log.d("NestedCoordinator","触发了onTouchEvent")
+        return super.onTouchEvent(event)
+    }
+
 }
