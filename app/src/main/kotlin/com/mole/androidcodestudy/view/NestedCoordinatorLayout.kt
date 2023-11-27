@@ -12,7 +12,6 @@ import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.google.android.material.appbar.AppBarLayout
-import java.lang.Math.abs
 
 /**
  * <pre>
@@ -268,6 +267,9 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         consumed: Boolean
     ): Boolean = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return super.onInterceptTouchEvent(ev)
+    }
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         Log.d("NestedCoordinator","触发了onTouchEvent")
         return super.onTouchEvent(event)
