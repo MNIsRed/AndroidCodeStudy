@@ -30,20 +30,20 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr), NestedScrollingChild3 {
 
     private var childHelper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
-    lateinit var parentCoordinatorLayout : CoordinatorLayout
-
-    fun parentCoordinatorInitialized():Boolean = this::parentCoordinatorLayout.isInitialized
+    private lateinit var parentCoordinatorLayout : CoordinatorLayout
     init {
         isNestedScrollingEnabled = true
     }
 
     var parentOffset = 0
+    var parentRange = 0
+    var childOffset = 0
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         var viewParent = parent
         while (viewParent != null){
-            if (viewParent is ParentCoordinatorLayout){
+            if (viewParent is CoordinatorLayout){
                 parentCoordinatorLayout = viewParent
                 break
             }
@@ -54,8 +54,15 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
             it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
                 override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                     parentOffset = verticalOffset
+                    parentRange = appBarLayout?.totalScrollRange?:0
                 }
-
+            })
+        }
+        findFirstDependency(children.toList())?.let {
+            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                    childOffset = verticalOffset
+                }
             })
         }
     }
@@ -121,13 +128,40 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         }
         //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
         //向下滑动dy<0
-        if (consumed[1] == 0){
-            //向下滑
-            if (dy<0) {
-                if (parentOffset != 0 && dy > parentOffset){
-                    parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
-                    consumed[1] = dy
+        if (consumed[1] == 0 && dy<0){
+            //第二层Appbar是否已经滑动
+            if (childOffset < 0){
+                //第二层Appbar已经可以消费完全部
+                if (dy >= childOffset){
+                    return
+                }else if(parentOffset < 0){
+                    //自己先消费一部分，然后传给上一层滑动
+                    val tempParentOffset = childOffset
+                    onNestedScroll(this,0,0,dx,tempParentOffset)
+                    consumed[1] = tempParentOffset
+                    parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy - tempParentOffset)
+                    consumed[1] = dy - tempParentOffset
                 }
+            }else if (parentOffset < 0){
+                //第二层appbar未滑动，向下滑动直接交给第一层
+                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                consumed[1] = dy
+            }
+        }else if (consumed[1] == 0 && dy>0){
+            //第一层已经滑动到顶部
+            if (parentOffset == parentRange){
+                return
+            }else if (dy <= -parentOffset){
+                //第一层可以全部消费
+                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                consumed[1] = dy
+            }else{
+                //先让第一层消费一部分
+                val tempParentOffset = parentOffset
+                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, -tempParentOffset)
+                consumed[1] = dy + tempParentOffset
+                onNestedScroll(this,0, 0,dx, dy+tempParentOffset)
+                consumed[1] = dy
             }
         }
     }
@@ -266,13 +300,4 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         velocityY: Float,
         consumed: Boolean
     ): Boolean = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
-
-    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        return super.onInterceptTouchEvent(ev)
-    }
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        Log.d("NestedCoordinator","触发了onTouchEvent")
-        return super.onTouchEvent(event)
-    }
-
 }
