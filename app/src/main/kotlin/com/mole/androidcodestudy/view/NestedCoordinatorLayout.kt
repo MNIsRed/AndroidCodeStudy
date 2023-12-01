@@ -140,7 +140,7 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
                     onNestedScroll(this,0,0,dx,tempParentOffset)
                     consumed[1] = tempParentOffset
                     parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy - tempParentOffset)
-                    consumed[1] = dy - tempParentOffset
+                    consumed[1] = dy
                 }
             }else if (parentOffset < 0){
                 //第二层appbar未滑动，向下滑动直接交给第一层
@@ -149,7 +149,7 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
             }
         }else if (consumed[1] == 0 && dy>0){
             //第一层已经滑动到顶部
-            if (parentOffset == parentRange){
+            if (parentOffset == -parentRange){
                 return
             }else if (dy <= -parentOffset){
                 //第一层可以全部消费
