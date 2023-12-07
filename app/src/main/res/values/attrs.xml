@@ -5,4 +5,15 @@
         <attr name="text" format="string"/>
     </declare-styleable>
     <attr name="DefStyleAttr" format="reference"/>
+    <declare-styleable name="CornerConstraintLayout">
+        <attr name="leftTopCorner" format="dimension" />
+        <attr name="leftBottomCorner" format="dimension" />
+        <attr name="rightTopCorner" format="dimension" />
+        <attr name="rightBottomCorner" format="dimension" />
+        <attr name="topCorner" format="dimension" />
+        <attr name="bottomCorner" format="dimension" />
+        <attr name="leftCorner" format="dimension" />
+        <attr name="rightCorner" format="dimension" />
+        <attr name="allCorner" format="dimension" />
+    </declare-styleable>
 </resources>
