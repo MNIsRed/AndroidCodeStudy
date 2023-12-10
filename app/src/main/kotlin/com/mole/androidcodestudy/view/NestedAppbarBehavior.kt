@@ -65,15 +65,15 @@ class NestedAppbarBehavior @JvmOverloads constructor(context: Context, attrs: At
     ): Boolean {
         Log.d("AppbarBehavior","触发了onTouchEvent")
         (parent as? NestedCoordinatorLayout)?.apply {
-            if (parentCoordinatorInitialized()){
-                val dy = (ev.y - lastY).toInt()
-                if ((dy != 0)){
-                    lastY = ev.y
-                    //把TouchEvent交给parentCoordinatorLayout
-                    //通过onStartNestedScroll或者onTouchEvent的方式并未达到预期效果
-//                    return true
-                }
-            }
+//            if (parentCoordinatorInitialized()){
+//                val dy = (ev.y - lastY).toInt()
+//                if ((dy != 0)){
+//                    lastY = ev.y
+//                    //把TouchEvent交给parentCoordinatorLayout
+//                    //通过onStartNestedScroll或者onTouchEvent的方式并未达到预期效果
+////                    return true
+//                }
+//            }
         }
         lastY = ev.y
         return super.onTouchEvent(parent, child, ev)

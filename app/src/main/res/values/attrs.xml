@@ -14,6 +14,8 @@
         <attr name="bottomCorner" format="dimension" />
         <attr name="leftCorner" format="dimension" />
         <attr name="rightCorner" format="dimension" />
+        <attr name="mainDiagonal" format="dimension" />
+        <attr name="subDiagonal" format="dimension" />
         <attr name="allCorner" format="dimension" />
     </declare-styleable>
 </resources>

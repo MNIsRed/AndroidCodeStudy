@@ -2,7 +2,10 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.graphics.Outline
+import android.graphics.Path
 import android.graphics.Rect
+import android.graphics.RectF
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -27,6 +30,8 @@ import com.mole.androidcodestudy.R
 class CornerConstraintLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet?=null, defStyleAttrs:Int=0, defStyleRes:Int=0) :
     ConstraintLayout(context, attrs,defStyleAttrs,defStyleRes){
     var allCornerSize :Float = 0f
+    var mainDiagonalCornerSize : Float = 0f
+    var subDiagonalCornerSize : Float = 0f
     var topCornerSize :Float = 0f
     var bottomCornerSize:Float = 0f
     var leftCornerSize :Float = 0f
@@ -39,6 +44,10 @@ class CornerConstraintLayout @JvmOverloads constructor(context: Context, attrs: 
             attrs?.let {
                 val typedArray = context.obtainStyledAttributes(it, R.styleable.CornerConstraintLayout,defStyleAttrs,defStyleRes)
                 allCornerSize = typedArray.getDimension(R.styleable.CornerConstraintLayout_allCorner,0f)
+
+                mainDiagonalCornerSize = typedArray.getDimension(R.styleable.CornerConstraintLayout_mainDiagonal,0f)
+                subDiagonalCornerSize = typedArray.getDimension(R.styleable.CornerConstraintLayout_subDiagonal,0f)
+
 
                 topCornerSize = typedArray.getDimension(R.styleable.CornerConstraintLayout_topCorner,0f)
                 bottomCornerSize = typedArray.getDimension(R.styleable.CornerConstraintLayout_bottomCorner,0f)
@@ -63,7 +72,25 @@ class CornerConstraintLayout @JvmOverloads constructor(context: Context, attrs: 
                 if (allCornerSize != 0f){
                     val rect = Rect(0,0,view.width,view.height)
                     outline.setRoundRect(rect,allCornerSize)
-                }else if (topCornerSize != 0f){
+                }else if (mainDiagonalCornerSize != 0f){
+                    val rect = RectF(0f,0f,view.width.toFloat(),view.height.toFloat())
+                    Path().apply {
+                        addRoundRect(rect, floatArrayOf(mainDiagonalCornerSize,mainDiagonalCornerSize,0f,0f,mainDiagonalCornerSize,mainDiagonalCornerSize,0f,0f),Path.Direction.CCW)
+                    }.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            outline.setPath(it)
+                        }
+                    }
+                }else if (subDiagonalCornerSize != 0f){
+                    val rect = RectF(0f,0f,view.width.toFloat(),view.height.toFloat())
+                    Path().apply {
+                        addRoundRect(rect, floatArrayOf(0f,0f,subDiagonalCornerSize,subDiagonalCornerSize,0f,0f,subDiagonalCornerSize,subDiagonalCornerSize),Path.Direction.CCW)
+                    }.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            outline.setPath(it)
+                        }
+                    }
+                } else if (topCornerSize != 0f){
                     val rect = Rect(0,0,view.width,view.height+topCornerSize.toInt())
                     outline.setRoundRect(rect,topCornerSize)
                 }else if (bottomCornerSize != 0f){
