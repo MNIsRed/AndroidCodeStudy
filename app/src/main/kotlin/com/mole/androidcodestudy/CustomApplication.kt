@@ -10,6 +10,7 @@ class CustomApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        INSTANCE = this
     }
 
     /**
@@ -30,4 +31,11 @@ class CustomApplication : Application(), Configuration.Provider {
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .setJobSchedulerJobIdRange(1000, 2000) // Set the job ID range here
             .build()
+
+    companion object{
+        private lateinit var INSTANCE : CustomApplication
+        fun getInstance():CustomApplication{
+            return INSTANCE
+        }
+    }
 }

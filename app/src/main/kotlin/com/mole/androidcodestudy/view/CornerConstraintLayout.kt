@@ -114,6 +114,9 @@ class CornerConstraintLayout @JvmOverloads constructor(context: Context, attrs: 
                 }else if (rightBottomCornerSize != 0f){
                     val rect = Rect(-rightBottomCornerSize.toInt(),-rightBottomCornerSize.toInt(),view.width,view.height)
                     outline.setRoundRect(rect,rightBottomCornerSize)
+                }else{
+                    val rect = Rect(0,0,view.width,view.height)
+                    outline.setRect(rect)
                 }
             }
         }
