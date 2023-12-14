@@ -2,8 +2,6 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,14 +21,15 @@ import com.google.android.material.appbar.AppBarLayout
 </pre> *
  */
 @Suppress("unused")
-class NestedCoordinatorLayout  @JvmOverloads constructor(
+class NestedCoordinatorLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr), NestedScrollingChild3 {
 
     private var childHelper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
-    private lateinit var parentCoordinatorLayout : CoordinatorLayout
+    private lateinit var parentCoordinatorLayout: CoordinatorLayout
+
     init {
         isNestedScrollingEnabled = true
     }
@@ -42,8 +41,8 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         var viewParent = parent
-        while (viewParent != null){
-            if (viewParent is CoordinatorLayout){
+        while (viewParent != null) {
+            if (viewParent is CoordinatorLayout) {
                 parentCoordinatorLayout = viewParent
                 break
             }
@@ -51,15 +50,15 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         }
 
         findFirstDependency(parentCoordinatorLayout.children.toList())?.let {
-            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                     parentOffset = verticalOffset
-                    parentRange = appBarLayout?.totalScrollRange?:0
+                    parentRange = appBarLayout?.totalScrollRange ?: 0
                 }
             })
         }
         findFirstDependency(children.toList())?.let {
-            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
                 override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                     childOffset = verticalOffset
                 }
@@ -88,7 +87,15 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         type: Int,
         consumed: IntArray
     ) {
-        childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed,offsetInWindow, type, consumed)
+        childHelper.dispatchNestedScroll(
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            offsetInWindow,
+            type,
+            consumed
+        )
     }
 
     override fun hasNestedScrollingParent(type: Int): Boolean {
@@ -123,44 +130,44 @@ class NestedCoordinatorLayout  @JvmOverloads constructor(
         if (consumed[1] == 0) {
             super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
-        if (!this::parentCoordinatorLayout.isInitialized){
+        if (!this::parentCoordinatorLayout.isInitialized) {
             return
         }
         //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
         //向下滑动dy<0
-        if (consumed[1] == 0 && dy<0){
+        if (consumed[1] == 0 && dy < 0) {
             //第二层Appbar是否已经滑动
-            if (childOffset < 0){
+            if (childOffset < 0) {
                 //第二层Appbar已经可以消费完全部
-                if (dy >= childOffset){
+                if (dy >= childOffset) {
                     return
-                }else if(parentOffset < 0){
+                } else if (parentOffset < 0) {
                     //自己先消费一部分，然后传给上一层滑动
                     val tempParentOffset = childOffset
-                    onNestedScroll(this,0,0,dx,tempParentOffset)
+                    super.onNestedScroll(this, 0, 0, dx, tempParentOffset)
                     consumed[1] = tempParentOffset
-                    parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy - tempParentOffset)
+                    dispatchNestedScroll(0, consumed[1], dx, dy - tempParentOffset, null)
                     consumed[1] = dy
                 }
-            }else if (parentOffset < 0){
+            } else if (parentOffset < 0) {
                 //第二层appbar未滑动，向下滑动直接交给第一层
-                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
                 consumed[1] = dy
             }
-        }else if (consumed[1] == 0 && dy>0){
+        } else if (consumed[1] == 0 && dy > 0) {
             //第一层已经滑动到顶部
-            if (parentOffset == -parentRange){
+            if (parentOffset == -parentRange) {
                 return
-            }else if (dy <= -parentOffset){
+            } else if (dy <= -parentOffset) {
                 //第一层可以全部消费
-                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, dy)
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
                 consumed[1] = dy
-            }else{
+            } else {
                 //先让第一层消费一部分
                 val tempParentOffset = parentOffset
-                parentCoordinatorLayout.onNestedScroll(this,0, 0,dx, -tempParentOffset)
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, -tempParentOffset)
                 consumed[1] = dy + tempParentOffset
-                onNestedScroll(this,0, 0,dx, dy+tempParentOffset)
+                onNestedScroll(this, 0, 0, dx, dy + tempParentOffset)
                 consumed[1] = dy
             }
         }

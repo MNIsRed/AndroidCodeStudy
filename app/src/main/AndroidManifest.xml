@@ -32,6 +32,9 @@
         <activity android:name=".activity.KotlinDelegateActivity" />
         <activity android:name=".activity.LocationActivity" />
         <activity android:name=".activity.NestedCoordinatorActivity" />
+        <activity android:name=".activity.AnimationActivity" />
+        <activity android:name=".activity.SoftInputActivity" />
+        <activity android:name=".activity.FileActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

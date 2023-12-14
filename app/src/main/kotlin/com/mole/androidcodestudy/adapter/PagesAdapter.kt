@@ -1,13 +1,13 @@
 package com.mole.androidcodestudy.adapter
 
 import android.app.Activity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.button.MaterialButton
+import com.mole.androidcodestudy.extension.dp2px
 import com.mole.androidcodestudy.extension.start
 
 /**
@@ -19,14 +19,25 @@ import com.mole.androidcodestudy.extension.start
  *     version: 1.0
  * </pre>
  */
-typealias PageBean = Pair<String,Class<out AppCompatActivity>>
-class PagesAdapter(private val data : List<PageBean>):RecyclerView.Adapter<ViewHolder>() {
-    inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+typealias PageBean = Pair<String, Class<out AppCompatActivity>>
+
+class PagesAdapter(private val data: List<PageBean>) : RecyclerView.Adapter<ViewHolder>() {
+
+    private val horizonDivide = 15f.dp2px().toInt()
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolder(TextView(parent.context).apply {
+        return ViewHolder(MaterialButton(parent.context).apply {
+            layoutParams = RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginStart = horizonDivide
+                marginEnd = horizonDivide
+            }
             textSize = 15f
         })
     }
@@ -36,7 +47,7 @@ class PagesAdapter(private val data : List<PageBean>):RecyclerView.Adapter<ViewH
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder.itemView as? TextView)?.apply {
+        (holder.itemView as? MaterialButton)?.apply {
             text = data[position].first
             setOnClickListener {
                 (context as? Activity)?.start(data[position].second)

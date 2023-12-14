@@ -1,14 +1,6 @@
 package com.mole.androidcodestudy.activity
 
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.transition.AutoTransition
-import android.transition.TransitionManager
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
@@ -17,10 +9,6 @@ import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.extension.viewBinding
 import com.mole.androidcodestudy.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.BufferedWriter
-import java.io.IOException
-import java.io.OutputStreamWriter
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,53 +21,13 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        setClick()
-
-        viewModel.pet.observe(this) {
-            binding.clickButton.text = it?.data?.name ?: "null"
-        }
         hiltTestInterface.print()
-        autoTransitionTest()
 
         binding.rvPages.apply {
             adapter = PagesAdapter(pages)
         }
-
     }
 
-    private fun softInputMethodTest() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
-    }
-
-
-    private fun setClick() {
-        binding.clickButton.setOnClickListener {
-            viewModel.updatePet()
-        }
-        binding.fileButton.setOnClickListener {
-            tryFileOutput()
-        }
-        binding.showSoftInput.setOnClickListener {
-            softInputMethodTest()
-        }
-    }
-
-    private fun tryFileOutput() {
-        try {
-            val output = openFileOutput("data", Context.MODE_APPEND)
-            val writer = BufferedWriter(OutputStreamWriter(output))
-            writer.use {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    it.write("click Button At ${LocalDateTime.now()}\n")
-                }
-            }
-        } catch (e: IOException) {
-            Toast.makeText(applicationContext, "写入文件异常", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -91,31 +39,16 @@ class MainActivity : BaseActivity() {
         Runtime.getRuntime().gc()
     }
 
-    private fun autoTransitionTest() {
-        val autoTransition = AutoTransition()
-        autoTransition.startDelay = 500
-        autoTransition.duration = 2000
-        autoTransition.interpolator = AccelerateDecelerateInterpolator() // 插值器
-
-        binding.hideButton.setOnClickListener {
-            TransitionManager.beginDelayedTransition(binding.clRoot, autoTransition)
-            //rotation,translateX无效
-            //直接修改left，设置textSize改变大小，以及设置visibility都有效
-            //同时设置时，最后一项有动画效果
-            //binding.hideText.left += 20
-            //binding.hideText.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
-            binding.hideText.visibility =
-                if (binding.hideText.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-        }
-    }
-
     companion object {
         val pages: List<PageBean> = mapOf(
             "自定义View" to CustomViewTestActivity::class.java,
             "位置" to LocationActivity::class.java,
             "pickMedia" to PickMediaActivity::class.java,
             "委托" to KotlinDelegateActivity::class.java,
-            "嵌套Coordinator" to NestedCoordinatorActivity::class.java
+            "嵌套Coordinator" to NestedCoordinatorActivity::class.java,
+            "动画" to AnimationActivity::class.java,
+            "软键盘" to SoftInputActivity::class.java,
+            "文件" to FileActivity::class.java
         ).toList()
     }
 }
