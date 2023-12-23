@@ -6,6 +6,7 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
 import android.view.animation.Interpolator
 import com.mole.androidcodestudy.databinding.ActivityAnimationBinding
 import com.mole.androidcodestudy.extension.viewBinding
@@ -50,9 +51,9 @@ class AnimationActivity : BaseActivity() {
 
     private var infinityRotationAnimator: ValueAnimator? = null
     private fun infinityScrollImage() {
-        ValueAnimator.ofFloat(0f, 360f * 200).apply {
-            duration = 200 * 1000
-            repeatCount = 1
+        ValueAnimator.ofFloat(0f, 360f).apply {
+            duration = 2000
+            repeatCount = Animation.INFINITE
             interpolator = CustomInterpolator()
             addUpdateListener {
                 val animatedValue = it.animatedValue as Float
@@ -67,6 +68,8 @@ class AnimationActivity : BaseActivity() {
                 if (it.isRunning) {
                     it.cancel()
                     binding.ivAvatar.rotation = 0f
+                    (infinityRotationAnimator?.interpolator as? CustomInterpolator)?.completeTime =
+                        1f
                 } else {
                     it.start()
                 }
@@ -85,10 +88,14 @@ class AnimationActivity : BaseActivity() {
 
     // 自定义插值器
     class CustomInterpolator : Interpolator {
+        var completeTime = 1f
         override fun getInterpolation(input: Float): Float {
             // 应用指数上升的插值器
             //实践证明，插值器的值可以比1大，借此可以实现越转越快的效果
-            return (input * 200) * input * 10 / 200
+            if (completeTime < 10) {
+                completeTime += 0.01f
+            }
+            return input * completeTime * completeTime
         }
     }
 
