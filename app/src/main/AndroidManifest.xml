@@ -35,6 +35,7 @@
         <activity android:name=".activity.AnimationActivity" />
         <activity android:name=".activity.SoftInputActivity" />
         <activity android:name=".activity.FileActivity" />
+        <activity android:name=".activity.TextViewActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
