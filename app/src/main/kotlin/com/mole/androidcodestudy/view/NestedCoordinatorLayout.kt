@@ -2,8 +2,8 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.Nullable
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.NestedScrollingChild3
 import androidx.core.view.NestedScrollingChildHelper
@@ -34,9 +34,9 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         isNestedScrollingEnabled = true
     }
 
-    var parentOffset = 0
-    var parentRange = 0
-    var childOffset = 0
+    private var parentOffset = 0
+    private var parentRange = 0
+    private var childOffset = 0
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -50,19 +50,15 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         }
 
         findFirstDependency(parentCoordinatorLayout.children.toList())?.let {
-            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                    parentOffset = verticalOffset
-                    parentRange = appBarLayout?.totalScrollRange ?: 0
-                }
-            })
+            it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+                parentOffset = verticalOffset
+                parentRange = appBarLayout?.totalScrollRange ?: 0
+            }
         }
         findFirstDependency(children.toList())?.let {
-            it.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                    childOffset = verticalOffset
-                }
-            })
+            it.addOnOffsetChangedListener { _, verticalOffset ->
+                childOffset = verticalOffset
+            }
         }
     }
 
@@ -112,7 +108,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         return startNestedScroll(nestedScrollAxes) || superResult
     }
 
-    fun findFirstDependency(views: List<View?>): AppBarLayout? {
+    private fun findFirstDependency(views: List<View?>): AppBarLayout? {
         var i = 0
         val z = views.size
         while (i < z) {
@@ -249,7 +245,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
-        @Nullable offsetInWindow: IntArray?,
+        offsetInWindow: IntArray?,
         type: Int
     ): Boolean =
         childHelper.dispatchNestedScroll(
@@ -266,7 +262,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
-        @Nullable offsetInWindow: IntArray?
+        offsetInWindow: IntArray?
     ): Boolean =
         childHelper.dispatchNestedScroll(
             dxConsumed,
@@ -279,8 +275,8 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
     override fun dispatchNestedPreScroll(
         dx: Int,
         dy: Int,
-        @Nullable consumed: IntArray?,
-        @Nullable offsetInWindow: IntArray?
+        consumed: IntArray?,
+        offsetInWindow: IntArray?
     ): Boolean =
         childHelper.dispatchNestedPreScroll(
             dx,
@@ -293,8 +289,8 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
     override fun dispatchNestedPreScroll(
         dx: Int,
         dy: Int,
-        @Nullable consumed: IntArray?,
-        @Nullable offsetInWindow: IntArray?,
+        consumed: IntArray?,
+        offsetInWindow: IntArray?,
         type: Int
     ): Boolean =
         childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
@@ -307,4 +303,80 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         velocityY: Float,
         consumed: Boolean
     ): Boolean = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
+
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        when (ev.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                // Remember where the motion event started
+                mLastMotionY = ev.y.toInt()
+                mNestedYOffset = 0
+                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                mLastMotionY = ev.y.toInt()
+            }
+
+            MotionEvent.ACTION_UP -> {
+                stopNestedScroll(ViewCompat.TYPE_TOUCH)
+            }
+        }
+        return super.onInterceptTouchEvent(ev)
+    }
+
+
+    private var mLastMotionY = 0
+    private val mScrollConsumed = IntArray(2)
+    private val mScrollOffset = IntArray(2)
+    private var mNestedYOffset = 0
+
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
+        val action = ev.actionMasked
+
+        val vtev = MotionEvent.obtain(ev)
+        vtev.offsetLocation(0f, mNestedYOffset.toFloat())
+
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+                // Remember where the motion event started
+                mLastMotionY = ev.y.toInt()
+                mNestedYOffset = 0
+                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                val y = ev.y.toInt()
+                var deltaY = (mLastMotionY - y)
+                // Start with nested pre scrolling
+                if (dispatchNestedPreScroll(
+                        0, deltaY, mScrollConsumed, mScrollOffset,
+                        ViewCompat.TYPE_TOUCH
+                    )
+                ) {
+                    deltaY -= mScrollConsumed[1]
+                    mNestedYOffset += mScrollOffset[1]
+                }
+
+                // Scroll to follow the motion event
+                mLastMotionY = (y - mScrollOffset[1])
+
+                val oldY = scrollY
+                val scrolledDeltaY: Int = scrollY - oldY
+                val unconsumedY = deltaY - scrolledDeltaY
+                dispatchNestedScroll(
+                    0, scrolledDeltaY, 0, unconsumedY, mScrollOffset,
+                    ViewCompat.TYPE_TOUCH, mScrollConsumed
+                )
+
+                mLastMotionY -= mScrollOffset[1]
+                mNestedYOffset += mScrollOffset[1]
+            }
+
+            MotionEvent.ACTION_UP -> {
+                stopNestedScroll(ViewCompat.TYPE_TOUCH)
+            }
+        }
+        return super.onTouchEvent(ev)
+    }
+
 }
