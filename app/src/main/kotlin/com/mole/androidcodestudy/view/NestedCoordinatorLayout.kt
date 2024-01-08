@@ -2,7 +2,6 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,6 +37,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
     private var parentOffset = 0
     private var parentRange = 0
     private var childOffset = 0
+    private var childRance = 0
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -57,8 +57,9 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
             }
         }
         findFirstDependency(children.toList())?.let {
-            it.addOnOffsetChangedListener { _, verticalOffset ->
+            it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                 childOffset = verticalOffset
+                childRance = appBarLayout?.totalScrollRange ?: 0
             }
         }
     }
@@ -358,35 +359,67 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
                 val y = ev.y.toInt()
                 var deltaY = (mLastMotionY - y)
-                // Start with nested pre scrolling
-                if (dispatchNestedPreScroll(
-                        0, deltaY, mScrollConsumed, mScrollOffset,
-                        ViewCompat.TYPE_TOUCH
+                if (deltaY < 0) {
+                    //向上滑动的时候，期望优先滑动自身，自身先消费
+                    if (deltaY < childOffset) {
+                        //事件的距离（deltaY） > 自己可以消费的滑动距离（childOffset）
+
+                        //自身消费掉 childOffset
+                        mScrollConsumed[1] += childOffset
+                        if (dispatchNestedPreScroll(
+                                0, deltaY, mScrollConsumed, mScrollOffset,
+                                ViewCompat.TYPE_TOUCH
+                            )
+                        ) {
+                            deltaY -= mScrollConsumed[1]
+                            mNestedYOffset += mScrollOffset[1]
+                        }
+
+                        // Scroll to follow the motion event
+                        mLastMotionY = (y - mScrollOffset[1])
+
+                        val unconsumedY = deltaY - childOffset
+                        dispatchNestedScroll(
+                            0, childOffset, 0, unconsumedY, mScrollOffset,
+                            ViewCompat.TYPE_TOUCH, mScrollConsumed
+                        )
+                        mLastMotionY -= mScrollOffset[1]
+                        mNestedYOffset += mScrollOffset[1]
+                    } else {
+                        //全部交给自身消费
+                        mLastMotionY = y
+                        mNestedYOffset += y
+                    }
+                } else {
+                    //向下滑动，触发嵌套滑动，默认父布局消费
+                    // Start with nested pre scrolling
+                    if (dispatchNestedPreScroll(
+                            0, deltaY, mScrollConsumed, mScrollOffset,
+                            ViewCompat.TYPE_TOUCH
+                        )
+                    ) {
+                        deltaY -= mScrollConsumed[1]
+                        mNestedYOffset += mScrollOffset[1]
+                    }
+
+                    // Scroll to follow the motion event
+                    mLastMotionY = (y - mScrollOffset[1])
+
+                    val unconsumedY = deltaY
+                    dispatchNestedScroll(
+                        0, mScrollConsumed[1], 0, unconsumedY, mScrollOffset,
+                        ViewCompat.TYPE_TOUCH, mScrollConsumed
                     )
-                ) {
-                    deltaY -= mScrollConsumed[1]
+                    mLastMotionY -= mScrollOffset[1]
                     mNestedYOffset += mScrollOffset[1]
                 }
-
-                // Scroll to follow the motion event
-                mLastMotionY = (y - mScrollOffset[1])
-
-                val oldY = scrollY
-                val scrolledDeltaY: Int = scrollY - oldY
-                val unconsumedY = deltaY - scrolledDeltaY
-                dispatchNestedScroll(
-                    0, scrolledDeltaY, 0, unconsumedY, mScrollOffset,
-                    ViewCompat.TYPE_TOUCH, mScrollConsumed
-                )
-                mLastMotionY -= mScrollOffset[1]
-                mNestedYOffset += mScrollOffset[1]
-                Log.d("NestedCoordinatorLayout", "NestedCoordinatorLayout滑动了:$mNestedYOffset")
             }
 
             MotionEvent.ACTION_UP -> {
                 stopNestedScroll(ViewCompat.TYPE_TOUCH)
             }
         }
+        vtev.recycle()
         return super.onTouchEvent(ev)
     }
 
