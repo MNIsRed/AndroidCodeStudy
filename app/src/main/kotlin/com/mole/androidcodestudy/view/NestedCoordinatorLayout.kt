@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -126,47 +127,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         if (consumed[1] == 0) {
             super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
-        if (!this::parentCoordinatorLayout.isInitialized) {
-            return
-        }
-        //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
-        //向下滑动dy<0
-        if (consumed[1] == 0 && dy < 0) {
-            //第二层Appbar是否已经滑动
-            if (childOffset < 0) {
-                //第二层Appbar已经可以消费完全部
-                if (dy >= childOffset) {
-                    return
-                } else if (parentOffset < 0) {
-                    //自己先消费一部分，然后传给上一层滑动
-                    val tempParentOffset = childOffset
-                    super.onNestedScroll(this, 0, 0, dx, tempParentOffset)
-                    consumed[1] = tempParentOffset
-                    dispatchNestedScroll(0, consumed[1], dx, dy - tempParentOffset, null)
-                    consumed[1] = dy
-                }
-            } else if (parentOffset < 0) {
-                //第二层appbar未滑动，向下滑动直接交给第一层
-                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
-                consumed[1] = dy
-            }
-        } else if (consumed[1] == 0 && dy > 0) {
-            //第一层已经滑动到顶部
-            if (parentOffset == -parentRange) {
-                return
-            } else if (dy <= -parentOffset) {
-                //第一层可以全部消费
-                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
-                consumed[1] = dy
-            } else {
-                //先让第一层消费一部分
-                val tempParentOffset = parentOffset
-                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, -tempParentOffset)
-                consumed[1] = dy + tempParentOffset
-                onNestedScroll(this, 0, 0, dx, dy + tempParentOffset)
-                consumed[1] = dy
-            }
-        }
+        dispatchPreCheckConsume(dx, dy, consumed)
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray) {
@@ -174,6 +135,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         if (consumed[1] == 0) {
             super.onNestedPreScroll(target, dx, dy, consumed, ViewCompat.TYPE_TOUCH)
         }
+        dispatchPreCheckConsume(dx, dy, consumed)
     }
 
     override fun onNestedScroll(
@@ -292,8 +254,57 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
         consumed: IntArray?,
         offsetInWindow: IntArray?,
         type: Int
-    ): Boolean =
-        childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
+    ): Boolean = childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
+
+    private fun dispatchPreCheckConsume(
+        dx: Int,
+        dy: Int,
+        consumed: IntArray,
+    ): Boolean {
+        if (!this::parentCoordinatorLayout.isInitialized) {
+            return false
+        }
+        //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
+        //向下滑动dy<0
+        if (consumed[1] == 0 && dy < 0) {
+            //第二层Appbar是否已经滑动
+            if (childOffset < 0) {
+                //第二层Appbar已经可以消费完全部
+                if (dy >= childOffset) {
+                    return false
+                } else if (parentOffset < 0) {
+                    //自己先消费一部分，然后传给上一层滑动
+                    val tempParentOffset = childOffset
+                    super.onNestedScroll(this, 0, 0, dx, tempParentOffset)
+                    consumed[1] = tempParentOffset
+                    dispatchNestedScroll(0, consumed[1], dx, dy - tempParentOffset, null)
+                    consumed[1] = dy
+                }
+            } else if (parentOffset < 0) {
+                //第二层appbar未滑动，向下滑动直接交给第一层
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
+                consumed[1] = dy
+            }
+        } else if (consumed[1] == 0 && dy > 0) {
+            //第一层已经滑动到顶部
+            if (parentOffset == -parentRange) {
+                return false
+            } else if (dy <= -parentOffset) {
+                //第一层可以全部消费
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, dy)
+                consumed[1] = dy
+            } else {
+                //先让第一层消费一部分
+                val tempParentOffset = parentOffset
+                parentCoordinatorLayout.onNestedScroll(this, 0, 0, dx, -tempParentOffset)
+                consumed[1] = dy + tempParentOffset
+                onNestedScroll(this, 0, 0, dx, dy + tempParentOffset)
+                consumed[1] = dy
+            }
+        }
+        return true
+    }
+
 
     override fun dispatchNestedPreFling(velocityX: Float, velocityY: Float): Boolean =
         childHelper.dispatchNestedPreFling(velocityX, velocityY)
@@ -367,9 +378,9 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
                     0, scrolledDeltaY, 0, unconsumedY, mScrollOffset,
                     ViewCompat.TYPE_TOUCH, mScrollConsumed
                 )
-
                 mLastMotionY -= mScrollOffset[1]
                 mNestedYOffset += mScrollOffset[1]
+                Log.d("NestedCoordinatorLayout", "NestedCoordinatorLayout滑动了:$mNestedYOffset")
             }
 
             MotionEvent.ACTION_UP -> {

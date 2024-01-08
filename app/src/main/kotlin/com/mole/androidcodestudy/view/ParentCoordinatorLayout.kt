@@ -26,11 +26,16 @@ class ParentCoordinatorLayout @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr){
 
     override fun onStartNestedScroll(child: View, target: View, nestedScrollAxes: Int): Boolean {
-        return super.onStartNestedScroll(child, target, nestedScrollAxes)
+
+        val result =  super.onStartNestedScroll(child, target, nestedScrollAxes)
+        Log.d("ParentCoordinatorLayout","ParentCoordinatorLayout是否接受滑动：${result}")
+        return result
     }
 
     override fun onStartNestedScroll(child: View, target: View, axes: Int, type: Int): Boolean {
-        return super.onStartNestedScroll(child, target, axes, type)
+        val result = super.onStartNestedScroll(child, target, axes, type)
+        Log.d("ParentCoordinatorLayout","ParentCoordinatorLayout是否接受滑动：${result}")
+        return result
     }
 
     override fun onNestedScrollAccepted(child: View, target: View, nestedScrollAxes: Int) {
@@ -54,6 +59,41 @@ class ParentCoordinatorLayout @JvmOverloads constructor(
         if (consumed[1]!=0){
             Log.d("消费了滑动距离","：${consumed[1]}")
         }
+//        else{
+//            dispatchPreCheckConsume(dx, dy, consumed)
+//        }
+    }
+
+
+    private fun dispatchPreCheckConsume(
+        dx: Int,
+        dy: Int,
+        consumed: IntArray,
+    ): Boolean {
+        //向上滑动，并且已经滑倒顶了，交给父CoordinatorLayout
+        //向下滑动dy<0
+        if (consumed[1] == 0 && dy < 0) {
+            if (appbarOffset < 0) {
+                //第二层appbar未滑动，向下滑动直接交给第一层
+               onNestedScroll(this, 0, 0, dx, dy)
+                consumed[1] = dy
+            }
+        }  else if (consumed[1] == 0 && dy > 0) {
+            //第一层已经滑动到顶部
+            if (appbarOffset == -appbarScrollRange) {
+                return false
+            } else if (dy <= -appbarOffset) {
+                //第一层可以全部消费
+                onNestedScroll(this, 0, 0, dx, dy)
+                consumed[1] = dy
+            } else {
+                //先让第一层消费一部分
+                val tempParentOffset = appbarOffset
+                onNestedScroll(this, 0, 0, dx, -tempParentOffset)
+                consumed[1] = dy + tempParentOffset
+            }
+        }
+        return true
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
@@ -62,6 +102,9 @@ class ParentCoordinatorLayout @JvmOverloads constructor(
         if (consumed[1]!=0){
             Log.d("消费了滑动距离","：${consumed[1]}")
         }
+//        else{
+//            dispatchPreCheckConsume(dx, dy, consumed)
+//        }
     }
 
     fun findFirstDependency(views: List<View?>): AppBarLayout? {
