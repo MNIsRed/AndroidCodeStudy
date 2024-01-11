@@ -49,7 +49,8 @@ class MainActivity : BaseActivity() {
             "动画" to AnimationActivity::class.java,
             "软键盘" to SoftInputActivity::class.java,
             "文件" to FileActivity::class.java,
-            "TextView" to TextViewActivity::class.java
+            "TextView" to TextViewActivity::class.java,
+            "协程" to TextViewActivity::class.java
 
         ).toList()
     }

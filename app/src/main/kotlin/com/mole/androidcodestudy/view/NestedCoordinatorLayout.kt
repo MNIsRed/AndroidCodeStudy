@@ -1,5 +1,6 @@
 package com.mole.androidcodestudy.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -17,6 +18,7 @@ import com.google.android.material.appbar.AppBarLayout
  * e-mail : suliliveinchina@gmail.com
  * time   : 2023/11/16
  * desc   : copy from https://snipsave.com/user/mateuszpryczkowski/snippet/OkfTpFB1f11zdKlH0o/
+ * Thanks Mateusz Pryczkowski
  * version: 1.0
 </pre> *
  */
@@ -342,6 +344,7 @@ class NestedCoordinatorLayout @JvmOverloads constructor(
     private val mScrollOffset = IntArray(2)
     private var mNestedYOffset = 0
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         val action = ev.actionMasked
 
