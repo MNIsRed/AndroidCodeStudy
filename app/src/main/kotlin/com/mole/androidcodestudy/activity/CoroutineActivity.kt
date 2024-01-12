@@ -20,6 +20,8 @@ class CoroutineActivity : BaseActivity(){
     private val viewModel : CoroutineViewModel by viewModelProvider()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding.button.setOnClickListener {
+            viewModel.test()
+        }
     }
 }
