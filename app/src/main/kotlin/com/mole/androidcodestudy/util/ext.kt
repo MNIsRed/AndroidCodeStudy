@@ -10,8 +10,6 @@ import kotlinx.coroutines.newCoroutineContext
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
-val hasM = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-
 @ColorInt fun Int.getColor():Int{
     return ContextCompat.getColor(CustomApplication.getInstance(),this)
 }
@@ -22,3 +20,7 @@ val hasM = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
  * 因为Key是一个伴生对象，所以意味着，同一个coroutineContext中，只存在一个Job，同理ContinuationInterceptor也是只存在一个
  */
 suspend fun Job.Key.currentJob() = coroutineContext[Job]
+
+fun threadLog(msg:String) = println("[${Thread.currentThread().name}] $msg")
+fun timeLog(msg:String) = println("[${System.currentTimeMillis()}] $msg")
+

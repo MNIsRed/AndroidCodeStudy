@@ -1,7 +1,7 @@
 package com.mole.androidcodestudy.util;
 
 import static com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN;
-import static com.mole.androidcodestudy.util.ExtKt.getHasM;
+import static com.mole.androidcodestudy.extension.VersionExtKt.getHasM;
 
 import android.app.Activity;
 import android.app.Dialog;

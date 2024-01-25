@@ -50,7 +50,9 @@ class MainActivity : BaseActivity() {
             "软键盘" to SoftInputActivity::class.java,
             "文件" to FileActivity::class.java,
             "TextView" to TextViewActivity::class.java,
-            "协程" to CoroutineActivity::class.java
+            "协程" to CoroutineActivity::class.java,
+            "日历" to CalendarActivity::class.java,
+            "定时器" to AlarmActivity::class.java
 
         ).toList()
     }

@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mole.androidcodestudy" >
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <!-- 粗略的位置权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
@@ -37,11 +44,19 @@
         <activity android:name=".activity.FileActivity" />
         <activity android:name=".activity.TextViewActivity" />
         <activity android:name=".activity.CoroutineActivity" />
+        <activity android:name=".activity.CalendarActivity" />
+        <activity android:name=".activity.AlarmActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
             android:label="custom service"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:name=".receiver.AlarmBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.mole.androidcodestudy.alarm_action"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
