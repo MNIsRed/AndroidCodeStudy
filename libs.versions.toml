@@ -50,6 +50,8 @@ hiltCompiler={module="com.google.dagger:hilt-compiler",version.ref="hilt_version
 #Chucker
 chuckerDebug={module="com.github.chuckerteam.chucker:library",version.ref="chucker_version"}
 chuckerRelease={module="com.github.chuckerteam.chucker:library-no-op",version.ref="chucker_version"}
+alarmScheduler='com.carterchen247:alarm-scheduler:2.1.0'
+
 [bundles]
 androidx=["appcompact","constraintLayout","activity","activityKtx","coreKtx"]
 lifecycle=["lifecycleLiveData","lifecycleViewmodel","lifecycleProcess"]

@@ -50,6 +50,7 @@ dependencies {
     implementation libs.bundles.androidx
     implementation libs.hiltAndroid
     kapt libs.hiltCompiler
+    implementation libs.alarmScheduler
 }
 
 kapt { correctErrorTypes true }
