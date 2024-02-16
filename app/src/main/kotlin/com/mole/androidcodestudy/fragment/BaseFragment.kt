@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment
  * 1.打印生命周期日志
  */
 private const val TAG = "BaseFragment"
-open class BaseFragment : Fragment(){
+open class BaseFragment : Fragment{
+    constructor():super()
+    constructor(id:Int):super(id)
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.i(TAG,"${this.javaClass.simpleName}.onAttach")

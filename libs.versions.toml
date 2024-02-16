@@ -13,6 +13,7 @@ rxjava_version = "3.1.6"
 core_ktx_version = "1.7.0"
 hilt_version = "2.44"
 chucker_version="3.5.2"
+nav_version = "2.6.0"
 [libraries]
 #AndroidX
 appcompact={module="androidx.appcompat:appcompat",version.ref="appcompat_version"}
@@ -51,8 +52,15 @@ hiltCompiler={module="com.google.dagger:hilt-compiler",version.ref="hilt_version
 chuckerDebug={module="com.github.chuckerteam.chucker:library",version.ref="chucker_version"}
 chuckerRelease={module="com.github.chuckerteam.chucker:library-no-op",version.ref="chucker_version"}
 alarmScheduler='com.carterchen247:alarm-scheduler:2.1.0'
-
+#navigation
+# Java language implementation
+navigation_fragment={module="androidx.navigation:navigation-fragment",version.ref="nav_version"}
+navigation_ui={module="androidx.navigation:navigation-ui",version.ref="nav_version"}
+# Kotlin
+navigation_kt_fragment={module="androidx.navigation:navigation-fragment-ktx",version.ref="nav_version"}
+navigation_kt_ui={module="androidx.navigation:navigation-ui-ktx",version.ref="nav_version"}
 [bundles]
 androidx=["appcompact","constraintLayout","activity","activityKtx","coreKtx"]
 lifecycle=["lifecycleLiveData","lifecycleViewmodel","lifecycleProcess"]
 net=["retrofit","retrofitGson","gson"]
+navigation=["navigation_fragment","navigation_ui","navigation_kt_fragment","navigation_kt_ui"]

@@ -51,6 +51,7 @@ dependencies {
     implementation libs.hiltAndroid
     kapt libs.hiltCompiler
     implementation libs.alarmScheduler
+    implementation libs.bundles.navigation
 }
 
 kapt { correctErrorTypes true }
