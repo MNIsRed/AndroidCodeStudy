@@ -2,10 +2,9 @@ package com.mole.androidcodestudy.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.forEachIndexed
 import androidx.navigation.createGraph
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.fragment
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.databinding.ActivityMainBinding
@@ -41,8 +40,19 @@ class MainActivity : BaseActivity() {
                         label = "system"
                     }
                 }
+            }.also { navController ->
+                binding.bottomNavigation.setOnItemSelectedListener {
+                    val fragmentLabels = listOf("widget", "system")
+                    binding.bottomNavigation.menu.forEachIndexed { index, item ->
+                        if (item.itemId == it.itemId) {
+                            navController.navigate(fragmentLabels[index])
+                        }
+                    }
+                    true
+                }
             }
         }
+
     }
 
 
