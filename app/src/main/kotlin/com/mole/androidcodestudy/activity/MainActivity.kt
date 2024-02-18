@@ -10,6 +10,7 @@ import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.databinding.ActivityMainBinding
 import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.fragment.LibraryFragment
 import com.mole.androidcodestudy.fragment.SystemFragment
 import com.mole.androidcodestudy.fragment.WidgetFragment
 import com.mole.androidcodestudy.viewmodel.MainViewModel
@@ -32,20 +33,22 @@ class MainActivity : BaseActivity() {
             it as? NavHostFragment
         }?.apply {
             navController.apply {
-                graph = createGraph(startDestination = "widget") {
-                    fragment<WidgetFragment>("widget") {
-                        label = "widget"
+                graph = createGraph(startDestination = fragmentRoutes[0]) {
+                    fragment<WidgetFragment>(fragmentRoutes[0]) {
+                        label = fragmentRoutes[0]
                     }
-                    fragment<SystemFragment>("system") {
-                        label = "system"
+                    fragment<SystemFragment>(fragmentRoutes[1]) {
+                        label = fragmentRoutes[1]
+                    }
+                    fragment<LibraryFragment>(fragmentRoutes[2]) {
+                        label = fragmentRoutes[2]
                     }
                 }
             }.also { navController ->
                 binding.bottomNavigation.setOnItemSelectedListener {
-                    val fragmentLabels = listOf("widget", "system")
                     binding.bottomNavigation.menu.forEachIndexed { index, item ->
                         if (item.itemId == it.itemId) {
-                            navController.navigate(fragmentLabels[index])
+                            navController.navigate(fragmentRoutes[index])
                         }
                     }
                     true
@@ -65,4 +68,9 @@ class MainActivity : BaseActivity() {
         System.gc()
         Runtime.getRuntime().gc()
     }
+
+    companion object{
+        val fragmentRoutes = listOf("widget", "system", "library")
+    }
+
 }

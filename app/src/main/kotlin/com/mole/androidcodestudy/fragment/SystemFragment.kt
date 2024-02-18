@@ -1,6 +1,15 @@
 package com.mole.androidcodestudy.fragment
 
+import android.os.Bundle
+import android.view.View
 import com.mole.androidcodestudy.R
+import com.mole.androidcodestudy.activity.AlarmActivity
+import com.mole.androidcodestudy.activity.CalendarActivity
+import com.mole.androidcodestudy.activity.FileActivity
+import com.mole.androidcodestudy.activity.LocationActivity
+import com.mole.androidcodestudy.activity.PickMediaActivity
+import com.mole.androidcodestudy.adapter.PageBean
+import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentSystemBinding
 import com.mole.androidcodestudy.extension.viewBinding
 
@@ -11,4 +20,21 @@ import com.mole.androidcodestudy.extension.viewBinding
  */
 class SystemFragment : BaseFragment(R.layout.fragment_system) {
     private val binding: FragmentSystemBinding by viewBinding()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvPages.apply {
+            adapter = PagesAdapter(pages)
+        }
+    }
+
+    companion object {
+        val pages: List<PageBean> = mapOf(
+            "位置" to LocationActivity::class.java,
+            "pickMedia" to PickMediaActivity::class.java,
+            "文件" to FileActivity::class.java,
+            "日历" to CalendarActivity::class.java,
+            "定时器" to AlarmActivity::class.java
+        ).toList()
+    }
 }

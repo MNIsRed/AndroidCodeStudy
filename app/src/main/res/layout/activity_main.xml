@@ -13,11 +13,14 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- NavHostFragment搭配Fragment做导航
+        defaultNavHost ：设置为true，navigate的fragment会记录如返回栈，点击返回自动跳转fragment
+        -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            app:defaultNavHost="true"
+            app:defaultNavHost="false"
             android:layout_height="match_parent" />
     </FrameLayout>
 
@@ -25,7 +28,6 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        app:itemIconSize="0dp"
         app:itemTextColor="@color/navigation_color"
         app:menu="@menu/main_navigation"
         android:layout_height="wrap_content"
