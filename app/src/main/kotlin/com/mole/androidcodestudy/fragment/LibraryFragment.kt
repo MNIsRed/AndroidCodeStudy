@@ -5,6 +5,7 @@ import android.view.View
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.CoroutineActivity
 import com.mole.androidcodestudy.activity.KotlinDelegateActivity
+import com.mole.androidcodestudy.activity.LiveDataActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
@@ -24,6 +25,7 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
         val pages: List<PageBean> = mapOf(
             "委托" to KotlinDelegateActivity::class.java,
             "协程" to CoroutineActivity::class.java,
+            "LiveData" to LiveDataActivity::class.java
         ).toList()
     }
 }

@@ -46,6 +46,7 @@
         <activity android:name=".activity.CoroutineActivity" />
         <activity android:name=".activity.CalendarActivity" />
         <activity android:name=".activity.AlarmActivity" />
+        <activity android:name=".activity.LiveDataActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
