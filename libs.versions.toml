@@ -14,6 +14,15 @@ core_ktx_version = "1.7.0"
 hilt_version = "2.44"
 chucker_version="3.5.2"
 nav_version = "2.6.0"
+agp = "7.2.2"
+kotlin = "1.7.10"
+kotlinBom = "1.8.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+jetbrainsKotlinJvm = "1.7.10"
+kspVersion = "1.7.10-1.0.6"
+kotlinpoet="1.16.0"
 [libraries]
 #AndroidX
 appcompact={module="androidx.appcompat:appcompat",version.ref="appcompat_version"}
@@ -59,6 +68,18 @@ navigation_ui={module="androidx.navigation:navigation-ui",version.ref="nav_versi
 # Kotlin
 navigation_kt_fragment={module="androidx.navigation:navigation-fragment-ktx",version.ref="nav_version"}
 navigation_kt_ui={module="androidx.navigation:navigation-ui-ktx",version.ref="nav_version"}
+kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlinBom" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+kspSymbolsProcessor = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "kspVersion" }
+kotlinpoet = {module="com.squareup:kotlinpoet",version.ref="kotlinpoet"}
+kotlinpoetKsp = {module="com.squareup:kotlinpoet-ksp",version.ref="kotlinpoet"}
+[plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 [bundles]
 androidx=["appcompact","constraintLayout","activity","activityKtx","coreKtx"]
 lifecycle=["lifecycleLiveData","lifecycleViewmodel","lifecycleProcess"]
