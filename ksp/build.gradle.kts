@@ -8,7 +8,7 @@ java {
 }
 
 dependencies{
-    implementation(libs.kspSymbolsProcessor)
-    implementation(libs.kotlinpoet)
-    implementation(libs.kotlinpoetKsp)
+    api(libs.kspSymbolsProcessor)
+    api(libs.kotlinpoet)
+    api(libs.kotlinpoetKsp)
 }

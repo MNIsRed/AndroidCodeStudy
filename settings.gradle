@@ -30,4 +30,4 @@ rootProject.name = "AndroidCodeStudy"
 include ':app'
 include ':mole:base'
 enableFeaturePreview("VERSION_CATALOGS")
-include ':ksp'
+//include ':ksp'
