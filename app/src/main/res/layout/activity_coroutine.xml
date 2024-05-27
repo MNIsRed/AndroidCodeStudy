@@ -13,4 +13,13 @@
         android:text="点击触发"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/button_flow"
+        android:text="flow测试"
+        app:layout_constraintTop_toBottomOf="@id/button"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
