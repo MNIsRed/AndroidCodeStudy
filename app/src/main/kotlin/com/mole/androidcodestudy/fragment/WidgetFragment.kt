@@ -5,6 +5,7 @@ import android.view.View
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.AnimationActivity
 import com.mole.androidcodestudy.activity.CustomViewTestActivity
+import com.mole.androidcodestudy.activity.MaterialButtonActivity
 import com.mole.androidcodestudy.activity.NestedCoordinatorActivity
 import com.mole.androidcodestudy.activity.SoftInputActivity
 import com.mole.androidcodestudy.activity.TextViewActivity
@@ -37,6 +38,7 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
             "动画" to AnimationActivity::class.java,
             "软键盘" to SoftInputActivity::class.java,
             "TextView" to TextViewActivity::class.java,
+            "MaterialButton" to MaterialButtonActivity::class.java
         ).toList()
     }
 }
