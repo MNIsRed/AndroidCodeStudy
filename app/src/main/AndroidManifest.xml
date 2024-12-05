@@ -49,6 +49,7 @@
         <activity android:name=".activity.LiveDataActivity" />
         <activity android:name=".activity.MaterialButtonActivity" />
         <activity android:name=".activity.ViewModelActivity" />
+        <activity android:name=".activity.CustomLayoutManagerActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
