@@ -3,7 +3,6 @@ package com.mole.androidcodestudy.layoutmanager
 import android.graphics.Rect
 import android.util.Log
 import android.view.View
-import android.view.View.MeasureSpec
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -117,8 +116,48 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
     //    }
     //}
 
+    override fun scrollVerticallyBy(
+        dy: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State
+    ): Int {
+        return scrollBy(dy, recycler, state)
+    }
+
+    protected open fun scrollBy(
+        delta: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State
+    ): Int {
+        // If there are no view or no movement, return
+        if (delta == 0) {
+            return 0
+        }
+
+        val canScrollBackwards = (firstVisiblePosition) >= 0 && 0 < scroll && delta < 0
+
+        val canScrollForward =
+            (firstVisiblePosition + childCount) <= state.itemCount && (scroll + size) < (layoutEnd + mRectHelper.itemSize + paddingBottom)
+        delta > 0
+
+        // If can't scroll forward or backwards, return
+        if (!(canScrollBackwards || canScrollForward)) {
+            return 0
+        }
+
+        val correctedDistance = scrollBy(-delta, state)
+
+        val direction = if (delta > 0) Direction.END else Direction.START
+
+        recycleChildrenOutOfBounds(direction, recycler)
+
+        fillGap(direction, recycler, state)
+
+        return -correctedDistance
+    }
+
     override fun canScrollVertically(): Boolean {
-        return true
+        //如果 item 不多，不需要考虑滚动
+        if (childFrames.isNotEmpty()) {
+            return (childFrames[childFrames.size - 1]?.bottom ?: 0) > height
+        }
+        return false
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
@@ -419,7 +458,7 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
         val frame = childFrames[position]
 
         if (frame != null) {
-            val scroll = HORIZON_COUNT
+            val scroll = this.scroll
 
             val startPadding = paddingTop
 
@@ -603,6 +642,11 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
             val end = rect.bottom
             val endROw = rows[end]?.toMutableSet() ?: mutableSetOf()
             endROw.add(position)
+            rows[end] = endROw
+
+            //为什么只需要顶部和底部行塞入 position？
+            //因为rows 要考虑从顶部和底部恢复 item 的逻辑 fillAfter和 fillBefore。
+            //只需要达到边界就完成判断了，所以不需要设置中间的行
 
             rectCache[position] = rect
 

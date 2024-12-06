@@ -27,7 +27,7 @@ class CustomLayoutManagerActivity : BaseActivity() {
         binding.rcv.apply {
             setPadding(10, 10, 0, 0)
             layoutManager = FirstBigSpanLayoutManager()
-            adapter = NumberAdapter(100)
+            adapter = NumberAdapter(8)
             setSingleItemDecoration(object : ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,
