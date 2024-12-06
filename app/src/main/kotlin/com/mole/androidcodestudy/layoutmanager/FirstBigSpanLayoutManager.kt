@@ -68,53 +68,53 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
         super.scrollToPosition(position)
     }
 
-    override fun isAutoMeasureEnabled(): Boolean {
-        return true
-    }
+    //override fun isAutoMeasureEnabled(): Boolean {
+    //    return true
+    //}
 
     /**
      * 非自测量模式，需要根据位置决定 item 的宽高
      */
-    //override fun onMeasure(
-    //    recycler: RecyclerView.Recycler, state: RecyclerView.State, widthSpec: Int, heightSpec: Int
-    //) {
-    //    //super.onMeasure(recycler, state, widthSpec, heightSpec)
-    //    //val widthSize = MeasureSpec.getSize(widthSpec)
-    //    //return
-    //    if (state.itemCount == 0) {
-    //        super.onMeasure(recycler, state, widthSpec, heightSpec)
-    //        return
-    //    }
-    //
-    //    val widthSize = MeasureSpec.getSize(widthSpec) - paddingLeft - paddingRight
-    //    val itemView = recycler.getViewForPosition(0)
-    //
-    //    val horizonDecoration = getLeftDecorationWidth(itemView) + getRightDecorationWidth(itemView)
-    //    val verticalDecoration =
-    //        getTopDecorationHeight(itemView) + getBottomDecorationHeight(itemView)
-    //    val itemWidth = (widthSize - horizonDecoration * 3) / 3
-    //    //TODO 此时回收 view 就会崩溃？  记住回收 view
-    //    //并且因为设置了完全的高度，导致加载了全部的 item，没法利用 rc 的回收复用机制
-    //    //detachAndScrapView(itemView, recycler)
-    //    //如果有 9 个
-    //    if (state.itemCount >= CHANGE_COUNT) {
-    //        //    获取RecyclerView 的宽度
-    //        //    获取 itemDecoration 的水平margin
-    //        //    计算 横竖 1：:1 ，3个 item 的情况下，每个 item实际宽度，高度
-    //        //  获取 itemDecoration 的竖直margin
-    //        //    第一个的高度是 2倍数，所以前 3 个 item 等于原先的两行
-    //        //    剩下的 item 正常排列
-    //        //    获取一共占据多少行，算出实际高度
-    //
-    //        val rowSize = 2 + (state.itemCount - 1) / HORIZON_COUNT
-    //        val newHeight = rowSize * (itemWidth + verticalDecoration) + paddingTop + paddingBottom
-    //        setMeasuredDimension(widthSize, newHeight)
-    //    } else {
-    //        val rowSize = 1 + (state.itemCount) / HORIZON_COUNT
-    //        val newHeight = rowSize * (itemWidth + verticalDecoration) + paddingTop + paddingBottom
-    //        setMeasuredDimension(widthSize, newHeight)
-    //    }
-    //}
+    override fun onMeasure(
+        recycler: RecyclerView.Recycler, state: RecyclerView.State, widthSpec: Int, heightSpec: Int
+    ) {
+        //super.onMeasure(recycler, state, widthSpec, heightSpec)
+        //val widthSize = MeasureSpec.getSize(widthSpec)
+        //return
+        if (state.itemCount == 0) {
+            super.onMeasure(recycler, state, widthSpec, heightSpec)
+            return
+        }
+
+        val widthSize = View.MeasureSpec.getSize(widthSpec) - paddingLeft - paddingRight
+        val itemView = recycler.getViewForPosition(0)
+
+        val horizonDecoration = getLeftDecorationWidth(itemView) + getRightDecorationWidth(itemView)
+        val verticalDecoration =
+            getTopDecorationHeight(itemView) + getBottomDecorationHeight(itemView)
+        val itemWidth = (widthSize - horizonDecoration * 3) / 3
+        //TODO 此时回收 view 就会崩溃？  记住回收 view
+        //并且因为设置了完全的高度，导致加载了全部的 item，没法利用 rc 的回收复用机制
+        //detachAndScrapView(itemView, recycler)
+        //如果有 9 个
+        if (state.itemCount >= CHANGE_COUNT) {
+            //    获取RecyclerView 的宽度
+            //    获取 itemDecoration 的水平margin
+            //    计算 横竖 1：:1 ，3个 item 的情况下，每个 item实际宽度，高度
+            //  获取 itemDecoration 的竖直margin
+            //    第一个的高度是 2倍数，所以前 3 个 item 等于原先的两行
+            //    剩下的 item 正常排列
+            //    获取一共占据多少行，算出实际高度
+
+            val rowSize = 2 + (state.itemCount - 1) / HORIZON_COUNT
+            val newHeight = rowSize * (itemWidth + verticalDecoration) + paddingTop + paddingBottom
+            setMeasuredDimension(widthSize, newHeight)
+        } else {
+            val rowSize = 1 + (state.itemCount) / HORIZON_COUNT
+            val newHeight = rowSize * (itemWidth + verticalDecoration) + paddingTop + paddingBottom
+            setMeasuredDimension(widthSize, newHeight)
+        }
+    }
 
     override fun scrollVerticallyBy(
         dy: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State
@@ -133,8 +133,8 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
         val canScrollBackwards = (firstVisiblePosition) >= 0 && 0 < scroll && delta < 0
 
         val canScrollForward =
-            (firstVisiblePosition + childCount) <= state.itemCount && (scroll + size) < (layoutEnd + mRectHelper.itemSize + paddingBottom)
-        delta > 0
+            (firstVisiblePosition + childCount) <= state.itemCount && (scroll + size) < (layoutEnd + paddingBottom) &&
+                    delta > 0
 
         // If can't scroll forward or backwards, return
         if (!(canScrollBackwards || canScrollForward)) {
@@ -214,12 +214,7 @@ class FirstBigSpanLayoutManager : RecyclerView.LayoutManager() {
         if (!allItemsInScreen && overScroll > 0) {
             // If we are, fix it
             scrollBy(overScroll, state)
-
-            if (overScroll > 0) {
-                fillBefore(recycler, state)
-            } else {
-                fillAfter(recycler, state)
-            }
+            fillBefore(recycler, state)
         }
     }
 

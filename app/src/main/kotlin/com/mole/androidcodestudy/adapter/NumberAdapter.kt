@@ -19,9 +19,7 @@ import com.mole.androidcodestudy.util.getColor
  */
 class NumberAdapter(private val count: Int = 0) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
         return ViewHolder(TextView(p0.context).apply {

@@ -3,9 +3,11 @@ package com.mole.androidcodestudy.activity
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.mole.androidcodestudy.adapter.NumberAdapter
+import com.mole.androidcodestudy.adapter.RecyclerViewNestedAdapter
 import com.mole.androidcodestudy.databinding.ActivityCustomLayoutManagerBinding
 import com.mole.androidcodestudy.extension.setSingleItemDecoration
 import com.mole.androidcodestudy.extension.viewBindingByInflate
@@ -24,10 +26,9 @@ class CustomLayoutManagerActivity : BaseActivity() {
     private val binding by viewBindingByInflate<ActivityCustomLayoutManagerBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.rcv.apply {
-            setPadding(10, 10, 0, 0)
-            layoutManager = FirstBigSpanLayoutManager()
-            adapter = NumberAdapter(8)
+        binding.rcvRoot.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = RecyclerViewNestedAdapter(3)
             setSingleItemDecoration(object : ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,
@@ -36,7 +37,7 @@ class CustomLayoutManagerActivity : BaseActivity() {
                     state: RecyclerView.State
                 ) {
                     super.getItemOffsets(outRect, view, parent, state)
-                    outRect.set(0, 0, 10, 10)
+                    outRect.set(0, 20, 0, 0)
                 }
             })
         }
