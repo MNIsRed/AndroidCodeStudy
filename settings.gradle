@@ -7,8 +7,14 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+//注意plugins的位置
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version("0.8.0")
+}
+
 //开启versionCatalogs，因为还没有正式上线，所以得打开预览
-enableFeaturePreview('VERSION_CATALOGS')
+//enableFeaturePreview('VERSION_CATALOGS')
 //dependencyResolutionManagement 替代的是原先在allprojects里声明repositories的功能，一样是指定所有子项目都从这些远程仓库中获取依赖。
 dependencyResolutionManagement {
     //指定所有子项目都只能使用这里的远程仓库，否则就会构建失败。
@@ -26,8 +32,28 @@ dependencyResolutionManagement {
         }
     }
 }
+//toolchainManagement {
+//    jvm {
+//        javaRepositories {
+//            repository("foojay") {
+//                resolverClass = org.gradle.toolchains.foojay.FoojayToolchainResolver::class.java
+//            }
+//            repository("made_up") {
+//                resolverClass = MadeUpResolver::class.java
+//                credentials {
+//                    username = "user"
+//                    password = "password"
+//                }
+//                authentication {
+//                    create<DigestAuthentication>("digest")
+//                }
+//            }
+//        }
+//    }
+//}
+
 rootProject.name = "AndroidCodeStudy"
 include ':app'
 include ':mole:base'
-enableFeaturePreview("VERSION_CATALOGS")
+//enableFeaturePreview("VERSION_CATALOGS")
 include ':ksp'

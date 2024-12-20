@@ -50,6 +50,7 @@
         <activity android:name=".activity.MaterialButtonActivity" />
         <activity android:name=".activity.ViewModelActivity" />
         <activity android:name=".activity.CustomLayoutManagerActivity" />
+        <activity android:name=".activity.library.LombokActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

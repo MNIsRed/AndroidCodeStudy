@@ -3,9 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'io.freefair.lombok'
 }
 
 android {
+    namespace 'com.mole.androidcodestudy'
     compileSdk 33
 
     defaultConfig {
@@ -25,15 +27,25 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures{
         viewBinding = true
     }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 //configurations.configureEach {
@@ -60,6 +72,12 @@ dependencies {
     kapt libs.hiltCompiler
     implementation libs.alarmScheduler
     implementation libs.bundles.navigation
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
-kapt { correctErrorTypes true }
+kapt {
+    correctErrorTypes true
+//    @ToString需要添加这个属性
+    keepJavacAnnotationProcessors = true
+}
