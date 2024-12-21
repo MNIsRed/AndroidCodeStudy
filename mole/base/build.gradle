@@ -33,7 +33,9 @@ dependencies {
 
     api libs.bundles.net
 
-    debugImplementation libs.chuckerDebug
+    debugImplementation(libs.chuckerDebug){
+        exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+    }
     releaseImplementation libs.chuckerRelease
     implementation libs.coreKtx
     implementation libs.hiltAndroid

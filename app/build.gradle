@@ -72,8 +72,11 @@ dependencies {
     kapt libs.hiltCompiler
     implementation libs.alarmScheduler
     implementation libs.bundles.navigation
-    compileOnly 'org.projectlombok:lombok:1.18.36'
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    compileOnly (libs.library.auto.value.annotations)
+    annotationProcessor(libs.library.auto.value)
 }
 
 kapt {
