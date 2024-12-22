@@ -17,6 +17,7 @@ nav_version = "2.6.0"
 kspVersion = "1.9.0-1.0.13"
 kotlinpoet = "1.16.0"
 auto_value_version = "1.11.0"
+about_libraries_version = "11.2.3"
 [libraries]
 #AndroidX
 appcompact = { module = "androidx.appcompat:appcompat", version.ref = "appcompat_version" }
@@ -71,8 +72,14 @@ lombok="org.projectlombok:lombok:1.18.24"
 # AutoValue
 library_auto_value = {module="com.google.auto.value:auto-value" ,version.ref="auto_value_version"}
 library_auto_value_annotations = {module="com.google.auto.value:auto-value-annotations" ,version.ref="auto_value_version"}
+#aboutLibraries
+about_libraries={module="com.mikepenz:aboutlibraries-core",version.ref="about_libraries_version"}
+about_librarie_ui={module="com.mikepenz:aboutlibraries",version.ref="about_libraries_version"}
 [bundles]
 androidx = ["appcompact", "constraintLayout", "activity", "activityKtx", "coreKtx", "recyclerView"]
 lifecycle = ["lifecycleLiveDataKtx", "lifecycleProcess", "lifecycleViewmodelKtx"]
 net = ["retrofit", "retrofitGson", "gson"]
 navigation = ["navigation_fragment", "navigation_ui", "navigation_kt_fragment", "navigation_kt_ui"]
+[plugins]
+about_libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about_libraries_version" }
+

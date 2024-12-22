@@ -8,10 +8,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pages"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_about_libraries"
+        android:text="查看开源库"
+        android:layout_margin="15dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/rv_pages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

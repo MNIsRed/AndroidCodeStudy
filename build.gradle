@@ -6,6 +6,7 @@ plugins {
     id 'dev.iurysouza.modulegraph' version '0.3.0'
     id 'com.google.dagger.hilt.android' version libs.versions.hilt.version apply false
     id("io.freefair.lombok") version "8.3"
+    alias(libs.plugins.about.libraries) apply false
 }
 
 

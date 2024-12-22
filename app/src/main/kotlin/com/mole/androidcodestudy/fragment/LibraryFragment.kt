@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.fragment
 
 import android.os.Bundle
 import android.view.View
+import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.CoroutineActivity
 import com.mole.androidcodestudy.activity.KotlinDelegateActivity
@@ -21,6 +22,12 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
         binding.rvPages.apply {
             adapter = PagesAdapter(pages)
         }
+
+        binding.buttonAboutLibraries.setOnClickListener {
+            LibsBuilder()
+                .start(requireContext()) // start the activity
+        }
+
     }
 
     companion object {

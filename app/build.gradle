@@ -4,11 +4,12 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'io.freefair.lombok'
+    alias(libs.plugins.about.libraries)
 }
 
 android {
     namespace 'com.mole.androidcodestudy'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.mole.androidcodestudy"
@@ -77,6 +78,8 @@ dependencies {
 
     compileOnly (libs.library.auto.value.annotations)
     annotationProcessor(libs.library.auto.value)
+    implementation libs.about.libraries
+    implementation libs.about.librarie.ui
 }
 
 kapt {

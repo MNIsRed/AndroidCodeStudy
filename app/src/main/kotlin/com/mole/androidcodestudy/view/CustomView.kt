@@ -47,9 +47,9 @@ class CustomView @JvmOverloads constructor(
 //    constructor(context:Context,attrs: AttributeSet?,defStyleAttr : Int):super(context,attrs,defStyleAttr)
 //    constructor(context:Context,attrs: AttributeSet?,defStyleAttr : Int, defStyleRes : Int):super(context,attrs,defStyleAttr,defStyleRes)\
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.drawText(customText,0f,-paint.fontMetrics.top,paint)
+        canvas.drawText(customText,0f,-paint.fontMetrics.top,paint)
     }
 
     /**
