@@ -5,6 +5,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -24,6 +25,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //CrashTool
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
     }
     //指定toml文件目录
     versionCatalogs{

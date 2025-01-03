@@ -14,6 +14,7 @@ import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentWidgetBinding
 import com.mole.androidcodestudy.extension.viewBinding
+import com.yc.toollib.crash.CrashListActivity
 
 /**
  * @Description: AndroidUI控件测试聚合页面
@@ -40,7 +41,7 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
             "软键盘" to SoftInputActivity::class.java,
             "TextView" to TextViewActivity::class.java,
             "MaterialButton" to MaterialButtonActivity::class.java,
-            "自定义 LayoutManager" to CustomLayoutManagerActivity::class.java
+            "自定义 LayoutManager" to CustomLayoutManagerActivity::class.java,
         ).toList()
     }
 }

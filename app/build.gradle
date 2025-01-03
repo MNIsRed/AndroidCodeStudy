@@ -80,6 +80,8 @@ dependencies {
     annotationProcessor(libs.library.auto.value)
     implementation libs.about.libraries
     implementation libs.about.librarie.ui
+    implementation libs.bundles.ycCrashTool
+    implementation libs.palette
 }
 
 kapt {

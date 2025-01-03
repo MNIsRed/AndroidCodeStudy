@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr format="color" name="customColorAttribute"/>
+    <attr name="customColorAttribute" format="color" />
     <declare-styleable name="CustomView">
-        <attr name="text" format="string"/>
+        <attr name="text" format="string" />
     </declare-styleable>
-    <attr name="DefStyleAttr" format="reference"/>
+    <attr name="DefStyleAttr" format="reference" />
     <declare-styleable name="CornerConstraintLayout">
         <attr name="leftTopCorner" format="dimension" />
         <attr name="leftBottomCorner" format="dimension" />
@@ -17,5 +17,16 @@
         <attr name="mainDiagonal" format="dimension" />
         <attr name="subDiagonal" format="dimension" />
         <attr name="allCorner" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerTextView">
+        <attr name="TextLeftTopCorner" format="dimension" />
+        <attr name="TextLeftBottomCorner" format="dimension" />
+        <attr name="TextRightTopCorner" format="dimension" />
+        <attr name="TextRightBottomCorner" format="dimension" />
+        <attr name="TextAllCorner" format="dimension" />
+        <attr name="TextStrokeColor" format="color" />
+        <attr name="TextStrokeWidth" format="dimension" />
+        <attr name="TextSolidColor" format="color" />
     </declare-styleable>
 </resources>

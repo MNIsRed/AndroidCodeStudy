@@ -12,6 +12,7 @@ import android.view.View.MeasureSpec
 import com.example.androidtestapplication.RoundBottomOutlineProvider
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.databinding.ActivityCustomViewTestBinding
+import com.mole.androidcodestudy.util.getColor
 import com.mole.androidcodestudy.view.CustomView
 
 class CustomViewTestActivity : BaseActivity(){
@@ -29,6 +30,20 @@ class CustomViewTestActivity : BaseActivity(){
 
         binding.clipIv.outlineProvider = RoundBottomOutlineProvider(110f)
         binding.clipIv.clipToOutline = true
+
+        val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels
+        val destity = resources.displayMetrics.density
+
+        binding.tvRoundCorner.setOnClickListener {
+            if (it.tag == true){
+                binding.tvRoundCorner.backgroundStrokeColor = R.color.colorPrimary.getColor()
+                it.tag = false
+            }else{
+                binding.tvRoundCorner.backgroundStrokeColor = R.color.masa_red.getColor()
+                it.tag = true
+            }
+        }
     }
 
     /**

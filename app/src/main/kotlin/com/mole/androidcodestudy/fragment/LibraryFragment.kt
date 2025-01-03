@@ -9,10 +9,12 @@ import com.mole.androidcodestudy.activity.KotlinDelegateActivity
 import com.mole.androidcodestudy.activity.LiveDataActivity
 import com.mole.androidcodestudy.activity.ViewModelActivity
 import com.mole.androidcodestudy.activity.library.LombokActivity
+import com.mole.androidcodestudy.activity.library.PaletteActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
 import com.mole.androidcodestudy.extension.viewBinding
+import com.yc.toollib.crash.CrashListActivity
 
 class LibraryFragment : BaseFragment(R.layout.fragment_library) {
 
@@ -36,7 +38,9 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
             "协程" to CoroutineActivity::class.java,
             "LiveData" to LiveDataActivity::class.java,
             "ViewModel" to ViewModelActivity::class.java,
-            "Lombok" to LombokActivity::class.java
+            "Lombok" to LombokActivity::class.java,
+            "崩溃分析 CrashTool" to CrashListActivity::class.java,
+            "palette" to PaletteActivity::class.java
         ).toList()
     }
 }
