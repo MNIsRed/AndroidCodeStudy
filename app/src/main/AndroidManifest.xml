@@ -53,6 +53,8 @@
         <activity android:name=".activity.library.LombokActivity" />
         <activity android:name="com.yc.catonhelperlib.canary.ui.DisplayActivity" android:exported="true"/>
         <activity android:name=".activity.library.PaletteActivity" />
+        <activity android:name=".widget.activity.CoordinatorLayoutActivity" />
+        <activity android:name=".widget.activity.MotionLayoutActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

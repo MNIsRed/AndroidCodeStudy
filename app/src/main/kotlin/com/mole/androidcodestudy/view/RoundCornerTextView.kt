@@ -14,6 +14,10 @@ import kotlin.math.max
  *     e-mail : suliliveinchina@gmail.com
  *     time   : 2024/12/25
  *     desc   : 自定义圆角背景的 TextView
+ *     others:还可以参考下其他方案：
+ *     https://github.com/getActivity/ShapeView
+ *     https://github.com/JavaNoober/BackgroundLibrary
+ *
  *     version: 1.0
  * </pre>
  */
@@ -32,10 +36,12 @@ class RoundCornerTextView @JvmOverloads constructor(
             field = value
             backgroundDrawable.setStroke(backgroundStrokeWidth, value)
         }
-    var backgroundStrokeWidth = 10
+    var backgroundStrokeWidth = 0
         set(value) {
             field = value
             backgroundDrawable.setStroke(value, backgroundStrokeColor)
+            //当你设置 strokeWidth 时，GradientDrawable 需要重新计算边框的形状和位置。如果不重新设置圆角半径 (setCornerRadii)，GradientDrawable 可能会使用旧的圆角半径值，导致边框的圆角显示不全。
+            backgroundDrawable.setBackgroundCorner()
         }
     private var backgroundDrawable: GradientDrawable = GradientDrawable()
 
