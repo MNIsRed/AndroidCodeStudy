@@ -34,7 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -76,12 +76,18 @@ dependencies {
     compileOnly libs.lombok
     annotationProcessor libs.lombok
 
-    compileOnly (libs.library.auto.value.annotations)
+    compileOnly(libs.library.auto.value.annotations)
     annotationProcessor(libs.library.auto.value)
     implementation libs.about.libraries
     implementation libs.about.librarie.ui
     implementation libs.bundles.ycCrashTool
     implementation libs.palette
+    debugImplementation(libs.bundles.uetoolDebug) {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.github.tiann', module: 'FreeReflection'
+    }
+    releaseImplementation(libs.bundles.uetoolRelease)
 }
 
 kapt {

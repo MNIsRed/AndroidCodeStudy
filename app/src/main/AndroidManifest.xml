@@ -55,6 +55,7 @@
         <activity android:name=".activity.library.PaletteActivity" />
         <activity android:name=".widget.activity.CoordinatorLayoutActivity" />
         <activity android:name=".widget.activity.MotionLayoutActivity" />
+        <activity android:name=".library.UEToolActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

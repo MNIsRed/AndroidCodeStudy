@@ -14,6 +14,7 @@ import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.library.UEToolActivity
 import com.yc.toollib.crash.CrashListActivity
 
 class LibraryFragment : BaseFragment(R.layout.fragment_library) {
@@ -40,7 +41,8 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
             "ViewModel" to ViewModelActivity::class.java,
             "Lombok" to LombokActivity::class.java,
             "崩溃分析 CrashTool" to CrashListActivity::class.java,
-            "palette" to PaletteActivity::class.java
+            "palette" to PaletteActivity::class.java,
+            "UETool" to UEToolActivity::class.java
         ).toList()
     }
 }

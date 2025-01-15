@@ -6,30 +6,76 @@
     app:layoutDescription="@xml/activity_motion_layout_scene"
     app:showPaths="true">
 
-    <View
-        android:id="@+id/view_1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_avatar"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view_2"
-        android:layout_width="50dp"
+        android:id="@+id/v_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_1" />
+        android:alpha="0"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view_3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/yellow"
-        app:layout_constraintStart_toStartOf="@id/view_2"
-        app:layout_constraintTop_toBottomOf="@id/view_2" />
+    <LinearLayout
+        android:id="@+id/ll_fake_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/iv_top">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="tab1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="tab2" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/v_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_fake_tab">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/yellow" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/green" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/red" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/black" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
