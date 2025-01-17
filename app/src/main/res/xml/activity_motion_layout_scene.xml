@@ -10,6 +10,44 @@
         <OnSwipe
             motion:touchAnchorId="@id/iv_top"
             motion:touchAnchorSide="bottom" />
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="50"
+                motion:motionTarget="@id/iv_top" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="100"
+                motion:motionTarget="@id/iv_top" />
+            <KeyAttribute
+                motion:framePosition="50"
+                motion:motionTarget="@id/ll_fake_tab">
+                <CustomAttribute
+                    motion:attributeName="backgroundColor"
+                    motion:customColorValue="@color/yellow" />
+            </KeyAttribute>
+            <KeyAttribute
+                motion:framePosition="0"
+                motion:motionTarget="@id/ll_fake_tab">
+                <CustomAttribute
+                    motion:attributeName="backgroundColor"
+                    motion:customColorValue="@color/white" />
+            </KeyAttribute>
+            <KeyAttribute
+                motion:framePosition="100"
+                motion:motionTarget="@id/ll_fake_tab">
+                <CustomAttribute
+                    motion:attributeName="backgroundColor"
+                    motion:customColorValue="@color/green" />
+            </KeyAttribute>
+            <KeyPosition
+                motion:keyPositionType="parentRelative"
+                motion:motionTarget="@id/iv_head"
+                motion:percentX="0.5"
+                motion:framePosition="50"
+                motion:percentY="0.2" />
+        </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -18,13 +56,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintTop_toTopOf="parent" />
+            motion:layout_constraintTop_toTopOf="parent">
+            <CustomAttribute
+                motion:attributeName="crossfade"
+                motion:customFloatValue="0" />
+        </Constraint>
         <Constraint
             android:id="@+id/v_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
             android:alpha="0"
+            android:background="@color/white"
             motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/ll_fake_tab"
@@ -32,6 +74,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             motion:layout_constraintTop_toBottomOf="@id/iv_top" />
+        <Constraint
+            android:id="@+id/iv_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -39,14 +87,18 @@
             android:id="@+id/iv_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintBottom_toBottomOf="@id/v_toolbar" />
+            motion:layout_constraintBottom_toBottomOf="@id/v_toolbar"
+            motion:layout_constraintDimensionRatio="1:1">
+            <CustomAttribute
+                motion:attributeName="crossfade"
+                motion:customFloatValue="1" />
+        </Constraint>
         <Constraint
             android:id="@+id/v_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
             android:alpha="1"
+            android:background="@color/white"
             motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/ll_fake_tab"
@@ -54,5 +106,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             motion:layout_constraintTop_toBottomOf="@id/iv_top" />
+        <Constraint
+            android:id="@+id/iv_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 </MotionScene>

@@ -6,11 +6,13 @@
     app:layoutDescription="@xml/activity_motion_layout_scene"
     app:showPaths="true">
 
-    <ImageView
+    <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/iv_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@drawable/icon_avatar"
+        app:altSrc="@color/yellow"
+        app:crossfade="0"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +45,15 @@
             android:gravity="center"
             android:text="tab2" />
     </LinearLayout>
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/iv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:roundPercent="1" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/v_bottom"
