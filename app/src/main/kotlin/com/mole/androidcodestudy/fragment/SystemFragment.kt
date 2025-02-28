@@ -8,6 +8,7 @@ import com.mole.androidcodestudy.activity.CalendarActivity
 import com.mole.androidcodestudy.activity.FileActivity
 import com.mole.androidcodestudy.activity.LocationActivity
 import com.mole.androidcodestudy.activity.PickMediaActivity
+import com.mole.androidcodestudy.activity.system.BatteryActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentSystemBinding
@@ -34,7 +35,8 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
             "pickMedia" to PickMediaActivity::class.java,
             "文件" to FileActivity::class.java,
             "日历" to CalendarActivity::class.java,
-            "定时器" to AlarmActivity::class.java
+            "定时器" to AlarmActivity::class.java,
+            "电池信息" to BatteryActivity::class.java
         ).toList()
     }
 }

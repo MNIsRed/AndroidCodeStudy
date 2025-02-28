@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.AnimationActivity
+import com.mole.androidcodestudy.activity.ConstraintLayoutActivity
 import com.mole.androidcodestudy.activity.CustomLayoutManagerActivity
 import com.mole.androidcodestudy.activity.CustomViewTestActivity
 import com.mole.androidcodestudy.activity.MaterialButtonActivity
@@ -44,7 +45,8 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
             "MaterialButton" to MaterialButtonActivity::class.java,
             "自定义 LayoutManager" to CustomLayoutManagerActivity::class.java,
             "CoordinatorLayout" to CoordinatorLayoutActivity::class.java,
-            "MotionLayout" to MotionLayoutActivity::class.java
+            "MotionLayout" to MotionLayoutActivity::class.java,
+            "ConstraintLayout" to ConstraintLayoutActivity::class.java
         ).toList()
     }
 }

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mole.androidcodestudy" >
-
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -56,6 +56,10 @@
         <activity android:name=".widget.activity.CoordinatorLayoutActivity" />
         <activity android:name=".widget.activity.MotionLayoutActivity" />
         <activity android:name=".library.UEToolActivity" />
+        <activity
+            android:name=".activity.system.BatteryActivity"
+            android:exported="false" />
+        <activity android:name=".activity.ConstraintLayoutActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
