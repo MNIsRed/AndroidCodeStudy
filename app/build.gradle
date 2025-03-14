@@ -36,6 +36,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
 
@@ -66,7 +70,7 @@ dependencies {
     implementation(libs.rxjava)
     implementation libs.bundles.lifecycle
     implementation libs.coil
-    implementation libs.material
+    //implementation libs.material
     implementation libs.work
     implementation libs.bundles.androidx
     implementation libs.hiltAndroid
@@ -88,6 +92,17 @@ dependencies {
         exclude group: 'com.github.tiann', module: 'FreeReflection'
     }
     releaseImplementation(libs.bundles.uetoolRelease)
+    def composeBom = platform(libs.compose.bom)
+    implementation composeBom
+    androidTestImplementation(composeBom)
+    implementation libs.bundles.compose
+
+    implementation(libs.sqlcipher){
+        artifact{
+            type = 'aar'
+        }
+    }
+    implementation libs.local.sqlite
 }
 
 kapt {

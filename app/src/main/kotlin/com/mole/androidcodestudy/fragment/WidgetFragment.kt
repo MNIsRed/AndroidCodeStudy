@@ -15,7 +15,9 @@ import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentWidgetBinding
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.widget.activity.BreakIteratorActivity
 import com.mole.androidcodestudy.widget.activity.CoordinatorLayoutActivity
+import com.mole.androidcodestudy.widget.activity.ForegroundImageViewActivity
 import com.mole.androidcodestudy.widget.activity.MotionLayoutActivity
 
 /**
@@ -46,7 +48,9 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
             "自定义 LayoutManager" to CustomLayoutManagerActivity::class.java,
             "CoordinatorLayout" to CoordinatorLayoutActivity::class.java,
             "MotionLayout" to MotionLayoutActivity::class.java,
-            "ConstraintLayout" to ConstraintLayoutActivity::class.java
+            "ConstraintLayout" to ConstraintLayoutActivity::class.java,
+            "流失文本动画" to BreakIteratorActivity::class.java,
+            "ForegroundImageView" to ForegroundImageViewActivity::class.java
         ).toList()
     }
 }

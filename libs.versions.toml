@@ -6,7 +6,7 @@ room_version = "2.4.1"
 work_version = "2.7.1"
 lifecycle_version = "2.6.1"
 appcompat_version = "1.4.1"
-material_version = "1.5.0"
+material_version = "1.12.0"
 constraint_layout_version = "2.1.3"
 activity_version = "1.7.0-beta02"
 rxjava_version = "3.1.6"
@@ -20,6 +20,8 @@ auto_value_version = "1.11.0"
 about_libraries_version = "11.2.3"
 ycAndroidTool_version = "1.2.8"
 uetool_version = "1.3.4"
+compose-bom = "2025.02.00"
+
 [libraries]
 #AndroidX
 appcompact = { module = "androidx.appcompat:appcompat", version.ref = "appcompat_version" }
@@ -86,6 +88,13 @@ palette = "androidx.palette:palette:1.0.0"
 uetool = { module = "com.github.eleme.UETool:uetool", version.ref = "uetool_version" }
 uetool_base = { module = "com.github.eleme.UETool:uetool-base", version.ref = "uetool_version" }
 uetool_no_op = { module = "com.github.eleme.UETool:uetool-no-op", version.ref = "uetool_version" }
+#compose
+compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compose_material3 = { group = "androidx.compose.material3", name = "material3" }
+compose_viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
+#sqlcipher-android
+sqlcipher = { module = "net.zetetic:sqlcipher-android", version = "4.6.0" }
+local_sqlite = { module = "androidx.sqlite:sqlite", version = "2.2.0" }
 [bundles]
 androidx = ["appcompact", "constraintLayout", "activity", "activityKtx", "coreKtx", "recyclerView"]
 lifecycle = ["lifecycleLiveDataKtx", "lifecycleProcess", "lifecycleViewmodelKtx"]
@@ -94,6 +103,7 @@ navigation = ["navigation_fragment", "navigation_ui", "navigation_kt_fragment", 
 ycCrashTool = ["yc_crash_lib", "yc_file_lib", "yc_caton_lib", "yc_net_lib", "yc_anr_lib"]
 uetoolDebug = ["uetool", "uetool_base"]
 uetoolRelease = ["uetool_no_op"]
+compose = ["compose_material3", "compose_viewbinding"]
 [plugins]
 about_libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about_libraries_version" }
 

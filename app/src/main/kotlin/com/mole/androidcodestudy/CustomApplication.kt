@@ -15,6 +15,7 @@ class CustomApplication : Application(), Configuration.Provider {
         super.onCreate()
         INSTANCE = this
         initYCAndroidTool()
+        System.loadLibrary("sqlcipher")
     }
 
     /**

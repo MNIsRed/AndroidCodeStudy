@@ -1,4 +1,4 @@
-package com.mole.androidcodestudy.library
+package com.mole.androidcodestudy.library.activity
 
 import android.os.Bundle
 import com.mole.androidcodestudy.activity.BaseActivity

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mole.androidcodestudy" >
+    package="com.mole.androidcodestudy">
+
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <!-- 粗略的位置权限 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:name="com.mole.androidcodestudy.CustomApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,10 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.AndroidCodeStudy"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
             android:name="com.mole.androidcodestudy.activity.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,24 +57,30 @@
         <activity android:name=".activity.ViewModelActivity" />
         <activity android:name=".activity.CustomLayoutManagerActivity" />
         <activity android:name=".activity.library.LombokActivity" />
-        <activity android:name="com.yc.catonhelperlib.canary.ui.DisplayActivity" android:exported="true"/>
+        <activity
+            android:name="com.yc.catonhelperlib.canary.ui.DisplayActivity"
+            android:exported="true" />
         <activity android:name=".activity.library.PaletteActivity" />
         <activity android:name=".widget.activity.CoordinatorLayoutActivity" />
         <activity android:name=".widget.activity.MotionLayoutActivity" />
-        <activity android:name=".library.UEToolActivity" />
+        <activity android:name=".library.activity.UEToolActivity" />
         <activity
             android:name=".activity.system.BatteryActivity"
             android:exported="false" />
         <activity android:name=".activity.ConstraintLayoutActivity" />
+        <activity android:name=".widget.activity.BreakIteratorActivity" />
+        <activity android:name=".widget.activity.ForegroundImageViewActivity" />
+        <activity android:name=".library.activity.SqlcipherActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
             android:label="custom service"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <receiver android:name=".receiver.AlarmBroadcastReceiver"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <receiver
+            android:name=".receiver.AlarmBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.mole.androidcodestudy.alarm_action"/>
+                <action android:name="com.mole.androidcodestudy.alarm_action" />
             </intent-filter>
         </receiver>
     </application>
