@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnOpenMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开主页" />
+
+    <Button
+        android:id="@+id/btnOpenWebsite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开网页" />
+
+    <Button
+        android:id="@+id/btnMakeCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拨打电话" />
+
+    <Button
+        android:id="@+id/btnSendEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送邮件" />
+
+    <Button
+        android:id="@+id/btnShareText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享文本" />
+
+    <Button
+        android:id="@+id/btnTestScheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试 Scheme 跳转" />
+
+</LinearLayout> 

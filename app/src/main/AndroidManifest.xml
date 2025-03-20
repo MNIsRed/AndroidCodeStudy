@@ -34,8 +34,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="custom_action_intent" />
+                <!--一个intent-filter除了action之外，还需要category，特别是当它不是LAUNCHER的时候。比如，如果Intent包含CATEGORY_DEFAULT，那么Activity的intent-filter必须也包含这个category。否则，系统可能无法匹配到。-->
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.mole.androidcodestudy.activity.ConfigurationChangeTestActivity" />
@@ -71,6 +75,21 @@
         <activity android:name=".widget.activity.BreakIteratorActivity" />
         <activity android:name=".widget.activity.ForegroundImageViewActivity" />
         <activity android:name=".library.activity.SqlcipherActivity" />
+        <activity android:name=".activity.system.ImplicitIntentActivity" />
+        <activity
+            android:name=".activity.SchemeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="custom"
+                    android:host="com.mole.androidcodestudy"
+                    android:port="8888"
+                    android:pathPattern="/.*" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
