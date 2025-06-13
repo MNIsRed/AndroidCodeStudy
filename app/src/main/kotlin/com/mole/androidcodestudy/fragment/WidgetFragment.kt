@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.AnimationActivity
 import com.mole.androidcodestudy.activity.ConstraintLayoutActivity
@@ -13,6 +14,7 @@ import com.mole.androidcodestudy.activity.SoftInputActivity
 import com.mole.androidcodestudy.activity.TextViewActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
+import com.mole.androidcodestudy.adapter.pageBean
 import com.mole.androidcodestudy.databinding.FragmentWidgetBinding
 import com.mole.androidcodestudy.extension.viewBinding
 import com.mole.androidcodestudy.widget.activity.BreakIteratorActivity
@@ -36,21 +38,21 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
         }
     }
 
-
+    
     companion object {
-        val pages: List<PageBean> = mapOf(
-            "自定义View" to CustomViewTestActivity::class.java,
-            "嵌套Coordinator" to NestedCoordinatorActivity::class.java,
-            "动画" to AnimationActivity::class.java,
-            "软键盘" to SoftInputActivity::class.java,
-            "TextView" to TextViewActivity::class.java,
-            "MaterialButton" to MaterialButtonActivity::class.java,
-            "自定义 LayoutManager" to CustomLayoutManagerActivity::class.java,
-            "CoordinatorLayout" to CoordinatorLayoutActivity::class.java,
-            "MotionLayout" to MotionLayoutActivity::class.java,
-            "ConstraintLayout" to ConstraintLayoutActivity::class.java,
-            "流失文本动画" to BreakIteratorActivity::class.java,
-            "ForegroundImageView" to ForegroundImageViewActivity::class.java
-        ).toList()
+        val pages: List<PageBean> = listOf(
+            pageBean<CustomViewTestActivity>("自定义View"),
+            pageBean<NestedCoordinatorActivity>("嵌套Coordinator"),
+            pageBean<AnimationActivity>("动画"),
+            pageBean<SoftInputActivity>("软键盘"),
+            pageBean<TextViewActivity>("TextView"),
+            pageBean<MaterialButtonActivity>("MaterialButton"),
+            pageBean<CustomLayoutManagerActivity>("自定义 LayoutManager"),
+            pageBean<CoordinatorLayoutActivity>("CoordinatorLayout"),
+            pageBean<MotionLayoutActivity>("MotionLayout"),
+            pageBean<ConstraintLayoutActivity>("ConstraintLayout"),
+            pageBean<BreakIteratorActivity>("流失文本动画"),
+            pageBean<ForegroundImageViewActivity>("ForegroundImageView")
+        )
     }
 }

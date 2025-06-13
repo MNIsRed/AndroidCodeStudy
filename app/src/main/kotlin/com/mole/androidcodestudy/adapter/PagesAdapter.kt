@@ -21,6 +21,10 @@ import com.mole.androidcodestudy.extension.start
  */
 typealias PageBean = Pair<String, Class<out AppCompatActivity>>
 
+inline fun <reified T : AppCompatActivity> pageBean(title: String): PageBean {
+    return PageBean(title, T::class.java)
+}
+
 class PagesAdapter(private val data: List<PageBean>) : RecyclerView.Adapter<ViewHolder>() {
 
     private val horizonDivide = 15f.dp2px().toInt()

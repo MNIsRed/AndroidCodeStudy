@@ -18,7 +18,7 @@ import kotlin.reflect.KProperty
  */
 class ViewModelDelegate<VM:ViewModel>(private val clazz:Class<VM>) : ReadOnlyProperty<AppCompatActivity,VM>{
     override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): VM {
-        return ViewModelProvider(thisRef)[clazz]
+        return ViewModelProvider(thisRef,thisRef.defaultViewModelProviderFactory)[clazz]
     }
 }
 

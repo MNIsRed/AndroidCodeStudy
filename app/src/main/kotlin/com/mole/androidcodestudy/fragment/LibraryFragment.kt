@@ -8,6 +8,7 @@ import com.mole.androidcodestudy.activity.CoroutineActivity
 import com.mole.androidcodestudy.activity.KotlinDelegateActivity
 import com.mole.androidcodestudy.activity.LiveDataActivity
 import com.mole.androidcodestudy.activity.ViewModelActivity
+import com.mole.androidcodestudy.activity.library.ExoplayerActivity
 import com.mole.androidcodestudy.activity.library.LombokActivity
 import com.mole.androidcodestudy.activity.library.PaletteActivity
 import com.mole.androidcodestudy.adapter.PageBean
@@ -44,7 +45,8 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
             "崩溃分析 CrashTool" to CrashListActivity::class.java,
             "palette" to PaletteActivity::class.java,
             "UETool" to UEToolActivity::class.java,
-            "Sqlcipher" to SqlcipherActivity::class.java
+            "Sqlcipher" to SqlcipherActivity::class.java,
+            "motion photo" to ExoplayerActivity::class.java
         ).toList()
     }
 }

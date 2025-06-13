@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mole.androidcodestudy.coroutine.CustomContinuationInterceptor
 import com.mole.androidcodestudy.util.threadLog
 import com.mole.androidcodestudy.util.timeLog
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.suspendCancellableCoroutine
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -36,7 +38,8 @@ import kotlin.coroutines.suspendCoroutine
  *     version: 1.0
  * </pre>
  */
-class CoroutineViewModel : ViewModel() {
+@HiltViewModel
+class CoroutineViewModel @Inject constructor() : ViewModel() {
     fun test() {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             println(exception.message)

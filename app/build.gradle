@@ -103,6 +103,7 @@ dependencies {
         }
     }
     implementation libs.local.sqlite
+    implementation libs.bundles.exoplayer
 }
 
 kapt {

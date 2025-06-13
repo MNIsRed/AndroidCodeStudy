@@ -90,6 +90,7 @@
                     android:pathPattern="/.*" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.library.ExoplayerActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
