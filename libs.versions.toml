@@ -102,6 +102,7 @@ exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exo_ve
 exoplayer_dash = { module = "androidx.media3:media3-exoplayer", version.ref = "exo_version" }
 exoplayer_ui = { module = "androidx.media3:media3-ui", version.ref = "exo_version" }
 
+textRecognition = { module = "com.google.mlkit:text-recognition", version = "16.0.1" }
 [bundles]
 androidx = ["appcompact", "constraintLayout", "activity", "activityKtx", "coreKtx", "recyclerView"]
 lifecycle = ["lifecycleLiveDataKtx", "lifecycleProcess", "lifecycleViewmodelKtx"]

@@ -11,6 +11,7 @@ import com.mole.androidcodestudy.activity.ViewModelActivity
 import com.mole.androidcodestudy.activity.library.ExoplayerActivity
 import com.mole.androidcodestudy.activity.library.LombokActivity
 import com.mole.androidcodestudy.activity.library.PaletteActivity
+import com.mole.androidcodestudy.activity.library.TextRecognitionActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
@@ -46,7 +47,8 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
             "palette" to PaletteActivity::class.java,
             "UETool" to UEToolActivity::class.java,
             "Sqlcipher" to SqlcipherActivity::class.java,
-            "motion photo" to ExoplayerActivity::class.java
+            "motion photo" to ExoplayerActivity::class.java,
+            "OCR" to TextRecognitionActivity::class.java
         ).toList()
     }
 }

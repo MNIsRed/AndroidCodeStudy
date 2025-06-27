@@ -91,6 +91,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.library.ExoplayerActivity" />
+        <activity android:name=".activity.library.TextRecognitionActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
