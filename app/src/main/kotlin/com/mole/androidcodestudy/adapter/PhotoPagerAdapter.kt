@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.request.ErrorResult
-import coil.request.ImageRequest
-import coil.request.SuccessResult
+import coil.target.Target
 import com.mole.androidcodestudy.data.PhotoPagerBean
 
 /**
@@ -18,7 +16,7 @@ import com.mole.androidcodestudy.data.PhotoPagerBean
 
 class PhotoPagerAdapter(
     private val images: List<PhotoPagerBean>,
-    private val onHeightMeasured: (position: Int, ratio: Float) -> Unit
+    private val onHeightMeasured: (position: Int, height: Int) -> Unit
 ) : RecyclerView.Adapter<PhotoPagerAdapter.PhotoPagerViewHolder>() {
     
     companion object {
@@ -27,7 +25,8 @@ class PhotoPagerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoPagerViewHolder {
         return PhotoPagerViewHolder(ImageView(parent.context).apply {
-            scaleType = ImageView.ScaleType.FIT_CENTER
+            scaleType = ImageView.ScaleType.FIT_XY
+            adjustViewBounds = true
             layoutParams = RecyclerView.LayoutParams(
                 RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT
             )
@@ -55,10 +54,22 @@ class PhotoPagerAdapter(
                             // 将 Drawable 设置给 ImageView
                             setImageDrawable(resultDrawable)
 
-                            // 在这里执行你的测量逻辑
-                            // 注意：此时 Drawable 的尺寸是固定的，可以直接用
+                            // 计算实际需要的高度（基于屏幕宽度和图片宽高比）
+                            val screenWidth = context.resources.displayMetrics.widthPixels
                             val ratio = resultDrawable.intrinsicHeight.toFloat() / resultDrawable.intrinsicWidth
-                            onHeightMeasured(actualPosition, ratio)
+                            val calculatedHeight = (screenWidth * ratio).toInt()
+                            
+                            Log.d(TAG, "Position: $actualPosition, ScreenWidth: $screenWidth, Ratio: $ratio, CalculatedHeight: $calculatedHeight")
+                            
+                            // 通知容器更新高度
+                            onHeightMeasured(actualPosition, calculatedHeight)
+                            
+                            // 延迟设置 ImageView 的高度，避免与 ViewPager2 的测量过程冲突
+                            post {
+                                val layoutParams = this@apply.layoutParams
+                                layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
+                                this@apply.layoutParams = layoutParams
+                            }
 
                         },
                         onError = { errorDrawable ->
@@ -67,9 +78,20 @@ class PhotoPagerAdapter(
 
                             setImageDrawable(errorDrawable)
 
-                            // 图片加载失败时也通知测量，使用默认比例
+                            // 图片加载失败时也通知测量，使用默认比例计算高度
+                            val screenWidth = context.resources.displayMetrics.widthPixels
                             val defaultRatio = images[actualPosition].height.toFloat() / images[actualPosition].width
-                            onHeightMeasured(actualPosition, defaultRatio)
+                            val calculatedHeight = (screenWidth * defaultRatio).toInt()
+                            
+                            // 通知容器更新高度
+                            onHeightMeasured(actualPosition, calculatedHeight)
+                            
+                            // 延迟设置 ImageView 的高度，避免与 ViewPager2 的测量过程冲突
+                            post {
+                                val layoutParams = this@apply.layoutParams
+                                layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
+                                this@apply.layoutParams = layoutParams
+                            }
                         }
                     )
                 }

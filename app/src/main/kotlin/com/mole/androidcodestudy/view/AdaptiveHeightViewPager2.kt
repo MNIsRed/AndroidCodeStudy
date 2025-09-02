@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -18,7 +19,7 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
 
     private val viewPager: ViewPager2
     private var currentPosition = 0
-    private var nextPosition = 0
+    private var currentPositionOffset = 0f
     // 用于存储每个位置的子 View 高度
     private val childHeights = mutableMapOf<Int, Int>()
 
@@ -34,9 +35,13 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
+                // 保存当前的滑动状态
+                currentPosition = position
+                currentPositionOffset = positionOffset
+                
                 // positionOffset 是从 0.0 到 1.0 的滑动比例
                 // 当 positionOffset 不为 0 时，说明正在滑动中
-                if (positionOffset > 0) {
+                if (positionOffset > 0 || childHeights.containsKey(position)) {
                     //  触发容器的重新测量
                     requestLayout()
                 }
@@ -44,6 +49,10 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
 
             override fun onPageSelected(position: Int) {
                 currentPosition = position
+                // 页面切换完成时，确保当前页面的高度正确
+                ensureCurrentPageHeight()
+                // 页面切换完成时，也需要重新测量以确保高度正确
+                requestLayout()
             }
         })
     }
@@ -65,58 +74,112 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
             if (position == currentPosition) {
                 requestLayout()
             }
+            
+            // 同时更新 ViewPager2 中对应位置的 View 高度
+            updateChildViewHeight(position, height)
+        }
+    }
+    
+    /**
+     * 确保当前页面的高度正确
+     */
+    private fun ensureCurrentPageHeight() {
+        val currentHeight = childHeights[currentPosition]
+        if (currentHeight != null && currentHeight > 0) {
+            updateChildViewHeight(currentPosition, currentHeight)
+        }
+    }
+    
+    /**
+     * 更新指定位置的子 View 高度
+     */
+    private fun updateChildViewHeight(position: Int, height: Int) {
+        // 延迟执行，避免在测量过程中直接修改子View
+        post {
+            val recyclerView = viewPager.getChildAt(0) as? RecyclerView
+            val layoutManager = recyclerView?.layoutManager
+            
+            // 如果当前页面正在显示，立即更新其高度
+            if (layoutManager != null && recyclerView != null) {
+                for (i in 0 until layoutManager.childCount) {
+                    val child = layoutManager.getChildAt(i)
+                    if (child != null) {
+                        val childPosition = recyclerView.getChildAdapterPosition(child)
+                        if (childPosition == position) {
+                            val layoutParams = child.layoutParams
+                            //if (layoutParams.height != height) {
+                            //    layoutParams.height = height
+                            //    child.layoutParams = layoutParams
+                            //    child.requestLayout()
+                            //}
+                            layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
+                            child.layoutParams = layoutParams
+                            child.requestLayout()
+                            break
+                        }
+                    }
+                }
+            }
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // 测量内部的 ViewPager2
+        // 首先正常测量 ViewPager2，获取其默认高度
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        // --- 核心的高度计算逻辑 ---
-
-        // 获取当前滑动位置和偏移量
-        val position = viewPager.currentItem
-
-        // 获取当前页面的高度，如果没有则为0
-        val currentHeight = childHeights[position] ?: 0
-
-        // 如果只有一个页面或者没有下一个页面的高度信息，则直接使用当前页面高度
-        if (childHeights.size <= position + 1) {
-            // 确保至少有一个最小高度，避免高度为0导致无法显示
-            val finalHeight = if (currentHeight > 0) currentHeight else measuredHeight
-            setMeasuredDimension(measuredWidth, finalHeight)
-            return
+        
+        // 获取当前页面的高度，如果没有则使用测量得到的高度
+        val currentHeight = childHeights[currentPosition] ?: measuredHeight
+        val targetHeight = if (currentHeight > 0 && childHeights.isNotEmpty()) {
+            // 如果没有滑动（positionOffset 为 0），直接使用当前页面高度
+            if (currentPositionOffset == 0f) {
+                currentHeight
+            } else {
+                // 滑动过程中，计算下一个页面的高度
+                val nextPosition = currentPosition + 1
+                val nextHeight = childHeights[nextPosition] ?: currentHeight
+                
+                // 使用线性插值计算滑动过程中的动态高度
+                (currentHeight * (1 - currentPositionOffset) + nextHeight * currentPositionOffset).toInt()
+            }
+        } else {
+            // 如果没有高度信息，使用默认测量高度
+            measuredHeight
         }
-
-        // 获取下一个页面的高度
-        val nextHeight = childHeights[position + 1] ?: 0
-
-        // 使用线性插值计算滑动过程中的动态高度
-        // (这里我们需要自己计算一个 positionOffset，因为 onMeasure 中拿不到)
-        // 这是一个简化的计算，实际中可能需要更复杂的逻辑来获取精确的 offset
-        // 幸运的是，ViewPager2 内部的 RecyclerView 可以帮助我们
+        
+        // 确保子页面高度与容器高度匹配
+        ensureChildrenFillViewPager(targetHeight)
+        
+        // 设置容器的最终测量高度
+        setMeasuredDimension(measuredWidth, targetHeight)
+    }
+    
+    /**
+     * 确保所有可见的子页面都填满ViewPager
+     */
+    private fun ensureChildrenFillViewPager(targetHeight: Int) {
         val recyclerView = viewPager.getChildAt(0) as? RecyclerView
         val layoutManager = recyclerView?.layoutManager
-        var positionOffset = 0f
-
-        // 这是一个技巧，通过视图的平移来估算偏移比例
-        // 注意：这可能不是100%精确，但效果通常很好
-        if (layoutManager != null && layoutManager.childCount > 0) {
-            val firstChild = layoutManager.getChildAt(0)
-            if (firstChild != null) {
-                val measuredWidth = getMeasuredWidth()
-                if (measuredWidth > 0) {
-                    positionOffset = abs(firstChild.left).toFloat() / measuredWidth
+        
+        if (layoutManager != null && recyclerView != null) {
+            // 更新所有可见子View的高度
+            for (i in 0 until layoutManager.childCount) {
+                val child = layoutManager.getChildAt(i)
+                if (child != null) {
+                    val layoutParams = child.layoutParams
+                    //if (layoutParams.height != targetHeight) {
+                    //    layoutParams.height = targetHeight
+                    //
+                    //}
+                    layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
+                    child.layoutParams = layoutParams
+                    child.requestLayout()
+                    // 强制重新测量子View
+                    child.measure(
+                        View.MeasureSpec.makeMeasureSpec(child.measuredWidth, View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(targetHeight, View.MeasureSpec.EXACTLY)
+                    )
                 }
             }
         }
-
-        // 线性插值计算
-        val newHeight = (currentHeight * (1 - positionOffset) + nextHeight * positionOffset).toInt()
-
-        // 确保有一个最小高度，避免高度为0导致无法显示
-        val finalHeight = if (newHeight > 0) newHeight else measuredHeight
-        // 设置容器的最终测量高度
-        setMeasuredDimension(measuredWidth, finalHeight)
     }
 }

@@ -37,10 +37,10 @@ class ViewPager2AdaptiveHeightActivity : BaseActivity() {
                         500, 667
                     ),
                 )
-            ) { position, ratio ->
+            ) { position, height ->
                 binding.rootViewPager.onChildHeightMeasured(
                     position,
-                    (ScreenUtils.getScreenWidth() * ratio).toInt()
+                    height
                 )
             }
         }
