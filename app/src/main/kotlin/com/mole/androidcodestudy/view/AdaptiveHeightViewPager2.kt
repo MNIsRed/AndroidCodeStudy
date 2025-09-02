@@ -146,6 +146,13 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
             measuredHeight
         }
         
+        // 如果目标高度与当前测量的高度不同，需要重新测量ViewPager2
+        if (targetHeight != measuredHeight) {
+            // 重新测量 ViewPager2，让它适应新的高度
+            val newHeightSpec = View.MeasureSpec.makeMeasureSpec(targetHeight, View.MeasureSpec.EXACTLY)
+            viewPager.measure(widthMeasureSpec, newHeightSpec)
+        }
+        
         // 确保子页面高度与容器高度匹配
         ensureChildrenFillViewPager(targetHeight)
         
@@ -178,7 +185,63 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
                         View.MeasureSpec.makeMeasureSpec(child.measuredWidth, View.MeasureSpec.EXACTLY),
                         View.MeasureSpec.makeMeasureSpec(targetHeight, View.MeasureSpec.EXACTLY)
                     )
+                    
+                    // 如果子View是 ImageView，通知它重新计算 Matrix
+                    if (child is android.widget.ImageView) {
+                        child.post {
+                            notifyImageViewToRecalculateMatrix(child)
+                        }
+                    }
                 }
+            }
+        }
+    }
+    
+    /**
+     * 通知 ImageView 重新计算其 Matrix
+     */
+    private fun notifyImageViewToRecalculateMatrix(imageView: android.widget.ImageView) {
+        val drawable = imageView.drawable
+        if (drawable != null && imageView.width > 0 && imageView.height > 0) {
+            // 计算新的 Matrix
+            val matrix = android.graphics.Matrix()
+            val drawableWidth = drawable.intrinsicWidth.toFloat()
+            val drawableHeight = drawable.intrinsicHeight.toFloat()
+            
+            if (drawableWidth > 0 && drawableHeight > 0) {
+                // 计算缩放比例，让图片宽度充满 ImageView 宽度
+                val scaleX = imageView.width / drawableWidth
+                val scaleY = scaleX  // 保持宽高比，使用相同的缩放比例
+                
+                // 计算缩放后的图片尺寸
+                val scaledWidth = drawableWidth * scaleX
+                val scaledHeight = drawableHeight * scaleY
+                
+                // 检查缩放后的高度是否超过容器高度
+                val finalScale = if (scaledHeight > imageView.height) {
+                    // 如果图片高度超过容器，则以容器高度为准
+                    imageView.height / drawableHeight
+                } else {
+                    // 否则以宽度充满为准
+                    scaleX
+                }
+                
+                // 设置最终的缩放比例
+                matrix.setScale(finalScale, finalScale)
+                
+                // 重新计算缩放后的尺寸
+                val finalScaledWidth = drawableWidth * finalScale
+                val finalScaledHeight = drawableHeight * finalScale
+                
+                // 水平居中，垂直顶部对齐
+                val dx = (imageView.width - finalScaledWidth) / 2f
+                val dy = 0f  // 顶部对齐
+                
+                // 设置平移
+                matrix.postTranslate(dx, dy)
+                
+                // 应用 Matrix
+                imageView.imageMatrix = matrix
             }
         }
     }

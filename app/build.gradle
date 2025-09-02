@@ -38,7 +38,7 @@ android {
         viewBinding = true
         compose true
     }
-    composeOptions{
+    composeOptions {
         kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
@@ -86,19 +86,19 @@ dependencies {
     implementation libs.about.librarie.ui
     implementation libs.bundles.ycCrashTool
     implementation libs.palette
-    debugImplementation(libs.bundles.uetoolDebug) {
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.github.tiann', module: 'FreeReflection'
-    }
-    releaseImplementation(libs.bundles.uetoolRelease)
+    //debugImplementation(libs.bundles.uetoolDebug) {
+    //    exclude group: 'com.android.support', module: 'support-compat'
+    //    exclude group: 'com.android.support', module: 'support-media-compat'
+    //    exclude group: 'com.github.tiann', module: 'FreeReflection'
+    //}
+    //releaseImplementation(libs.bundles.uetoolRelease)
     def composeBom = platform(libs.compose.bom)
     implementation composeBom
     androidTestImplementation(composeBom)
     implementation libs.bundles.compose
 
-    implementation(libs.sqlcipher){
-        artifact{
+    implementation(libs.sqlcipher) {
+        artifact {
             type = 'aar'
         }
     }
@@ -106,6 +106,13 @@ dependencies {
     implementation libs.bundles.exoplayer
     implementation libs.textRecognition
     implementation libs.utilCodeX
+
+    implementation files('libs/uetool-debug.aar')
+    implementation files('libs/uetool-fresco-debug.aar')
+    implementation files('libs/uetool-base-debug.aar')
+    implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
+    implementation "com.facebook.fresco:fresco:1.0.1"
+
 }
 
 kapt {
