@@ -2,7 +2,6 @@ package com.mole.androidcodestudy.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.AnimationActivity
 import com.mole.androidcodestudy.activity.ConstraintLayoutActivity
@@ -12,6 +11,7 @@ import com.mole.androidcodestudy.activity.MaterialButtonActivity
 import com.mole.androidcodestudy.activity.NestedCoordinatorActivity
 import com.mole.androidcodestudy.activity.SoftInputActivity
 import com.mole.androidcodestudy.activity.TextViewActivity
+import com.mole.androidcodestudy.activity.widget.ViewPager2AdaptiveHeightActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.adapter.pageBean
@@ -38,7 +38,7 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
         }
     }
 
-    
+
     companion object {
         val pages: List<PageBean> = listOf(
             pageBean<CustomViewTestActivity>("自定义View"),
@@ -52,7 +52,8 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
             pageBean<MotionLayoutActivity>("MotionLayout"),
             pageBean<ConstraintLayoutActivity>("ConstraintLayout"),
             pageBean<BreakIteratorActivity>("流失文本动画"),
-            pageBean<ForegroundImageViewActivity>("ForegroundImageView")
+            pageBean<ForegroundImageViewActivity>("ForegroundImageView"),
+            pageBean<ViewPager2AdaptiveHeightActivity>("切换高度的 ViewPager2")
         )
     }
 }

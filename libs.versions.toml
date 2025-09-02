@@ -103,6 +103,9 @@ exoplayer_dash = { module = "androidx.media3:media3-exoplayer", version.ref = "e
 exoplayer_ui = { module = "androidx.media3:media3-ui", version.ref = "exo_version" }
 
 textRecognition = { module = "com.google.mlkit:text-recognition", version = "16.0.1" }
+
+utilCodeX = { module = "com.blankj:utilcodex", version = "1.31.1" }
+
 [bundles]
 androidx = ["appcompact", "constraintLayout", "activity", "activityKtx", "coreKtx", "recyclerView"]
 lifecycle = ["lifecycleLiveDataKtx", "lifecycleProcess", "lifecycleViewmodelKtx"]
@@ -111,7 +114,7 @@ navigation = ["navigation_fragment", "navigation_ui", "navigation_kt_fragment", 
 ycCrashTool = ["yc_crash_lib", "yc_file_lib", "yc_caton_lib", "yc_net_lib", "yc_anr_lib"]
 uetoolDebug = ["uetool", "uetool_base"]
 uetoolRelease = ["uetool_no_op"]
-compose = ["compose_material3", "compose_viewbinding","compose_activity"]
+compose = ["compose_material3", "compose_viewbinding", "compose_activity"]
 exoplayer = ["exoplayer", "exoplayer_dash", "exoplayer_ui"]
 [plugins]
 about_libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about_libraries_version" }

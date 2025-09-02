@@ -92,6 +92,7 @@
         </activity>
         <activity android:name=".activity.library.ExoplayerActivity" />
         <activity android:name=".activity.library.TextRecognitionActivity" />
+        <activity android:name=".activity.widget.ViewPager2AdaptiveHeightActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"

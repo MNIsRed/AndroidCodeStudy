@@ -3,6 +3,8 @@ package com.mole.androidcodestudy
 import android.app.Application
 import androidx.work.Configuration
 import androidx.work.WorkManager
+import coil.Coil
+import coil.ImageLoader
 import com.yc.toollib.crash.CrashHandler
 import com.yc.toollib.crash.CrashListener
 import com.yc.toollib.crash.CrashToolUtils
@@ -16,6 +18,12 @@ class CustomApplication : Application(), Configuration.Provider {
         INSTANCE = this
         initYCAndroidTool()
         System.loadLibrary("sqlcipher")
+        
+        // 初始化Coil
+        val imageLoader = ImageLoader.Builder(this)
+            .crossfade(true)
+            .build()
+        Coil.setImageLoader(imageLoader)
     }
 
     /**

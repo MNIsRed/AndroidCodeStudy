@@ -105,6 +105,7 @@ dependencies {
     implementation libs.local.sqlite
     implementation libs.bundles.exoplayer
     implementation libs.textRecognition
+    implementation libs.utilCodeX
 }
 
 kapt {
