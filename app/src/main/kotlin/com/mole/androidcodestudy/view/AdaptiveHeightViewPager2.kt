@@ -17,15 +17,14 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs) {
 
-    private val viewPager: ViewPager2
+    // 在容器内部添加一个 ViewPager2
+    private val viewPager: ViewPager2 = ViewPager2(context)
     private var currentPosition = 0
     private var currentPositionOffset = 0f
     // 用于存储每个位置的子 View 高度
     private val childHeights = mutableMapOf<Int, Int>()
 
     init {
-        // 在容器内部添加一个 ViewPager2
-        viewPager = ViewPager2(context)
         addView(viewPager, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
         // 注册页面滑动回调
@@ -49,8 +48,6 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
 
             override fun onPageSelected(position: Int) {
                 currentPosition = position
-                // 页面切换完成时，确保当前页面的高度正确
-                ensureCurrentPageHeight()
                 // 页面切换完成时，也需要重新测量以确保高度正确
                 requestLayout()
             }
@@ -74,54 +71,11 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
             if (position == currentPosition) {
                 requestLayout()
             }
-            
-            // 同时更新 ViewPager2 中对应位置的 View 高度
-            updateChildViewHeight(position, height)
         }
     }
-    
-    /**
-     * 确保当前页面的高度正确
-     */
-    private fun ensureCurrentPageHeight() {
-        val currentHeight = childHeights[currentPosition]
-        if (currentHeight != null && currentHeight > 0) {
-            updateChildViewHeight(currentPosition, currentHeight)
-        }
-    }
-    
-    /**
-     * 更新指定位置的子 View 高度
-     */
-    private fun updateChildViewHeight(position: Int, height: Int) {
-        // 延迟执行，避免在测量过程中直接修改子View
-        post {
-            val recyclerView = viewPager.getChildAt(0) as? RecyclerView
-            val layoutManager = recyclerView?.layoutManager
-            
-            // 如果当前页面正在显示，立即更新其高度
-            if (layoutManager != null && recyclerView != null) {
-                for (i in 0 until layoutManager.childCount) {
-                    val child = layoutManager.getChildAt(i)
-                    if (child != null) {
-                        val childPosition = recyclerView.getChildAdapterPosition(child)
-                        if (childPosition == position) {
-                            val layoutParams = child.layoutParams
-                            //if (layoutParams.height != height) {
-                            //    layoutParams.height = height
-                            //    child.layoutParams = layoutParams
-                            //    child.requestLayout()
-                            //}
-                            layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
-                            child.layoutParams = layoutParams
-                            child.requestLayout()
-                            break
-                        }
-                    }
-                }
-            }
-        }
-    }
+
+
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // 首先正常测量 ViewPager2，获取其默认高度
@@ -149,7 +103,7 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
         // 如果目标高度与当前测量的高度不同，需要重新测量ViewPager2
         if (targetHeight != measuredHeight) {
             // 重新测量 ViewPager2，让它适应新的高度
-            val newHeightSpec = View.MeasureSpec.makeMeasureSpec(targetHeight, View.MeasureSpec.EXACTLY)
+            val newHeightSpec = MeasureSpec.makeMeasureSpec(targetHeight, MeasureSpec.EXACTLY)
             viewPager.measure(widthMeasureSpec, newHeightSpec)
         }
         
@@ -167,23 +121,16 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
         val recyclerView = viewPager.getChildAt(0) as? RecyclerView
         val layoutManager = recyclerView?.layoutManager
         
-        if (layoutManager != null && recyclerView != null) {
+        if (layoutManager != null) {
             // 更新所有可见子View的高度
             for (i in 0 until layoutManager.childCount) {
                 val child = layoutManager.getChildAt(i)
                 if (child != null) {
-                    val layoutParams = child.layoutParams
-                    //if (layoutParams.height != targetHeight) {
-                    //    layoutParams.height = targetHeight
-                    //
-                    //}
-                    layoutParams.height = RecyclerView.LayoutParams.MATCH_PARENT
-                    child.layoutParams = layoutParams
-                    child.requestLayout()
+                    //child.requestLayout()
                     // 强制重新测量子View
                     child.measure(
-                        View.MeasureSpec.makeMeasureSpec(child.measuredWidth, View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(targetHeight, View.MeasureSpec.EXACTLY)
+                        MeasureSpec.makeMeasureSpec(child.measuredWidth, MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(targetHeight, MeasureSpec.EXACTLY)
                     )
                     
                     // 如果子View是 ImageView，通知它重新计算 Matrix
@@ -201,48 +148,6 @@ class AdaptiveHeightViewPager2 @JvmOverloads constructor(
      * 通知 ImageView 重新计算其 Matrix
      */
     private fun notifyImageViewToRecalculateMatrix(imageView: android.widget.ImageView) {
-        val drawable = imageView.drawable
-        if (drawable != null && imageView.width > 0 && imageView.height > 0) {
-            // 计算新的 Matrix
-            val matrix = android.graphics.Matrix()
-            val drawableWidth = drawable.intrinsicWidth.toFloat()
-            val drawableHeight = drawable.intrinsicHeight.toFloat()
-            
-            if (drawableWidth > 0 && drawableHeight > 0) {
-                // 计算缩放比例，让图片宽度充满 ImageView 宽度
-                val scaleX = imageView.width / drawableWidth
-                val scaleY = scaleX  // 保持宽高比，使用相同的缩放比例
-                
-                // 计算缩放后的图片尺寸
-                val scaledWidth = drawableWidth * scaleX
-                val scaledHeight = drawableHeight * scaleY
-                
-                // 检查缩放后的高度是否超过容器高度
-                val finalScale = if (scaledHeight > imageView.height) {
-                    // 如果图片高度超过容器，则以容器高度为准
-                    imageView.height / drawableHeight
-                } else {
-                    // 否则以宽度充满为准
-                    scaleX
-                }
-                
-                // 设置最终的缩放比例
-                matrix.setScale(finalScale, finalScale)
-                
-                // 重新计算缩放后的尺寸
-                val finalScaledWidth = drawableWidth * finalScale
-                val finalScaledHeight = drawableHeight * finalScale
-                
-                // 水平居中，垂直顶部对齐
-                val dx = (imageView.width - finalScaledWidth) / 2f
-                val dy = 0f  // 顶部对齐
-                
-                // 设置平移
-                matrix.postTranslate(dx, dy)
-                
-                // 应用 Matrix
-                imageView.imageMatrix = matrix
-            }
-        }
+        com.mole.androidcodestudy.util.ImageMatrixUtils.recalculateImageMatrix(imageView)
     }
 }
