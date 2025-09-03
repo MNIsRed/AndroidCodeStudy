@@ -8,41 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.blankj.utilcode.util.ScreenUtils
 import com.mole.androidcodestudy.data.PhotoPagerBean
+import java.lang.ref.WeakReference
 
 /**
  *  PhotoPagerAdapter
  */
-
-
 class PhotoPagerAdapter(
     private val images: List<PhotoPagerBean>,
-    private val onHeightMeasured: (position: Int, height: Int) -> Unit
-) : RecyclerView.Adapter<PhotoPagerAdapter.PhotoPagerViewHolder>() {
+    viewPager: com.mole.androidcodestudy.view.AdaptiveHeightViewPager2
+) : RecyclerView.Adapter<PhotoPagerAdapter.PhotoPagerViewHolder>(), HeightMeasurableAdapter {
+
+    private var viewPagerRef: WeakReference<com.mole.androidcodestudy.view.AdaptiveHeightViewPager2>? =
+        null
+
+    init {
+        this.viewPagerRef = WeakReference(viewPager)
+    }
+
+    override fun setViewPager(viewPager: com.mole.androidcodestudy.view.AdaptiveHeightViewPager2) {
+        this.viewPagerRef = WeakReference(viewPager)
+    }
 
     companion object {
         private const val TAG = "PhotoPagerAdapter"
-    }
-
-    /**
-     * 计算图片在容器中的最佳高度，与 Matrix 逻辑保持一致
-     */
-    private fun calculateOptimalHeight(
-        drawable: android.graphics.drawable.Drawable,
-        containerWidth: Int,
-        maxHeight: Int = Int.MAX_VALUE
-    ): Int {
-        val calculatedHeight =
-            com.mole.androidcodestudy.util.ImageMatrixUtils.calculateOptimalHeight(
-                drawable,
-                containerWidth
-            )
-
-        // 如果设置了最大高度限制，则应用该限制
-        return if (maxHeight != Int.MAX_VALUE && calculatedHeight > maxHeight) {
-            maxHeight
-        } else {
-            calculatedHeight
-        }
     }
 
     /**
@@ -94,8 +82,7 @@ class PhotoPagerAdapter(
                     val currentWidth = width
                     val currentHeight = height
                     if (currentWidth > 0 && currentHeight > 0) {
-                        (holder.itemView as? ImageView)?.drawable?.let {
-                            drawable ->
+                        (holder.itemView as? ImageView)?.drawable?.let { drawable ->
                             setupImageMatrix(drawable, currentWidth, currentHeight)
                         }
                     }
@@ -110,4 +97,8 @@ class PhotoPagerAdapter(
     }
 
     class PhotoPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    override fun onHeightMeasured(position: Int, height: Int) {
+        viewPagerRef?.get()?.onChildHeightMeasured(position, height)
+    }
 }
