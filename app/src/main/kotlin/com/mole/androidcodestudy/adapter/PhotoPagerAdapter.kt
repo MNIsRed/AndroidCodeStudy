@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.blankj.utilcode.util.ScreenUtils
 import com.mole.androidcodestudy.data.PhotoPagerBean
 
 /**
@@ -82,79 +83,22 @@ class PhotoPagerAdapter(
                 )
 
                 // 使用更直接的方式加载图片
-                load(images[actualPosition].url) {
-                    target(
-                        onSuccess = { resultDrawable ->
-                            // resultDrawable 就是加载成功的图片 Drawable
-                            Log.d(
-                                TAG,
-                                "Image available (from cache or network) at position: $actualPosition"
-                            )
+                (holder.itemView as? ImageView)?.load(images[actualPosition].url)
+                // 通知容器更新高度
+                val calculatedHeight =
+                    ScreenUtils.getScreenWidth() * images[actualPosition].height.toFloat() / images[actualPosition].width.toFloat()
+                onHeightMeasured(actualPosition, calculatedHeight.toInt())
 
-                            // 将 Drawable 设置给 ImageView
-                            setImageDrawable(resultDrawable)
-
-                            // 使用与 Matrix一致的逻辑计算容器高度
-                            val screenWidth = context.resources.displayMetrics.widthPixels
-                            val calculatedHeight =
-                                calculateOptimalHeight(resultDrawable, screenWidth)
-
-                            Log.d(
-                                TAG,
-                                "Position: $actualPosition, ScreenWidth: $screenWidth, CalculatedHeight: $calculatedHeight"
-                            )
-
-                            // 通知容器更新高度
-                            onHeightMeasured(actualPosition, calculatedHeight)
-
-                            // 延迟设置图片的 Matrix，确保在容器高度变化时图片正确显示
-                            post {
-                                val currentWidth = width
-                                val currentHeight = height
-                                if (currentWidth > 0 && currentHeight > 0) {
-                                    setupImageMatrix(resultDrawable, currentWidth, currentHeight)
-                                }
-                            }
-
-                        },
-                        onError = { errorDrawable ->
-                            // errorDrawable 是加载失败时显示的占位图
-                            Log.e(TAG, "Image loading failed at position: $actualPosition")
-
-                            setImageDrawable(errorDrawable)
-
-                            // 图片加载失败时使用默认数据计算高度
-                            val screenWidth = context.resources.displayMetrics.widthPixels
-                            // 使用图片数据中的尺寸信息构建一个虚拟的 Drawable
-                            val imageData = images[actualPosition]
-                            val virtualDrawable = object : android.graphics.drawable.Drawable() {
-                                override fun draw(canvas: android.graphics.Canvas) {}
-                                override fun setAlpha(alpha: Int) {}
-                                override fun setColorFilter(colorFilter: android.graphics.ColorFilter?) {}
-                                override fun getOpacity(): Int =
-                                    android.graphics.PixelFormat.TRANSLUCENT
-
-                                override fun getIntrinsicWidth(): Int = imageData.width
-                                override fun getIntrinsicHeight(): Int = imageData.height
-                            }
-                            val calculatedHeight =
-                                calculateOptimalHeight(virtualDrawable, screenWidth)
-
-                            // 通知容器更新高度
-                            onHeightMeasured(actualPosition, calculatedHeight)
-
-                            // 对错误图片也设置 Matrix
-                            if (errorDrawable != null) {
-                                post {
-                                    val currentWidth = width
-                                    val currentHeight = height
-                                    if (currentWidth > 0 && currentHeight > 0) {
-                                        setupImageMatrix(errorDrawable, currentWidth, currentHeight)
-                                    }
-                                }
-                            }
+                // 延迟设置图片的 Matrix，确保在容器高度变化时图片正确显示
+                post {
+                    val currentWidth = width
+                    val currentHeight = height
+                    if (currentWidth > 0 && currentHeight > 0) {
+                        (holder.itemView as? ImageView)?.drawable?.let {
+                            drawable ->
+                            setupImageMatrix(drawable, currentWidth, currentHeight)
                         }
-                    )
+                    }
                 }
             } else {
                 Log.w(
