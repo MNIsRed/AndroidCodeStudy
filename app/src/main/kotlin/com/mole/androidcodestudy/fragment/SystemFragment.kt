@@ -10,6 +10,7 @@ import com.mole.androidcodestudy.activity.LocationActivity
 import com.mole.androidcodestudy.activity.PickMediaActivity
 import com.mole.androidcodestudy.activity.system.BatteryActivity
 import com.mole.androidcodestudy.activity.system.ImplicitIntentActivity
+import com.mole.androidcodestudy.activity.system.MediaMetadataRetrieverActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentSystemBinding
@@ -38,7 +39,8 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
             "日历" to CalendarActivity::class.java,
             "定时器" to AlarmActivity::class.java,
             "电池信息" to BatteryActivity::class.java,
-            "隐式意图" to ImplicitIntentActivity::class.java
+            "隐式意图" to ImplicitIntentActivity::class.java,
+            "视频元信息" to MediaMetadataRetrieverActivity::class.java,
         ).toList()
     }
 }

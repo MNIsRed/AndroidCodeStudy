@@ -16,6 +16,7 @@ import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.library.activity.PdfViewerActivity
 import com.mole.androidcodestudy.library.activity.SqlcipherActivity
 import com.mole.androidcodestudy.library.activity.UEToolActivity
 import com.yc.toollib.crash.CrashListActivity
@@ -48,7 +49,8 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
             "UETool" to UEToolActivity::class.java,
             "Sqlcipher" to SqlcipherActivity::class.java,
             "motion photo" to ExoplayerActivity::class.java,
-            "OCR" to TextRecognitionActivity::class.java
+            "OCR" to TextRecognitionActivity::class.java,
+            "PDF 预览" to PdfViewerActivity::class.java
         ).toList()
     }
 }

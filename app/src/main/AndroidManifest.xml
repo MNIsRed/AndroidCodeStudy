@@ -75,24 +75,28 @@
         <activity android:name=".widget.activity.BreakIteratorActivity" />
         <activity android:name=".widget.activity.ForegroundImageViewActivity" />
         <activity android:name=".library.activity.SqlcipherActivity" />
+        <activity android:name=".library.activity.PdfViewerActivity" />
         <activity android:name=".activity.system.ImplicitIntentActivity" />
         <activity
             android:name=".activity.SchemeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="custom"
                     android:host="com.mole.androidcodestudy"
+                    android:pathPattern="/.*"
                     android:port="8888"
-                    android:pathPattern="/.*" />
+                    android:scheme="custom" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.library.ExoplayerActivity" />
         <activity android:name=".activity.library.TextRecognitionActivity" />
         <activity android:name=".activity.widget.ViewPager2AdaptiveHeightActivity" />
+        <activity android:name=".activity.system.MediaMetadataRetrieverActivity" />
 
         <service
             android:name="com.mole.androidcodestudy.service.CustomJobService"
@@ -105,6 +109,19 @@
                 <action android:name="com.mole.androidcodestudy.alarm_action" />
             </intent-filter>
         </receiver>
+        <!-- 在 Application 中 手动/按需（On-Demand） 初始化 WorkManager ，添加这段代码来移除 WorkManager 的自动初始化 -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+
+            <!-- 这里显式移除 WorkManagerInitializer -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+
+        </provider>
     </application>
 
 </manifest>

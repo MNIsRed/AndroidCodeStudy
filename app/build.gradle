@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace 'com.mole.androidcodestudy'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.mole.androidcodestudy"
@@ -39,7 +39,23 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+    signingConfigs{
+        release {
+            storeFile file("../AndroidCodeStudy.jks")
+            storePassword "123456"
+            keyAlias "AndroidCodeStudy"
+            keyPassword "123456"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 
@@ -112,6 +128,10 @@ dependencies {
     implementation files('libs/uetool-base-debug.aar')
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
     implementation "com.facebook.fresco:fresco:1.0.1"
+    // 使用 mhiew 分支以适配 16K 页大小设备（如 Pixel 8 / Android 14），避免 pdfium native 崩溃
+    //implementation 'com.github.mhiew:android-pdf-viewer:3.2.0-beta.1'
+    implementation("io.github.oothp:android-pdf-viewer:3.2.0-beta06")
+
 
 }
 
