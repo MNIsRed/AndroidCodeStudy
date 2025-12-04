@@ -22,6 +22,7 @@ ycAndroidTool_version = "1.2.8"
 uetool_version = "1.3.4"
 compose-bom = "2025.02.00"
 exo_version = "1.4.1"
+xcrash_version = "3.1.0"
 [libraries]
 #AndroidX
 appcompact = { module = "androidx.appcompat:appcompat", version.ref = "appcompat_version" }
@@ -105,6 +106,7 @@ exoplayer_ui = { module = "androidx.media3:media3-ui", version.ref = "exo_versio
 textRecognition = { module = "com.google.mlkit:text-recognition", version = "16.0.1" }
 
 utilCodeX = { module = "com.blankj:utilcodex", version = "1.31.1" }
+xcrash = { module = "com.iqiyi.xcrash:xcrash-android-lib", version.ref = "xcrash_version" }
 
 [bundles]
 androidx = ["appcompact", "constraintLayout", "activity", "activityKtx", "coreKtx", "recyclerView"]
@@ -118,4 +120,3 @@ compose = ["compose_material3", "compose_viewbinding", "compose_activity"]
 exoplayer = ["exoplayer", "exoplayer_dash", "exoplayer_ui"]
 [plugins]
 about_libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about_libraries_version" }
-

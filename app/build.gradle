@@ -41,7 +41,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
-    signingConfigs{
+    signingConfigs {
         release {
             storeFile file("../AndroidCodeStudy.jks")
             storePassword "123456"
@@ -122,16 +122,15 @@ dependencies {
     implementation libs.bundles.exoplayer
     implementation libs.textRecognition
     implementation libs.utilCodeX
+    implementation libs.xcrash
 
     implementation files('libs/uetool-debug.aar')
     implementation files('libs/uetool-fresco-debug.aar')
     implementation files('libs/uetool-base-debug.aar')
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
     implementation "com.facebook.fresco:fresco:1.0.1"
-    // 使用 mhiew 分支以适配 16K 页大小设备（如 Pixel 8 / Android 14），避免 pdfium native 崩溃
-    //implementation 'com.github.mhiew:android-pdf-viewer:3.2.0-beta.1'
+    // 适配 16k，并且没有线程问题的版本
     implementation("io.github.oothp:android-pdf-viewer:3.2.0-beta06")
-
 
 }
 

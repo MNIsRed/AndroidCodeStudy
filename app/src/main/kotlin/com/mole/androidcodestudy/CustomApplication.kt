@@ -3,11 +3,15 @@ package com.mole.androidcodestudy
 import android.app.Application
 import androidx.work.Configuration
 import androidx.work.WorkManager
+import android.util.Log
 import coil.Coil
 import coil.ImageLoader
 import com.yc.toollib.crash.CrashHandler
 import com.yc.toollib.crash.CrashListener
 import com.yc.toollib.crash.CrashToolUtils
+import java.io.File
+import xcrash.ICrashCallback
+import xcrash.XCrash
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -16,6 +20,7 @@ class CustomApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
+        initXCrash()
         initYCAndroidTool()
         System.loadLibrary("sqlcipher")
         
@@ -66,6 +71,33 @@ class CustomApplication : Application(), Configuration.Provider {
                 //崩溃文件存储路径：/storage/emulated/0/Android/data/你的包名/cache/crashLogs
             }
         })
+    }
+
+    /**
+     * 初始化 xCrash 用于捕获 native/ANR 崩溃，并在 Java 崩溃后继续让 CrashHandler 处理
+     */
+    private fun initXCrash() {
+        val logDir = File(filesDir, "xcrash").apply { mkdirs() }.absolutePath
+        val params = XCrash.InitParameters()
+            .setLogDir(logDir)
+            .setAppVersion("1.0.1")
+            .setJavaRethrow(true) // 处理完 Java 崩溃后继续交给现有 CrashHandler
+            .setAnrRethrow(true)
+            .setNativeRethrow(false)
+            .setNativeDumpAllThreads(true)
+            .setNativeDumpMap(true)
+            .setNativeDumpFds(true)
+            .setNativeLogCountMax(5)
+            .setJavaCallback(ICrashCallback { logPath, emergency ->
+                Log.e("XCrash", "Java 崩溃日志: $logPath emergency: $emergency")
+            })
+            .setAnrCallback(ICrashCallback { logPath, emergency ->
+                Log.e("XCrash", "ANR 日志: $logPath emergency: $emergency")
+            })
+            .setNativeCallback(ICrashCallback { logPath, emergency ->
+                Log.e("XCrash", "native 崩溃捕获，日志路径: $logPath, emergency: $emergency")
+            })
+        XCrash.init(this, params)
     }
 
     companion object {
