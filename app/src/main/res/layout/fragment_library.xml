@@ -3,23 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/button_about_libraries" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_about_libraries"
         android:text="查看开源库"
         android:layout_margin="15dp"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@id/rv_pages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_pages" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

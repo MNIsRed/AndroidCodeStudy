@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.AnimationActivity
 import com.mole.androidcodestudy.activity.ConstraintLayoutActivity
@@ -16,11 +17,14 @@ import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.adapter.pageBean
 import com.mole.androidcodestudy.databinding.FragmentWidgetBinding
+import com.mole.androidcodestudy.extension.dp2px
+import com.mole.androidcodestudy.extension.setSingleItemDecoration
 import com.mole.androidcodestudy.extension.viewBinding
 import com.mole.androidcodestudy.widget.activity.BreakIteratorActivity
 import com.mole.androidcodestudy.widget.activity.CoordinatorLayoutActivity
 import com.mole.androidcodestudy.widget.activity.ForegroundImageViewActivity
 import com.mole.androidcodestudy.widget.activity.MotionLayoutActivity
+import com.mole.androidcodestudy.widget.decoration.GridSpacingItemDecoration
 
 /**
  * @Description: AndroidUI控件测试聚合页面
@@ -34,6 +38,13 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPages.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            setSingleItemDecoration(
+                GridSpacingItemDecoration(
+                    spanCount = 2,
+                    spacing = 12f.dp2px().toInt()
+                )
+            )
             adapter = PagesAdapter(pages)
         }
     }

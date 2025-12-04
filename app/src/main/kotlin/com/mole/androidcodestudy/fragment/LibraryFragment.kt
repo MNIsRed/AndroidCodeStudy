@@ -2,6 +2,7 @@ package com.mole.androidcodestudy.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.CoroutineActivity
@@ -15,11 +16,14 @@ import com.mole.androidcodestudy.activity.library.TextRecognitionActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
+import com.mole.androidcodestudy.extension.dp2px
+import com.mole.androidcodestudy.extension.setSingleItemDecoration
 import com.mole.androidcodestudy.extension.viewBinding
 import com.mole.androidcodestudy.library.activity.PdfViewerActivity
 import com.mole.androidcodestudy.library.activity.SqlcipherActivity
 import com.mole.androidcodestudy.library.activity.UEToolActivity
 import com.yc.toollib.crash.CrashListActivity
+import com.mole.androidcodestudy.widget.decoration.GridSpacingItemDecoration
 
 class LibraryFragment : BaseFragment(R.layout.fragment_library) {
 
@@ -27,6 +31,13 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPages.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            setSingleItemDecoration(
+                GridSpacingItemDecoration(
+                    spanCount = 2,
+                    spacing = 12f.dp2px().toInt()
+                )
+            )
             adapter = PagesAdapter(pages)
         }
 

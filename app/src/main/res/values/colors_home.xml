@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主色与背景 -->
+    <color name="main_primary">#6B5AF9</color>
+    <color name="main_background">#F4F5F9</color>
+    <color name="main_card">#FFFFFFFF</color>
+    <color name="main_card_stroke">#E6E8EF</color>
+    <color name="main_text_primary">#111827</color>
+    <color name="main_text_secondary">#8E98A7</color>
+    <color name="main_bottom_bar">#FFFFFFFF</color>
+    <color name="main_bottom_bar_border">#E3E6ED</color>
+
+    <!-- 图标主题色 -->
+    <color name="icon_bg_purple">#E8E3FF</color>
+    <color name="icon_tint_purple">#6B5AF9</color>
+
+    <color name="icon_bg_blue">#E4F1FF</color>
+    <color name="icon_tint_blue">#2B7CE2</color>
+
+    <color name="icon_bg_teal">#E1F8F2</color>
+    <color name="icon_tint_teal">#1DA995</color>
+
+    <color name="icon_bg_indigo">#E7EBFF</color>
+    <color name="icon_tint_indigo">#4E5BE5</color>
+
+    <color name="icon_bg_pink">#FDE8F3</color>
+    <color name="icon_tint_pink">#F15F9F</color>
+
+    <color name="icon_bg_orange">#FFEEDC</color>
+    <color name="icon_tint_orange">#F89B4C</color>
+
+    <color name="icon_bg_cyan">#E0F8FB</color>
+    <color name="icon_tint_cyan">#3AB6D5</color>
+
+    <color name="icon_bg_green">#E2F6E9</color>
+    <color name="icon_tint_green">#45B65C</color>
+
+    <color name="icon_bg_lime">#F0F8D8</color>
+    <color name="icon_tint_lime">#89B83C</color>
+
+    <color name="icon_bg_red">#FCE6E6</color>
+    <color name="icon_tint_red">#E15A5A</color>
+
+    <color name="icon_bg_yellow">#FFF5CF</color>
+    <color name="icon_tint_yellow">#D5A628</color>
+
+    <color name="icon_bg_default">#E6E8EF</color>
+    <color name="icon_tint_default">#4B5563</color>
+</resources>
