@@ -5,24 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mole.androidcodestudy.R
-import com.mole.androidcodestudy.activity.CoroutineActivity
-import com.mole.androidcodestudy.activity.KotlinDelegateActivity
-import com.mole.androidcodestudy.activity.LiveDataActivity
-import com.mole.androidcodestudy.activity.ViewModelActivity
-import com.mole.androidcodestudy.activity.library.ExoplayerActivity
-import com.mole.androidcodestudy.activity.library.LombokActivity
-import com.mole.androidcodestudy.activity.library.PaletteActivity
-import com.mole.androidcodestudy.activity.library.TextRecognitionActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentLibraryBinding
 import com.mole.androidcodestudy.extension.dp2px
 import com.mole.androidcodestudy.extension.setSingleItemDecoration
 import com.mole.androidcodestudy.extension.viewBinding
-import com.mole.androidcodestudy.library.activity.PdfViewerActivity
-import com.mole.androidcodestudy.library.activity.SqlcipherActivity
-import com.mole.androidcodestudy.library.activity.UEToolActivity
-import com.yc.toollib.crash.CrashListActivity
+import com.mole.androidcodestudy.home.HomeEntries
 import com.mole.androidcodestudy.widget.decoration.GridSpacingItemDecoration
 
 class LibraryFragment : BaseFragment(R.layout.fragment_library) {
@@ -49,19 +38,6 @@ class LibraryFragment : BaseFragment(R.layout.fragment_library) {
     }
 
     companion object {
-        val pages: List<PageBean> = mapOf(
-            "委托" to KotlinDelegateActivity::class.java,
-            "协程" to CoroutineActivity::class.java,
-            "LiveData" to LiveDataActivity::class.java,
-            "ViewModel" to ViewModelActivity::class.java,
-            "Lombok" to LombokActivity::class.java,
-            "崩溃分析 CrashTool" to CrashListActivity::class.java,
-            "palette" to PaletteActivity::class.java,
-            "UETool" to UEToolActivity::class.java,
-            "Sqlcipher" to SqlcipherActivity::class.java,
-            "motion photo" to ExoplayerActivity::class.java,
-            "OCR" to TextRecognitionActivity::class.java,
-            "PDF 预览" to PdfViewerActivity::class.java
-        ).toList()
+        val pages: List<PageBean> = HomeEntries.libraryEntries.map { PageBean(it.title, it.activity) }
     }
 }

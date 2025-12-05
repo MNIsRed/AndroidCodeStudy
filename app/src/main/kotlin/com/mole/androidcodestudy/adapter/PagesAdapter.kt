@@ -27,7 +27,10 @@ inline fun <reified T : AppCompatActivity> pageBean(title: String): PageBean {
     return PageBean(title, T::class.java)
 }
 
-class PagesAdapter(private val data: List<PageBean>) : RecyclerView.Adapter<PagesAdapter.ViewHolder>() {
+class PagesAdapter(
+    private var data: List<PageBean>,
+    private val onItemClick: ((PageBean) -> Unit)? = null
+) : RecyclerView.Adapter<PagesAdapter.ViewHolder>() {
 
     data class PageStyle(
         val icon: String,
@@ -113,8 +116,13 @@ class PagesAdapter(private val data: List<PageBean>) : RecyclerView.Adapter<Page
             cardContainer.strokeColor = ContextCompat.getColor(context, R.color.main_card_stroke)
 
             cardContainer.setOnClickListener {
-                (context as? Activity)?.start(item.second)
+                onItemClick?.invoke(item) ?: (context as? Activity)?.start(item.second)
             }
         }
+    }
+
+    fun submit(newData: List<PageBean>) {
+        data = newData
+        notifyDataSetChanged()
     }
 }

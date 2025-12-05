@@ -10,6 +10,7 @@ import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.databinding.ActivityMainBinding
 import com.mole.androidcodestudy.di.HiltTestInterface
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.fragment.SearchEntriesBottomSheet
 import com.mole.androidcodestudy.fragment.LibraryFragment
 import com.mole.androidcodestudy.fragment.SystemFragment
 import com.mole.androidcodestudy.fragment.WidgetFragment
@@ -28,6 +29,9 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         hiltTestInterface.print()
         binding
+        binding.actionSearch.setOnClickListener {
+            SearchEntriesBottomSheet().show(supportFragmentManager, "search_entries")
+        }
 
         supportFragmentManager.findFragmentById(R.id.nav_host_fragment).let {
             it as? NavHostFragment

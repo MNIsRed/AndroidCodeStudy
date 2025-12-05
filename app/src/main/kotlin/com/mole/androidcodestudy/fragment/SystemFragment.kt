@@ -4,20 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mole.androidcodestudy.R
-import com.mole.androidcodestudy.activity.AlarmActivity
-import com.mole.androidcodestudy.activity.CalendarActivity
-import com.mole.androidcodestudy.activity.FileActivity
-import com.mole.androidcodestudy.activity.LocationActivity
-import com.mole.androidcodestudy.activity.PickMediaActivity
-import com.mole.androidcodestudy.activity.system.BatteryActivity
-import com.mole.androidcodestudy.activity.system.ImplicitIntentActivity
-import com.mole.androidcodestudy.activity.system.MediaMetadataRetrieverActivity
 import com.mole.androidcodestudy.adapter.PageBean
 import com.mole.androidcodestudy.adapter.PagesAdapter
 import com.mole.androidcodestudy.databinding.FragmentSystemBinding
 import com.mole.androidcodestudy.extension.dp2px
 import com.mole.androidcodestudy.extension.setSingleItemDecoration
 import com.mole.androidcodestudy.extension.viewBinding
+import com.mole.androidcodestudy.home.HomeEntries
 import com.mole.androidcodestudy.widget.decoration.GridSpacingItemDecoration
 
 /**
@@ -43,15 +36,6 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
     }
 
     companion object {
-        val pages: List<PageBean> = mapOf(
-            "位置" to LocationActivity::class.java,
-            "pickMedia" to PickMediaActivity::class.java,
-            "文件" to FileActivity::class.java,
-            "日历" to CalendarActivity::class.java,
-            "定时器" to AlarmActivity::class.java,
-            "电池信息" to BatteryActivity::class.java,
-            "隐式意图" to ImplicitIntentActivity::class.java,
-            "视频元信息" to MediaMetadataRetrieverActivity::class.java,
-        ).toList()
+        val pages: List<PageBean> = HomeEntries.systemEntries.map { PageBean(it.title, it.activity) }
     }
 }
