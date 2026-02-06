@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neo-Brutalism Android Playground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --neo-green: #4ade80;
+            --neo-yellow: #facc15;
+            --neo-blue: #38bdf8;
+            --neo-orange: #fb923c;
+            --neo-bg: #fefae0;
+            --neo-border: #000000;
+        }
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: var(--neo-bg);
+            color: var(--neo-border);
+        }
+        .neo-brutal-card {
+            border: 4px solid var(--neo-border);
+            box-shadow: 6px 6px 0px 0px var(--neo-border);
+            transition: all 0.1s ease;
+        }
+        .neo-brutal-card:active {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px 0px var(--neo-border);
+        }
+        .neo-brutal-header-btn {
+            border: 3px solid var(--neo-border);
+            box-shadow: 4px 4px 0px 0px var(--neo-border);
+        }
+        .neo-brutal-nav-item.active .neo-icon-box {
+            background-color: var(--neo-yellow);
+            border: 2px solid var(--neo-border);
+            box-shadow: 2px 2px 0px 0px var(--neo-border);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen">
+<div class="h-screen w-full mx-auto max-w-md flex flex-col overflow-hidden bg-[var(--neo-bg)]">
+<header class="flex-shrink-0 p-6 pt-10">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="neo-brutal-header-btn bg-[var(--neo-yellow)] p-2 rounded-xl">
+<span class="material-symbols-outlined font-bold text-3xl">android</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-2xl font-extrabold uppercase tracking-tight leading-none">Android Playground</h1>
+<p class="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-70">Components &amp; Features</p>
+</div>
+</div>
+<button class="neo-brutal-header-btn bg-white p-2 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined font-bold">search</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto px-6 pb-24">
+<div class="space-y-6">
+<button class="w-full neo-brutal-card bg-[var(--neo-green)] p-6 rounded-[2rem] text-left flex flex-col justify-between min-h-[140px]">
+<span class="material-symbols-outlined text-4xl mb-4">dashboard_customize</span>
+<div class="flex justify-between items-end">
+<span class="text-xl font-black uppercase">自定义 VIEW</span>
+<span class="material-symbols-outlined font-black">arrow_forward</span>
+</div>
+</button>
+<div class="grid grid-cols-2 gap-4">
+<button class="neo-brutal-card bg-[var(--neo-yellow)] p-4 rounded-2xl text-left aspect-square flex flex-col justify-between">
+<span class="material-symbols-outlined text-3xl">layers</span>
+<span class="text-sm font-black uppercase leading-tight">嵌套 COORDINATOR</span>
+</button>
+<button class="neo-brutal-card bg-[var(--neo-blue)] p-4 rounded-2xl text-left aspect-square flex flex-col justify-between">
+<span class="material-symbols-outlined text-3xl">motion_mode</span>
+<span class="text-sm font-black uppercase leading-tight">动画</span>
+</button>
+</div>
+<div class="space-y-4">
+<button class="w-full neo-brutal-card bg-white p-5 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[var(--neo-orange)]">keyboard</span>
+<span class="font-black uppercase text-sm">软键盘</span>
+</div>
+<span class="material-symbols-outlined opacity-30">chevron_right</span>
+</button>
+<button class="w-full neo-brutal-card bg-white p-5 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[var(--neo-blue)]">format_size</span>
+<span class="font-black uppercase text-sm">TEXTVIEW</span>
+</div>
+<span class="material-symbols-outlined opacity-30">chevron_right</span>
+</button>
+<button class="w-full neo-brutal-card bg-white p-5 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[var(--neo-green)]">smart_button</span>
+<span class="font-black uppercase text-sm">MATERIALBUTTON</span>
+</div>
+<span class="material-symbols-outlined opacity-30">chevron_right</span>
+</button>
+<button class="w-full neo-brutal-card bg-[var(--neo-orange)] p-5 rounded-2xl flex flex-col gap-3 text-left">
+<div class="flex justify-between items-center">
+<span class="font-black uppercase text-sm">MOTIONLAYOUT</span>
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<p class="text-[10px] font-bold uppercase opacity-80">Advanced layout animations and transitions</p>
+</button>
+<button class="w-full neo-brutal-card bg-white p-5 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[var(--neo-yellow)]">view_quilt</span>
+<span class="font-black uppercase text-sm">CONSTRAINTLAYOUT</span>
+</div>
+<span class="material-symbols-outlined opacity-30">chevron_right</span>
+</button>
+</div>
+<div class="pt-2 pb-8 text-center">
+<a class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity" href="#">
+<span>View Open Source Library</span>
+<span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</div>
+</div>
+</main>
+<footer class="flex-shrink-0 bg-white border-t-[4px] border-black">
+<nav class="flex justify-around items-center h-24 px-2">
+<a class="flex flex-col items-center justify-center text-center w-1/4 neo-brutal-nav-item active" href="#">
+<div class="neo-icon-box p-1.5 rounded-lg mb-1 flex items-center justify-center">
+<span class="material-symbols-outlined font-black text-xl">tune</span>
+</div>
+<span class="text-[8px] font-black uppercase leading-none">Controls</span>
+</a>
+<a class="flex flex-col items-center justify-center text-center w-1/4 neo-brutal-nav-item" href="#">
+<div class="p-1.5 mb-1 flex items-center justify-center">
+<span class="material-symbols-outlined font-black text-xl">settings_input_component</span>
+</div>
+<span class="text-[8px] font-black uppercase leading-none opacity-60">System</span>
+</a>
+<a class="flex flex-col items-center justify-center text-center w-1/4 neo-brutal-nav-item" href="#">
+<div class="p-1.5 mb-1 flex items-center justify-center">
+<span class="material-symbols-outlined font-black text-xl">category</span>
+</div>
+<span class="text-[8px] font-black uppercase leading-none opacity-60 text-center">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-center w-1/4 neo-brutal-nav-item" href="#">
+<div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
+<span class="material-symbols-outlined text-white font-black text-xl">light_mode</span>
+</div>
+</a>
+</nav>
+</footer>
+</div>
+
+</body></html>
