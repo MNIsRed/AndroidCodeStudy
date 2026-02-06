@@ -25,10 +25,10 @@ class WidgetFragment : BaseFragment(R.layout.fragment_widget) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvPages.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = GridLayoutManager(requireContext(), 3)
             setSingleItemDecoration(
                 GridSpacingItemDecoration(
-                    spanCount = 2,
+                    spanCount = 3,
                     spacing = 12f.dp2px().toInt()
                 )
             )

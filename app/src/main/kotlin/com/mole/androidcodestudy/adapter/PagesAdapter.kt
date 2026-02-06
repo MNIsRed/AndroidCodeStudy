@@ -100,7 +100,7 @@ class PagesAdapter(
         val context = holder.binding.root.context
 
         holder.binding.apply {
-            title.text = item.first
+            title.text = formatTitle(item.first)
             title.setTextColor(ContextCompat.getColor(context, R.color.main_text_primary))
 
             icon.text = style.icon
@@ -124,5 +124,19 @@ class PagesAdapter(
     fun submit(newData: List<PageBean>) {
         data = newData
         notifyDataSetChanged()
+    }
+
+    /**
+     * 将标题中的英文部分统一大写并与中文留出间隔，便于读取
+     */
+    private fun formatTitle(raw: String): String {
+        val trimmed = raw.trim()
+        val match = Regex("^([\\u4e00-\\u9fa5]+)\\s*([A-Za-z].*)$").find(trimmed)
+        return if (match != null) {
+            val (cn, en) = match.destructured
+            "${cn.trim()} ${en.trim().uppercase()}"
+        } else {
+            trimmed.uppercase()
+        }
     }
 }
