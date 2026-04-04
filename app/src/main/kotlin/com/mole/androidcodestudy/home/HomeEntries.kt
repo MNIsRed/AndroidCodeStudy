@@ -33,7 +33,7 @@ import com.mole.androidcodestudy.widget.activity.BreakIteratorActivity
 import com.mole.androidcodestudy.widget.activity.CoordinatorLayoutActivity
 import com.mole.androidcodestudy.widget.activity.ForegroundImageViewActivity
 import com.mole.androidcodestudy.widget.activity.MotionLayoutActivity
-import com.yc.toollib.crash.CrashListActivity
+// YCAndroidTool disabled: missing artifacts in repos.
 
 enum class HomeCategory { WIDGET, SYSTEM, LIBRARY }
 
@@ -78,7 +78,7 @@ object HomeEntries {
         HomeEntry("LiveData", LiveDataActivity::class.java, HomeCategory.LIBRARY),
         HomeEntry("ViewModel", ViewModelActivity::class.java, HomeCategory.LIBRARY),
         HomeEntry("Lombok", LombokActivity::class.java, HomeCategory.LIBRARY),
-        HomeEntry("崩溃分析 CrashTool", CrashListActivity::class.java, HomeCategory.LIBRARY),
+        // HomeEntry("崩溃分析 CrashTool", CrashListActivity::class.java, HomeCategory.LIBRARY),
         HomeEntry("palette", PaletteActivity::class.java, HomeCategory.LIBRARY),
         HomeEntry("UETool", UEToolActivity::class.java, HomeCategory.LIBRARY),
         HomeEntry("Sqlcipher", SqlcipherActivity::class.java, HomeCategory.LIBRARY),

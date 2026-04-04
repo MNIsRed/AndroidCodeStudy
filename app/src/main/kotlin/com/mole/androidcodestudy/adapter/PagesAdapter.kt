@@ -104,16 +104,11 @@ class PagesAdapter(
             title.setTextColor(ContextCompat.getColor(context, R.color.main_text_primary))
 
             icon.text = style.icon
-            icon.setTextColor(ContextCompat.getColor(context, android.R.color.white))
+            icon.setTextColor(ContextCompat.getColor(context, R.color.neo_border))
 
             (iconContainer.background as? GradientDrawable)?.setColor(
                 ContextCompat.getColor(context, style.iconBackground)
             )
-
-            cardContainer.setCardBackgroundColor(
-                ContextCompat.getColor(context, R.color.main_card)
-            )
-            cardContainer.strokeColor = ContextCompat.getColor(context, R.color.main_card_stroke)
 
             cardContainer.setOnClickListener {
                 onItemClick?.invoke(item) ?: (context as? Activity)?.start(item.second)

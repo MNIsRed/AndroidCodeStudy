@@ -6,9 +6,7 @@ import androidx.work.WorkManager
 import android.util.Log
 import coil.Coil
 import coil.ImageLoader
-import com.yc.toollib.crash.CrashHandler
-import com.yc.toollib.crash.CrashListener
-import com.yc.toollib.crash.CrashToolUtils
+// YCAndroidTool disabled: missing artifacts in repos.
 import java.io.File
 import xcrash.ICrashCallback
 import xcrash.XCrash
@@ -21,7 +19,7 @@ class CustomApplication : Application(), Configuration.Provider {
         super.onCreate()
         INSTANCE = this
         initXCrash()
-        initYCAndroidTool()
+        // initYCAndroidTool() // disabled: missing artifacts in repos.
         System.loadLibrary("sqlcipher")
         
         // 初始化Coil
@@ -50,38 +48,16 @@ class CustomApplication : Application(), Configuration.Provider {
             .setJobSchedulerJobIdRange(1000, 2000) // Set the job ID range here
             .build()
 
-    private fun initYCAndroidTool() {
-        CrashHandler.getInstance().init(this, object : CrashListener {
-            /**
-             * 重启app
-             */
-            override fun againStartApp() {
-                CrashToolUtils.reStartApp1(this@CustomApplication, 1000)
-                //CrashToolUtils.reStartApp2(App.this,1000, MainActivity.class);
-                //CrashToolUtils.reStartApp3(AppManager.getAppManager().currentActivity());
-            }
-
-            /**
-             * 自定义上传crash，支持开发者上传自己捕获的crash数据
-             * @param ex                        ex
-             */
-            override fun recordException(ex: Throwable?) {
-                //自定义上传crash，支持开发者上传自己捕获的crash数据
-                //StatService.recordException(getApplication(), ex);
-                //崩溃文件存储路径：/storage/emulated/0/Android/data/你的包名/cache/crashLogs
-            }
-        })
-    }
 
     /**
-     * 初始化 xCrash 用于捕获 native/ANR 崩溃，并在 Java 崩溃后继续让 CrashHandler 处理
+     * 初始化 xCrash 用于捕获 native/ANR 崩溃
      */
     private fun initXCrash() {
         val logDir = File(filesDir, "xcrash").apply { mkdirs() }.absolutePath
         val params = XCrash.InitParameters()
             .setLogDir(logDir)
             .setAppVersion("1.0.1")
-            .setJavaRethrow(true) // 处理完 Java 崩溃后继续交给现有 CrashHandler
+            .setJavaRethrow(true) // 继续交给系统默认处理
             .setAnrRethrow(true)
             .setNativeRethrow(false)
             .setNativeDumpAllThreads(true)

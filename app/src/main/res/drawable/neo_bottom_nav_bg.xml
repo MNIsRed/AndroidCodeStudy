@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:height="4dp" android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neo_border" />
+        </shape>
+    </item>
+    <item android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/main_bottom_bar" />
+        </shape>
+    </item>
+</layer-list>

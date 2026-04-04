@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="18dp"
-        android:paddingTop="20dp"
+        android:paddingTop="26dp"
         android:paddingBottom="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,36 +24,66 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/header_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Android Playground"
-                android:textColor="@color/main_text_primary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+            <FrameLayout
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/neo_button_yellow"
+                android:padding="4dp">
 
-            <TextView
-                android:id="@+id/header_subtitle"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:fontFamily="@font/material_icons"
+                    android:text="android"
+                    android:textColor="@color/neo_border"
+                    android:textSize="26sp" />
+            </FrameLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Explore Components &amp; Features"
-                android:textColor="@color/main_text_secondary"
-                android:textSize="13sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android Playground"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.02"
+                    android:textColor="@color/main_text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-black" />
+
+                <TextView
+                    android:id="@+id/header_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Components &amp; Features"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.18"
+                    android:textColor="@color/main_text_secondary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/action_search"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/neo_button_white"
             android:padding="10dp"
             android:src="@android:drawable/ic_menu_search"
-            android:tint="@color/main_text_secondary"
+            android:tint="@color/neo_border"
             android:contentDescription="@string/search_icon_desc" />
     </LinearLayout>
 
@@ -72,13 +102,18 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:background="@color/main_bottom_bar"
-        android:paddingTop="6dp"
-        android:paddingBottom="10dp"
-        android:elevation="6dp"
+        android:layout_height="84dp"
+        android:background="@drawable/neo_bottom_nav_bg"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:elevation="0dp"
+        app:itemBackground="@drawable/neo_bottom_nav_item_bg"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/navigation_color"
         app:itemTextColor="@color/navigation_color"
+        app:itemTextAppearanceActive="@style/TextAppearance.Neo.BottomNav"
+        app:itemTextAppearanceInactive="@style/TextAppearance.Neo.BottomNav"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/main_navigation"
         app:layout_constraintBottom_toBottomOf="parent"

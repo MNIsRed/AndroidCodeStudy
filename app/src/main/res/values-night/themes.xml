@@ -3,14 +3,15 @@
     <style name="Theme.AndroidCodeStudy" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main_primary</item>
-        <item name="colorPrimaryVariant">#7C6CFF</item>
+        <item name="colorPrimaryVariant">@color/main_primary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/main_primary</item>
-        <item name="colorSecondaryVariant">#7C6CFF</item>
+        <item name="colorSecondaryVariant">@color/main_primary</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/main_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Customize your theme here. -->
         <item name="DefStyleAttr">@style/CustomViewElse</item>
     </style>

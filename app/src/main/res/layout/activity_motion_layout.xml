@@ -70,17 +70,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@color/yellow" />
+                android:background="@color/neo_yellow" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@color/green" />
+                android:background="@color/neo_green" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@color/red" />
+                android:background="@color/neo_red" />
 
             <View
                 android:layout_width="match_parent"

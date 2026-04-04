@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/icon_network_bar" />
+                    android:src="@android:drawable/ic_menu_revert" />
             </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -95,7 +95,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:background="@color/green" />
+                android:background="@color/neo_green" />
 
             <View
                 android:layout_width="match_parent"
