@@ -100,7 +100,8 @@ dependencies {
     annotationProcessor(libs.library.auto.value)
     implementation libs.about.libraries
     implementation libs.about.librarie.ui
-    implementation libs.bundles.ycCrashTool
+    // NOTE: YCAndroidTool artifacts are missing from configured repos; disable to unblock builds.
+//    implementation libs.bundles.ycCrashTool
     implementation libs.palette
     //debugImplementation(libs.bundles.uetoolDebug) {
     //    exclude group: 'com.android.support', module: 'support-compat'

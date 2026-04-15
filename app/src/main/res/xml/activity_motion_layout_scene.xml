@@ -39,7 +39,7 @@
                 motion:motionTarget="@id/ll_fake_tab">
                 <CustomAttribute
                     motion:attributeName="backgroundColor"
-                    motion:customColorValue="@color/green" />
+                    motion:customColorValue="@color/neo_green" />
             </KeyAttribute>
             <KeyPosition
                 motion:keyPositionType="parentRelative"

@@ -1,49 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Neo-brutalism palette (night uses same palette for consistency) -->
+    <color name="neo_green">#4ADE80</color>
+    <color name="neo_yellow">#FACC15</color>
+    <color name="neo_blue">#38BDF8</color>
+    <color name="neo_orange">#FB923C</color>
+    <color name="neo_pink">#F472B6</color>
+    <color name="neo_purple">#A78BFA</color>
+    <color name="neo_cyan">#22D3EE</color>
+    <color name="neo_lime">#A3E635</color>
+    <color name="neo_red">#F87171</color>
+    <color name="neo_indigo">#818CF8</color>
+    <color name="neo_border">#000000</color>
+    <color name="neo_nav_inactive">#5C5C5C</color>
+
     <!-- 主色与背景 -->
-    <color name="main_primary">#8B7CFF</color>
-    <color name="main_background">#0F1626</color>
-    <color name="main_card">#1C2437</color>
-    <color name="main_card_stroke">#273146</color>
-    <color name="main_text_primary">#F4F6FA</color>
-    <color name="main_text_secondary">#9AA3B7</color>
-    <color name="main_bottom_bar">#1C2437</color>
-    <color name="main_bottom_bar_border">#273146</color>
+    <color name="main_primary">@color/neo_blue</color>
+    <color name="main_background">#FEFAE0</color>
+    <color name="main_card">#FFFFFFFF</color>
+    <color name="main_card_stroke">@color/neo_border</color>
+    <color name="main_text_primary">@color/neo_border</color>
+    <color name="main_text_secondary">#4B4B4B</color>
+    <color name="main_bottom_bar">#FFFFFFFF</color>
+    <color name="main_bottom_bar_border">@color/neo_border</color>
 
     <!-- 图标主题色 -->
-    <color name="icon_bg_purple">#2C255E</color>
-    <color name="icon_tint_purple">#C6B9FF</color>
+    <color name="icon_bg_purple">@color/neo_purple</color>
+    <color name="icon_tint_purple">@color/neo_border</color>
 
-    <color name="icon_bg_blue">#1C2F52</color>
-    <color name="icon_tint_blue">#A6C8FF</color>
+    <color name="icon_bg_blue">@color/neo_blue</color>
+    <color name="icon_tint_blue">@color/neo_border</color>
 
-    <color name="icon_bg_teal">#12423C</color>
-    <color name="icon_tint_teal">#7CE7CF</color>
+    <color name="icon_bg_teal">@color/neo_green</color>
+    <color name="icon_tint_teal">@color/neo_border</color>
 
-    <color name="icon_bg_indigo">#262C5C</color>
-    <color name="icon_tint_indigo">#ADB9FF</color>
+    <color name="icon_bg_indigo">@color/neo_indigo</color>
+    <color name="icon_tint_indigo">@color/neo_border</color>
 
-    <color name="icon_bg_pink">#4F2444</color>
-    <color name="icon_tint_pink">#F59BC7</color>
+    <color name="icon_bg_pink">@color/neo_pink</color>
+    <color name="icon_tint_pink">@color/neo_border</color>
 
-    <color name="icon_bg_orange">#4F2B16</color>
-    <color name="icon_tint_orange">#FFC08A</color>
+    <color name="icon_bg_orange">@color/neo_orange</color>
+    <color name="icon_tint_orange">@color/neo_border</color>
 
-    <color name="icon_bg_cyan">#143B45</color>
-    <color name="icon_tint_cyan">#7AE6F5</color>
+    <color name="icon_bg_cyan">@color/neo_cyan</color>
+    <color name="icon_tint_cyan">@color/neo_border</color>
 
-    <color name="icon_bg_green">#123722</color>
-    <color name="icon_tint_green">#92F0B5</color>
+    <color name="icon_bg_green">@color/neo_green</color>
+    <color name="icon_tint_green">@color/neo_border</color>
 
-    <color name="icon_bg_lime">#273618</color>
-    <color name="icon_tint_lime">#C6F27D</color>
+    <color name="icon_bg_lime">@color/neo_lime</color>
+    <color name="icon_tint_lime">@color/neo_border</color>
 
-    <color name="icon_bg_red">#4C1E22</color>
-    <color name="icon_tint_red">#F7A6A6</color>
+    <color name="icon_bg_red">@color/neo_red</color>
+    <color name="icon_tint_red">@color/neo_border</color>
 
-    <color name="icon_bg_yellow">#423211</color>
-    <color name="icon_tint_yellow">#FFE08A</color>
+    <color name="icon_bg_yellow">@color/neo_yellow</color>
+    <color name="icon_tint_yellow">@color/neo_border</color>
 
-    <color name="icon_bg_default">#2C3242</color>
-    <color name="icon_tint_default">#E5E7EB</color>
+    <color name="icon_bg_default">#FDE68A</color>
+    <color name="icon_tint_default">@color/neo_border</color>
 </resources>

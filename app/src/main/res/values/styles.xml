@@ -14,5 +14,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="TextAppearance.Neo.BottomNav" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+    </style>
 
 </resources>
