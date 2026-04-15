@@ -94,6 +94,10 @@ compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = 
 compose_material3 = { group = "androidx.compose.material3", name = "material3" }
 compose_viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
 compose_activity = { group = "androidx.activity", name = "activity-compose" }
+compose_constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+compose_preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose_ui_tool = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose_livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 #sqlcipher-android
 sqlcipher = { module = "net.zetetic:sqlcipher-android", version = "4.6.0" }
 local_sqlite = { module = "androidx.sqlite:sqlite", version = "2.2.0" }
@@ -116,7 +120,7 @@ navigation = ["navigation_fragment", "navigation_ui", "navigation_kt_fragment", 
 ycCrashTool = ["yc_crash_lib", "yc_file_lib", "yc_caton_lib", "yc_net_lib", "yc_anr_lib"]
 uetoolDebug = ["uetool", "uetool_base"]
 uetoolRelease = ["uetool_no_op"]
-compose = ["compose_material3", "compose_viewbinding", "compose_activity"]
+compose = ["compose_material3", "compose_viewbinding", "compose_activity", "compose_constraintlayout", "compose_preview", "compose_ui_tool", "compose_livedata"]
 exoplayer = ["exoplayer", "exoplayer_dash", "exoplayer_ui"]
 [plugins]
 about_libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about_libraries_version" }

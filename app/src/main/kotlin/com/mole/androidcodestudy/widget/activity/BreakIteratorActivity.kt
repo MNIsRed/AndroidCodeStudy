@@ -1,14 +1,31 @@
 package com.mole.androidcodestudy.widget.activity
 
 import android.os.Bundle
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
+import com.mole.androidcodestudy.R
 import com.mole.androidcodestudy.activity.BaseActivity
+import com.mole.androidcodestudy.compose.ComposeScreenUtil.w
+import com.mole.androidcodestudy.compose.CustomEllipsizeText
 import com.mole.androidcodestudy.databinding.ActivityBreakIteratorBinding
 import com.mole.androidcodestudy.extension.viewBinding
 import kotlinx.coroutines.delay
@@ -29,7 +46,26 @@ class BreakIteratorActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.composeView.setContent { AnimatedText() }
+        binding.composeView.setContent {
+            Column {
+                CustomEllipsizeText(
+                    text = "峰学蔚来创始人，北京大学光华管理学院的打算客户经理看哈健康，资深升学规划师，知名教育博主。教育类畅销书作者，著有《决胜高中三年关键期》等书籍。",
+                    maxLines = 2,
+                    style = TextStyle(
+                        fontSize = 15.sp, color = Color(0xFF333333), lineHeight = 22.sp // 增加一点行高更好看
+                    ),
+                    iconSize = 23.w,
+                    icon = {
+                        // 这里模拟图片箭头
+                        Image(
+                            painter = painterResource(id = R.drawable.icon_arrow_right_10),
+                            contentDescription = "关闭",
+                            modifier = Modifier.size(23.w)
+                        )
+                    })
+                AnimatedText()
+            }
+        }
     }
 
     @Composable
@@ -69,4 +105,59 @@ class BreakIteratorActivity : BaseActivity() {
         }
         Text(text = substringText)
     }
-} 
+
+    // Theme.kt
+    @Composable
+    fun MyAppTheme(
+        // 注意：系统深色模式的切换，Android 会自动去 values-night 读取，
+        // 所以这里其实不需要手动写 if(darkTheme) 来区分颜色值！这是这个方案的一个巨大隐藏优势。
+        content: @Composable () -> Unit
+    ) {
+        // 1. 从 XML 中读取语义颜色
+        val primaryColor = colorResource(id = R.color.colorPrimary)
+        val dividerColor = colorResource(id = R.color.black)
+
+        // 2. 包装成 Compose 的 ColorScheme
+        // 这样在 Compose 代码里，就不需要到处写 colorResource 了
+        val colorScheme = lightColorScheme(
+            primary = primaryColor,
+            outline = dividerColor,
+            // ... 其他映射
+        )
+
+        // 3. 注入 MaterialTheme
+        MaterialTheme(
+            colorScheme = colorScheme,
+            content = content
+        )
+    }
+
+
+}
+
+@Immutable
+data class CustomColors(
+    val customColor: Color = Color(0xFF6E8FA5)
+)
+
+val LocalCustomColors = staticCompositionLocalOf { CustomColors() }
+
+object AppTheme {
+    val customColors: CustomColors
+        @Composable
+        get() = LocalCustomColors.current
+}
+
+@Composable
+fun MyAppTheme(content: @Composable () -> Unit) {
+    // 在这里赋值，兼顾 colorResource 以及 深色模式的切换
+    val myCustomColors = CustomColors(customColor = colorResource(R.color.yellow))
+    // CompositionLocalProvider 广播塔，广播 LocalCustomColors.current 为 myCustomColors
+    CompositionLocalProvider(
+        LocalCustomColors provides myCustomColors
+    ) {
+        // ... (这里的代码以及内部的所有子组件)
+        content()
+        Text(text = "测试自定义颜色", color = AppTheme.customColors.customColor)
+    }
+}
